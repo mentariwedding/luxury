@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
 import Reveal from './Reveal';
 import SplitText from './SplitText';
 import { supabase } from '@/lib/supabase';
@@ -11,7 +10,8 @@ export default function Hero() {
         title: "Rayakan Cinta, Penuh Makna.",
         subtitle: "Merangkai Momen dengan Ketulusan",
         description: "Kami percaya setiap pernikahan adalah cerita unik yang layak dirayakan dengan sempurna.",
-        image_url: "/images/hero.JPG"
+        image_url: "/images/hero.JPG",
+        video_url: ""
     });
 
     useEffect(() => {
@@ -21,14 +21,15 @@ export default function Hero() {
                 .select('*')
                 .eq('section_name', 'hero')
                 .single();
-            
+
             if (data && !error) {
-                setContent({
-                    title: data.title || content.title,
-                    subtitle: data.subtitle || content.subtitle,
-                    description: data.description || content.description,
-                    image_url: data.image_url || content.image_url
-                });
+                setContent(prev => ({
+                    title: data.title || prev.title,
+                    subtitle: data.subtitle || prev.subtitle,
+                    description: data.description || prev.description,
+                    image_url: data.image_url || prev.image_url,
+                    video_url: data.video_url || ''
+                }));
             }
         };
 
@@ -48,25 +49,52 @@ export default function Hero() {
                 <div className="absolute bottom-[30%] left-[20%] w-1 h-1 bg-[#CEB175]/40 rounded-full animate-ping"></div>
             </div>
 
-            {/* Subtle Video Background or Motion Background */}
+            {/* Background: Video if available, fallback to image */}
             <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-[#050505]/40 z-10"></div>
-                <img 
-                    src={content.image_url} 
-                    alt="Background" 
-                    className="w-full h-full object-cover opacity-60 scale-110 animate-[subtle-zoom_20s_infinite_alternate]"
-                />
+                {/* Stronger overlay for cinematic luxury feel */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-10"></div>
+                <div className="absolute inset-0 bg-[#050505]/30 z-10"></div>
+
+                {content.video_url ? (
+                    <video
+                        key={content.video_url}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        poster={content.image_url}
+                        className="w-full h-full object-cover opacity-70 scale-105"
+                    >
+                        <source src={content.video_url} type="video/mp4" />
+                    </video>
+                ) : (
+                    <img
+                        src={content.image_url}
+                        alt="Background"
+                        className="w-full h-full object-cover opacity-60 scale-110 animate-[subtle-zoom_20s_infinite_alternate]"
+                    />
+                )}
+            </div>
+
+            {/* Editorial side markers — frame the hero like a magazine spread */}
+            <div className="absolute top-32 left-6 md:left-12 z-10 hidden md:flex flex-col items-start gap-3">
+                <span className="text-[9px] uppercase tracking-[0.5em] text-[#CEB175]/50 font-light">N° 01</span>
+                <span className="w-px h-12 bg-[#CEB175]/30"></span>
+            </div>
+            <div className="absolute top-32 right-6 md:right-12 z-10 hidden md:flex flex-col items-end gap-3">
+                <span className="text-[9px] uppercase tracking-[0.5em] text-[#CEB175]/50 font-light italic font-serif">Mentari Wedding</span>
+                <span className="w-px h-12 bg-[#CEB175]/30"></span>
             </div>
 
             <div className="relative z-10 text-center px-4 max-w-5xl mx-auto mt-24 flex flex-col items-center">
                 <Reveal>
-                    <SplitText 
+                    <SplitText
                         text={content.subtitle}
                         className="text-[10px] md:text-xs font-light tracking-[0.5em] text-[#CEB175] uppercase mb-8 opacity-80"
                         stagger={0.05}
                     />
                 </Reveal>
-                
+
                 <h1 className="font-serif text-4xl sm:text-5xl md:text-8xl lg:text-9xl font-light leading-[1.1] text-white mb-10 drop-shadow-2xl">
                     {titleParts[0] && <><SplitText text={titleParts[0] + (titleParts[1] ? ',' : '')} delay={300} /> <br /></>}
                     {titleParts[1] && (
@@ -95,4 +123,3 @@ export default function Hero() {
         </section>
     );
 }
-

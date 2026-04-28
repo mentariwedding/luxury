@@ -8,9 +8,18 @@ import { useToast } from '@/components/Toast';
 import { useConfirm } from '@/components/ConfirmModal';
 import MinimalistTooltip from '@/components/MinimalistTooltip';
 
-const SECTIONS = ['hero', 'signature', 'approach', 'philosophy', 'atelier', 'partners'];
-const LABELS   = { hero: 'Hero', signature: 'Signature', approach: 'Pendekatan', philosophy: 'Filosofi', atelier: 'Atelier', partners: 'Partners' };
-const HAS_ITEMS = ['approach', 'philosophy', 'atelier', 'partners'];
+const SECTIONS = ['hero', 'whisper', 'signature', 'approach', 'atelier', 'venues', 'philosophy', 'manifesto'];
+const LABELS   = {
+    hero: 'Hero',
+    whisper: 'Whisper',
+    signature: 'Signature',
+    approach: 'Pendekatan',
+    atelier: 'Atelier',
+    venues: 'Venues',
+    philosophy: 'Filosofi',
+    manifesto: 'Manifesto',
+};
+const HAS_ITEMS = ['approach', 'philosophy', 'atelier'];
 
 function UnderlineInput({ label, name, value, onChange, textarea = false, rows = 4, placeholder = '' }) {
     return (
@@ -65,9 +74,20 @@ export default function ContentManagement() {
     const handleSaveMain = async (e) => {
         e.preventDefault();
         setSaving(true);
+        const payload = {
+            title: form.title,
+            subtitle: form.subtitle,
+            description: form.description,
+            cta_text: form.cta_text,
+            image_url: form.image_url,
+            updated_at: new Date(),
+        };
+        // Hero supports video_url
+        if (active?.section_name === 'hero') {
+            payload.video_url = form.video_url || null;
+        }
         const { error } = await supabase.from('section_content')
-            .update({ title: form.title, subtitle: form.subtitle, description: form.description,
-                      cta_text: form.cta_text, image_url: form.image_url, updated_at: new Date() })
+            .update(payload)
             .eq('id', form.id);
         setSaving(false);
         error ? toast('Gagal: ' + error.message, 'error') : toast('Konten berhasil disimpan!', 'success');
@@ -192,10 +212,13 @@ export default function ContentManagement() {
                                         <UnderlineInput label="Deskripsi" name="description" value={form.description} onChange={handleInput} textarea rows={4} placeholder="Paragraf deskripsi section..." />
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
                                             <UnderlineInput label="URL Gambar" name="image_url" value={form.image_url} onChange={handleInput} placeholder="/images/... atau https://..." />
-                                            {active.section_name === 'hero' && (
+                                            {(active.section_name === 'hero' || active.section_name === 'manifesto') && (
                                                 <UnderlineInput label="Teks Tombol CTA" name="cta_text" value={form.cta_text} onChange={handleInput} placeholder="Mulai Konsultasi..." />
                                             )}
                                         </div>
+                                        {active.section_name === 'hero' && (
+                                            <UnderlineInput label="URL Video Background (Opsional, .mp4)" name="video_url" value={form.video_url} onChange={handleInput} placeholder="https://...mp4 — kosongkan jika ingin gambar saja" />
+                                        )}
                                     </div>
 
                                     {/* Save */}
