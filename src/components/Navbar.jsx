@@ -16,11 +16,11 @@ export default function Navbar() {
     }, []);
 
     const navItems = [
-        { label: 'Portofolio', href: '#portfolio' },
-        { label: 'Pendekatan', href: '#approach' },
-        { label: 'Signature', href: '#signature' },
+        { label: 'Whisper', href: '#whisper' },
+        { label: 'Editorial', href: '#portfolio' },
         { label: 'Atelier', href: '#atelier' },
-        { label: 'Filosofi', href: '#philosophy' },
+        { label: 'Venues', href: '#venues' },
+        { label: 'Inquiry', href: '#manifesto' },
     ];
 
     return (
@@ -54,8 +54,8 @@ export default function Navbar() {
                     </div>
 
                     <div className="hidden md:block">
-                        <a href="#contact" className="relative inline-block px-8 py-3 group overflow-hidden border border-[#CEB175]/30 rounded-full transition-all duration-500 hover:border-[#CEB175]">
-                            <span className="relative z-10 text-[10px] uppercase tracking-[0.5em] font-light text-white group-hover:text-black transition-colors duration-500">Inquiry</span>
+                        <a href="#manifesto" className="relative inline-block px-8 py-3 group overflow-hidden border border-[#CEB175]/30 rounded-full transition-all duration-500 hover:border-[#CEB175]">
+                            <span className="relative z-10 text-[10px] uppercase tracking-[0.5em] font-light text-white group-hover:text-black transition-colors duration-500">Whisper</span>
                             <div className="absolute inset-0 bg-[#CEB175] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
                         </a>
                     </div>
@@ -88,12 +88,12 @@ export default function Navbar() {
                          </a>
                      ))}
                      <a 
-                        href="#contact" 
+                        href="#manifesto" 
                         onClick={() => setMobileMenuOpen(false)} 
                         className={`mt-10 text-xs uppercase tracking-[0.4em] text-black bg-[#CEB175] px-12 py-5 rounded-full transition-all duration-700 transform ${mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
                         style={{ transitionDelay: `${navItems.length * 100}ms` }}
                     >
-                        Inquiry
+                        Whisper to Us
                     </a>
                  </div>
             </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { SunMedium, ArrowUpRight, MapPin, Send } from 'lucide-react';
+import { SunMedium, MapPin, Send } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import Reveal from './Reveal';
 
@@ -70,20 +70,14 @@ export default function Footer() {
                         </Reveal>
                         <div className="relative z-10">
                             <Reveal delay={400}>
-                                <p className="font-serif text-3xl md:text-7xl font-light mb-12 max-w-4xl mx-auto leading-tight px-4">
+                                <p className="font-serif text-3xl md:text-7xl font-light mb-8 max-w-4xl mx-auto leading-tight px-4">
                                     Mari merangkai <span className="italic text-[#CEB175]">cerita abadi</span> Anda bersama kami.
                                 </p>
                             </Reveal>
                             <Reveal delay={600}>
-                                <a 
-                                    href={`https://wa.me/${settings.whatsapp_number}`} 
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-4 group border border-[#CEB175]/30 px-10 py-6 hover:bg-[#CEB175] hover:text-black transition-all duration-700 rounded-full"
-                                >
-                                    <span className="text-xs uppercase tracking-[0.3em]">Mulai Konsultasi</span>
-                                    <ArrowUpRight className="w-4 h-4 group-hover:rotate-45 transition-transform duration-500" />
-                                </a>
+                                <p className="text-[10px] uppercase tracking-[0.6em] text-[#CEB175]/60 italic font-serif">
+                                    — by inquiry only —
+                                </p>
                             </Reveal>
                         </div>
                     </div>
@@ -121,10 +115,11 @@ export default function Footer() {
                         <p className="text-[10px] uppercase tracking-[0.4em] text-[#525252] mb-10">Eksplorasi</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
                             {[
-                                { label: 'Portofolio', num: '01', href: '#portfolio' },
-                                { label: 'Pendekatan', num: '02', href: '#approach' },
-                                { label: 'Signature', num: '03', href: '#signature' },
-                                { label: 'Atelier', num: '04', href: '#atelier' },
+                                { label: 'Whisper', num: '01', href: '#whisper' },
+                                { label: 'Editorial', num: '02', href: '#portfolio' },
+                                { label: 'Atelier', num: '03', href: '#atelier' },
+                                { label: 'Venues', num: '04', href: '#venues' },
+                                { label: 'Inquiry', num: '05', href: '#manifesto' },
                             ].map((item) => (
                                 <a key={item.label} href={item.href} className="group flex items-end gap-3 w-fit">
                                     <span className="text-3xl font-serif font-light text-[#A3A3A3] group-hover:text-white transition-all duration-500 group-hover:translate-x-2">{item.label}</span>
