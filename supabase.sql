@@ -53,6 +53,22 @@ CREATE TABLE IF NOT EXISTS public.profiles (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
+-- 6. Storage Buckets
+-- Jalankan ini di SQL Editor Supabase untuk membuat bucket 'photos'
+-- Pastikan ekstensi 'storage' sudah aktif (biasanya sudah default)
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('photos', 'photos', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Storage Policies
+-- 1. Akses Publik: Siapa saja bisa melihat foto
+CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING (bucket_id = 'photos');
+
+-- 2. Akses Admin: Hanya user terautentikasi yang bisa upload/manage
+CREATE POLICY "Admins can manage photos" ON storage.objects FOR ALL 
+USING (bucket_id = 'photos' AND auth.role() = 'authenticated')
+WITH CHECK (bucket_id = 'photos' AND auth.role() = 'authenticated');
+
 -- AKTIFKAN RLS (Row Level Security)
 ALTER TABLE public.site_settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.section_content ENABLE ROW LEVEL SECURITY;
