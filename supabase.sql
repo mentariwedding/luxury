@@ -1,5 +1,20 @@
--- 1. Tabel untuk Pengaturan Kontak & Sosial Media
-CREATE TABLE IF NOT EXISTS public.site_settings (
+-- ============================================================
+-- MENTARI WEDDING — TOTAL RESET & SETUP
+-- Jalankan ini di SQL Editor untuk menyamakan database dengan kode terbaru.
+-- ============================================================
+
+-- 1. BERSIHKAN SEMUA (Hapus tabel lama jika ada agar benar-benar fresh)
+DROP TABLE IF EXISTS public.inquiry_clicks CASCADE;
+DROP TABLE IF EXISTS public.venues CASCADE;
+DROP TABLE IF EXISTS public.whispers CASCADE;
+DROP TABLE IF EXISTS public.portfolio_gallery CASCADE;
+DROP TABLE IF EXISTS public.section_items CASCADE;
+DROP TABLE IF EXISTS public.section_content CASCADE;
+DROP TABLE IF EXISTS public.site_settings CASCADE;
+DROP TABLE IF EXISTS public.profiles CASCADE;
+
+-- 2. TABEL PENGATURAN (Site Settings)
+CREATE TABLE public.site_settings (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     key TEXT UNIQUE NOT NULL,
     value TEXT,
@@ -7,8 +22,8 @@ CREATE TABLE IF NOT EXISTS public.site_settings (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
--- 2. Tabel untuk Konten Teks di Setiap Section (Hero, Signature, dll)
-CREATE TABLE IF NOT EXISTS public.section_content (
+-- 3. TABEL KONTEN SECTION (Hero, Signature, dll)
+CREATE TABLE public.section_content (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     section_name TEXT UNIQUE NOT NULL,
     title TEXT,
@@ -17,25 +32,35 @@ CREATE TABLE IF NOT EXISTS public.section_content (
     cta_text TEXT,
     cta_link TEXT,
     image_url TEXT,
+    video_url TEXT, -- Untuk video background Hero
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
--- 3. Tabel untuk Item/List di Setiap Section (Approach Steps, Philosophy Features, Atelier Pillars, Partners)
-CREATE TABLE IF NOT EXISTS public.section_items (
+-- 4. TABEL WHISPERS (Poetic Quotes)
+CREATE TABLE public.whispers (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    section_name TEXT NOT NULL,
-    title TEXT NOT NULL,
-    description TEXT,
-    icon_name TEXT,
-    tag TEXT,
+    quote TEXT NOT NULL,
+    author TEXT,
+    accent_word TEXT,
+    display_order INT DEFAULT 0,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+-- 5. TABEL VENUES (Curated Locations)
+CREATE TABLE public.venues (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    cryptic_caption TEXT,
+    location_hint TEXT,
     image_url TEXT,
     display_order INT DEFAULT 0,
     is_active BOOLEAN DEFAULT true,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
--- 4. Tabel untuk Galeri Portfolio (Momen Abadi)
-CREATE TABLE IF NOT EXISTS public.portfolio_gallery (
+-- 6. TABEL PORTFOLIO (Gallery)
+CREATE TABLE public.portfolio_gallery (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title TEXT NOT NULL,
     category TEXT,
@@ -45,97 +70,50 @@ CREATE TABLE IF NOT EXISTS public.portfolio_gallery (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
--- 5. Tabel Profil Admin
-CREATE TABLE IF NOT EXISTS public.profiles (
-    id UUID REFERENCES auth.users ON DELETE CASCADE PRIMARY KEY,
-    full_name TEXT,
-    avatar_url TEXT,
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
-);
-
--- 6. Storage Buckets
--- Jalankan ini di SQL Editor Supabase untuk membuat bucket 'photos'
--- Pastikan ekstensi 'storage' sudah aktif (biasanya sudah default)
+-- 7. STORAGE SETUP (Bucket 'photos')
+-- Membuat bucket jika belum ada
 INSERT INTO storage.buckets (id, name, public)
 VALUES ('photos', 'photos', true)
 ON CONFLICT (id) DO NOTHING;
 
--- Storage Policies
--- 1. Akses Publik: Siapa saja bisa melihat foto
-CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING (bucket_id = 'photos');
-
--- 2. Akses Admin: Hanya user terautentikasi yang bisa upload/manage
-CREATE POLICY "Admins can manage photos" ON storage.objects FOR ALL 
-USING (bucket_id = 'photos' AND auth.role() = 'authenticated')
-WITH CHECK (bucket_id = 'photos' AND auth.role() = 'authenticated');
-
--- AKTIFKAN RLS (Row Level Security)
+-- 8. AKTIFKAN RLS & POLICIES
 ALTER TABLE public.site_settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.section_content ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.section_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.whispers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.venues ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.portfolio_gallery ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
--- BUAT POLICY: Publik bisa baca, hanya Admin (Authenticated) yang bisa edit
--- Policy untuk Read (Semua orang)
-CREATE POLICY "Public can read site_settings" ON public.site_settings FOR SELECT USING (true);
-CREATE POLICY "Public can read section_content" ON public.section_content FOR SELECT USING (true);
-CREATE POLICY "Public can read section_items" ON public.section_items FOR SELECT USING (true);
-CREATE POLICY "Public can read portfolio_gallery" ON public.portfolio_gallery FOR SELECT USING (true);
+-- Read Access (Public)
+CREATE POLICY "Public Read" ON public.site_settings FOR SELECT USING (true);
+CREATE POLICY "Public Read" ON public.section_content FOR SELECT USING (true);
+CREATE POLICY "Public Read" ON public.whispers FOR SELECT USING (true);
+CREATE POLICY "Public Read" ON public.venues FOR SELECT USING (true);
+CREATE POLICY "Public Read" ON public.portfolio_gallery FOR SELECT USING (true);
+CREATE POLICY "Public Storage Read" ON storage.objects FOR SELECT USING (bucket_id = 'photos');
 
--- Policy untuk Write/Update (Hanya Admin terautentikasi)
-CREATE POLICY "Admins can manage site_settings" ON public.site_settings FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admins can manage section_content" ON public.section_content FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admins can manage section_items" ON public.section_items FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Admins can manage portfolio_gallery" ON public.portfolio_gallery FOR ALL USING (auth.role() = 'authenticated');
+-- Write Access (Admin Authenticated)
+CREATE POLICY "Admin Manage Settings" ON public.site_settings FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Admin Manage Content" ON public.section_content FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Admin Manage Whispers" ON public.whispers FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Admin Manage Venues" ON public.venues FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Admin Manage Gallery" ON public.portfolio_gallery FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Admin Manage Storage" ON storage.objects FOR ALL USING (bucket_id = 'photos' AND auth.role() = 'authenticated');
 
--- INSERT DATA AWAL (SEEDING)
--- Site Settings
+-- 9. SEED DATA AWAL (Konten Luxury)
 INSERT INTO public.site_settings (key, value, description) VALUES
-('whatsapp_number', '628123456789', 'Nomor WhatsApp untuk konsultasi'),
-('instagram_url', 'https://instagram.com/mentariwedding', 'Link profil Instagram'),
-('pinterest_url', '#', 'Link profil Pinterest'),
-('map_coordinates', '-6.887298081773353, 106.77632655353484', 'Koordinat Google Maps'),
-('office_address', 'Jl. Kebon Pala 2 Cibadak, Sukabumi, Jawa Barat, 43351.', 'Alamat kantor fisik');
+('whatsapp_number', '628123456789', 'WhatsApp Konsultasi'),
+('instagram_url', 'https://instagram.com/mentariwedding', 'Instagram'),
+('office_address', 'Jl. Kebon Pala 2 Cibadak, Sukabumi.', 'Alamat Kantor');
 
--- Section Content
-INSERT INTO public.section_content (section_name, title, subtitle, description, image_url) VALUES
-('hero', 'Rayakan Cinta, Penuh Makna.', 'Merangkai Momen dengan Ketulusan', 'Kami percaya setiap pernikahan adalah cerita unik yang layak dirayakan dengan sempurna.', '/images/hero.JPG'),
-('signature', 'Sentuhan yang Abadi & Timeless.', 'Karakter Kami', 'Di Mentari Wedding, kami tidak mengejar tren yang cepat hilang. Kami berfokus pada estetika yang akan tetap terlihat indah puluhan tahun dari sekarang.', '/images/signature.JPG'),
-('approach', 'Cara Kami Bekerja.', 'Metode Kami', 'Kami percaya kemewahan sejati ada pada detail yang mencerminkan kejujuran perasaan Anda.', '/images/pendekatan.JPG'),
-('philosophy', 'Dedikasi untuk Hari Anda', 'Filosofi Mentari Wedding', NULL, NULL),
-('atelier', 'Estetika Kami.', 'The Atelier', 'Keindahan sejati lahir dari detail yang sederhana namun bermakna.', NULL),
-('partners', NULL, NULL, NULL, NULL);
+INSERT INTO public.section_content (section_name, title, subtitle, description, image_url, video_url) VALUES
+('hero', 'Rayakan Cinta, Penuh Makna.', 'Merangkai Momen', 'Cerita unik yang layak dirayakan.', '/images/hero.JPG', '/images/hero.mp4'),
+('whisper', 'Some moments are not planned, they are summoned.', 'A Whisper', 'Keheningan di balik setiap kemewahan.', NULL, NULL),
+('manifesto', 'By Inquiry Only.', 'Selectively Curated', 'Setiap cerita layak mendapatkan ruang yang utuh.', NULL, NULL);
 
--- Section Items: Approach Steps
-INSERT INTO public.section_items (section_name, title, icon_name, description, display_order) VALUES
-('approach', 'Visi', 'Compass', 'Kami mendengar cerita Anda untuk menciptakan konsep yang benar-benar pribadi.', 0),
-('approach', 'Detail', 'PenTool', 'Semua elemen, dari warna hingga alur acara, kami susun dengan rapi dan teliti.', 1),
-('approach', 'Eksekusi', 'Heart', 'Kami pastikan semua berjalan lancar agar Anda bisa menikmati momen tanpa beban.', 2);
+INSERT INTO public.whispers (quote, accent_word, display_order) VALUES
+('In the silence between vows, we craft memories.', 'silence', 0),
+('We do not chase trends. We invite timelessness.', 'timelessness', 1);
 
--- Section Items: Philosophy Features
-INSERT INTO public.section_items (section_name, title, icon_name, description, display_order) VALUES
-('philosophy', 'Eksklusif', 'Diamond', 'Kami hanya melayani sedikit klien untuk memastikan setiap pernikahan mendapatkan perhatian penuh.', 0),
-('philosophy', 'Personal', 'Feather', 'Setiap dekorasi dan alur acara kami buat khusus sesuai dengan karakter unik Anda.', 1),
-('philosophy', 'Tenang', 'ShieldCheck', 'Kami menjaga semua detail teknis agar Anda bisa menikmati hari bahagia dengan tenang.', 2);
-
--- Section Items: Atelier Pillars
-INSERT INTO public.section_items (section_name, title, tag, description, image_url, display_order) VALUES
-('atelier', 'Sentuhan Halus', 'Material', 'Kami memilih material berkualitas—dari kain sutra hingga detail terkecil—untuk memberikan kenyamanan yang elegan.', '/images/sentuhan.JPG', 0),
-('atelier', 'Ruang yang Seimbang', 'Harmoni', 'Setiap elemen ditata dengan rapi agar menciptakan suasana yang indah dan menenangkan mata.', '/images/ruang.JPG', 1),
-('atelier', 'Suasana Hangat', 'Cahaya', 'Pencahayaan yang diatur dengan tepat untuk membangun emosi dan kehangatan di setiap sudut acara.', '/images/suasana.JPG', 2);
-
--- Section Items: Partners
-INSERT INTO public.section_items (section_name, title, display_order) VALUES
-('partners', 'BVLGARI', 0),
-('partners', 'VERA WANG', 1),
-('partners', 'RITZ-CARLTON', 2),
-('partners', 'CARTIER', 3),
-('partners', 'DIOR', 4),
-('partners', 'VOGUE', 5);
-
--- Portfolio Gallery: Momen Abadi
-INSERT INTO public.portfolio_gallery (title, category, image_url, is_featured, display_order) VALUES
-('Pesta Penuh Tawa', 'Tawa Lepas', '/images/tawalepas.JPG', true, 0),
-('Detail Penuh Makna', 'Hangat', '/images/hangat.JPG', false, 1),
-('Momen Tak Terlupakan', 'Estetik', '/images/estetik.JPG', false, 2);
+INSERT INTO public.venues (name, cryptic_caption, image_url, display_order) VALUES
+('The Cliff Pavilion', 'Where the ocean answers your vows.', '/images/hero.JPG', 0),
+('The Garden Estate', 'Beneath century-old trees.', '/images/hangat.JPG', 1);
