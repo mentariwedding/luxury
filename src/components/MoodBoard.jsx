@@ -185,13 +185,11 @@ export default function MoodBoard() {
 
                                 {/* CTA */}
                                 <a
-                                    href={`https://wa.me/628123456789?text=${encodeURIComponent(`Halo Mentari Wedding, saya tertarik dengan estetika "${current?.name}". Boleh kita diskusikan?`)}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                    href="/#manifesto"
                                     className="group inline-flex items-center gap-3 w-fit"
                                 >
                                     <span className="text-[10px] uppercase tracking-[0.4em] text-[#CEB175] border-b border-[#CEB175]/30 pb-0.5 group-hover:text-white group-hover:border-white transition-all duration-500">
-                                        Pilih gaya ini
+                                        Mulai Cerita
                                     </span>
                                     <span className="text-[#CEB175] group-hover:translate-x-1 transition-transform duration-500 text-xs">→</span>
                                 </a>

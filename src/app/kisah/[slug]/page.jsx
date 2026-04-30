@@ -117,7 +117,7 @@ export default function KisahDetailPage() {
                             <a href="/#manifesto"
                                 className="group inline-flex items-center gap-5 border border-[#CEB175]/40 px-10 py-4 rounded-full hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700">
                                 <span className="text-[9px] uppercase tracking-[0.5em] text-white group-hover:text-black font-light transition-colors duration-700">
-                                    Mulai Cerita Anda
+                                    Mulai Cerita
                                 </span>
                                 <span className="w-5 h-px bg-[#CEB175] group-hover:bg-black transition-colors duration-700" />
                             </a>

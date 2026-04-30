@@ -186,13 +186,11 @@ export default function PortfolioPage() {
                         Fragmen pilihan — selengkapnya hanya melalui percakapan
                     </p>
                     <a
-                        href="https://wa.me/628123456789?text=Halo%20Mentari%20Wedding%2C%20saya%20tertarik%20dengan%20karya-karya%20Anda%20dan%20ingin%20berdiskusi."
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href="/#manifesto"
                         className="group inline-flex items-center gap-5 border border-[#CEB175]/40 px-12 py-5 rounded-full hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700"
                     >
                         <span className="text-[10px] uppercase tracking-[0.5em] text-white group-hover:text-black font-light transition-colors duration-700">
-                            Mulai Percakapan
+                            Mulai Cerita
                         </span>
                         <span className="w-6 h-px bg-[#CEB175] group-hover:bg-black transition-colors duration-700" />
                     </a>

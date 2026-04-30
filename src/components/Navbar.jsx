@@ -6,25 +6,37 @@ import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
     const pathname = usePathname();
+    const isAdmin    = pathname?.startsWith('/admin');
     const isHomepage = pathname === '/';
-    const [scrolled, setScrolled] = useState(!isHomepage); // subpages: always dark
+
+    // Always declare hooks before any conditional return (Rules of Hooks)
+    const [scrolled, setScrolled] = useState(!isHomepage && !isAdmin);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
-        if (!isHomepage) return; // skip scroll listener on subpages
+        if (!isHomepage) return;
         const handleScroll = () => setScrolled(window.scrollY > 50);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [isHomepage]);
 
+    // Don't render on admin routes — admin has its own sidebar nav
+    if (isAdmin) return null;
+
     const isScrolled = scrolled;
+
+    // Smart href: on subpages, anchor links must go to /#section not just #section
+    const resolveHref = (href) => {
+        if (href.startsWith('#') && !isHomepage) return `/${href}`;
+        return href;
+    };
 
     const navItems = [
         { label: 'Editorial', href: '/portfolio' },
-        { label: 'Kisah', href: '/kisah' },
-        { label: 'Atelier', href: '#atelier' },
-        { label: 'Tentang', href: '/tentang' },
-        { label: 'Inquiry', href: '#manifesto' },
+        { label: 'Kisah',     href: '/kisah' },
+        { label: 'Atelier',   href: '#atelier' },
+        { label: 'Tentang',   href: '/tentang' },
+        { label: 'Inquiry',   href: '#manifesto' },
     ];
 
     return (
@@ -72,7 +84,7 @@ export default function Navbar() {
                         {navItems.map((item) => (
                             <a 
                                 key={item.label}
-                                href={item.href} 
+                                href={resolveHref(item.href)} 
                                 className="relative py-2 group"
                             >
                                 <span className="group-hover:text-white transition-colors duration-500">{item.label}</span>
@@ -82,7 +94,7 @@ export default function Navbar() {
                     </div>
 
                     <div className="hidden md:block">
-                        <a href="#manifesto" className="relative inline-block px-8 py-3 group overflow-hidden border border-[#CEB175]/30 rounded-full transition-all duration-500 hover:border-[#CEB175]">
+                        <a href={resolveHref('#manifesto')} className="relative inline-block px-8 py-3 group overflow-hidden border border-[#CEB175]/30 rounded-full transition-all duration-500 hover:border-[#CEB175]">
                             <span className="relative z-10 text-[10px] uppercase tracking-[0.5em] font-light text-white group-hover:text-black transition-colors duration-500">Mulai Cerita</span>
                             <div className="absolute inset-0 bg-[#CEB175] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
                         </a>
@@ -107,7 +119,7 @@ export default function Navbar() {
                      {navItems.map((item, index) => (
                          <a 
                             key={item.label}
-                            href={item.href} 
+                            href={resolveHref(item.href)} 
                             onClick={() => setMobileMenuOpen(false)} 
                             className={`hover:text-[#CEB175] transition-all duration-500 transform ${mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
                             style={{ transitionDelay: `${index * 100}ms` }}
@@ -116,7 +128,7 @@ export default function Navbar() {
                          </a>
                      ))}
                      <a 
-                        href="#manifesto" 
+                        href={resolveHref('#manifesto')} 
                         onClick={() => setMobileMenuOpen(false)} 
                         className={`mt-10 text-xs uppercase tracking-[0.4em] text-black bg-[#CEB175] px-12 py-5 rounded-full transition-all duration-700 transform ${mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
                         style={{ transitionDelay: `${navItems.length * 100}ms` }}
