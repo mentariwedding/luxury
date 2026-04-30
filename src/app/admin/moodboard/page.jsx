@@ -125,7 +125,7 @@ export default function MoodBoardAdmin() {
             </motion.div>
 
             {/* Panduan singkat */}
-            <div className="mb-10 p-5 border border-[#CEB175]/10 rounded-xl bg-[#CEB175]/[0.02]">
+            <div className="mb-10 p-5 border border-[#CEB175]/10 bg-[#CEB175]/[0.02]">
                 <p className="text-[8px] uppercase tracking-[0.4em] text-[#CEB175]/60 mb-2">Panduan Pengisian</p>
                 <ul className="space-y-1">
                     {[
@@ -159,10 +159,10 @@ export default function MoodBoardAdmin() {
 
             {loading ? (
                 <div className="space-y-4 animate-pulse">
-                    {[...Array(3)].map((_, i) => <div key={i} className="h-56 bg-white/[0.02] rounded-xl" />)}
+                    {[...Array(3)].map((_, i) => <div key={i} className="h-56 bg-white/[0.02]" />)}
                 </div>
             ) : palettes.length === 0 ? (
-                <div className="text-center py-32 border border-dashed border-white/[0.05] rounded-2xl">
+                <div className="text-center py-32 border border-dashed border-white/[0.05]">
                     <Palette className="w-8 h-8 text-white/10 mx-auto mb-4" />
                     <p className="font-serif italic text-2xl text-white/30 mb-4">Belum ada palette.</p>
                     <p className="text-[9px] uppercase tracking-[0.5em] text-white/20">Klik &quot;Tambah&quot; untuk mulai</p>
@@ -181,13 +181,13 @@ export default function MoodBoardAdmin() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, x: -20 }}
                                     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                                    className="group border border-white/[0.05] hover:border-[#CEB175]/15 rounded-2xl p-6 md:p-8 transition-colors duration-500 bg-white/[0.01]"
+                                    className="group border border-white/[0.05] hover:border-[#CEB175]/15 p-6 md:p-8 transition-colors duration-500 bg-white/[0.01]"
                                 >
                                     <div className="grid grid-cols-1 md:grid-cols-[100px_1fr_auto] gap-6 items-start">
 
                                         {/* Thumbnail + color preview */}
                                         <div className="flex flex-col gap-2">
-                                            <div className="relative w-20 h-28 overflow-hidden rounded-lg border border-white/[0.06] bg-[#0A0A0A]">
+                                            <div className="relative w-20 h-28 overflow-hidden border border-white/[0.06] bg-[#0A0A0A]">
                                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                                 <img
                                                     src={pal.image_url}

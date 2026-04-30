@@ -2,27 +2,25 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
-import { RefreshCw, CheckCircle, Clock, XCircle, MessageSquare } from 'lucide-react';
+import { RefreshCw, CheckCircle, Clock, XCircle, MessageSquare, MessageCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const STATUS_CONFIG = {
-    new:       { label: 'Baru', color: '#CEB175', bg: 'rgba(206,177,117,0.12)', icon: Clock },
-    contacted: { label: 'Dihubungi', color: '#6BA3BE', bg: 'rgba(107,163,190,0.12)', icon: MessageSquare },
-    booked:    { label: 'Booked', color: '#7CAE7A', bg: 'rgba(124,174,122,0.12)', icon: CheckCircle },
-    declined:  { label: 'Ditolak', color: '#A3A3A3', bg: 'rgba(163,163,163,0.08)', icon: XCircle },
+    new:       { label: 'Baru',       color: 'text-[#CEB175]',      dot: 'bg-[#CEB175]',       border: 'border-[#CEB175]/20',      bg: 'bg-[#CEB175]/5'      },
+    contacted: { label: 'Dihubungi',  color: 'text-blue-400',       dot: 'bg-blue-400',        border: 'border-blue-400/20',       bg: 'bg-blue-400/5'       },
+    booked:    { label: 'Booked',     color: 'text-emerald-400',    dot: 'bg-emerald-400',     border: 'border-emerald-400/20',    bg: 'bg-emerald-400/5'    },
+    declined:  { label: 'Ditolak',    color: 'text-white/25',       dot: 'bg-white/20',        border: 'border-white/10',          bg: 'bg-white/[0.02]'     },
 };
 
 export default function InquiriesAdmin() {
     const [inquiries, setInquiries] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [filter, setFilter] = useState('all');
-    const [updating, setUpdating] = useState(null);
+    const [loading,   setLoading]   = useState(true);
+    const [filter,    setFilter]    = useState('all');
+    const [updating,  setUpdating]  = useState(null);
 
     const fetch = useCallback(async () => {
         setLoading(true);
-        let query = supabase
-            .from('inquiry_submissions')
-            .select('*')
-            .order('created_at', { ascending: false });
+        let query = supabase.from('inquiry_submissions').select('*').order('created_at', { ascending: false });
         if (filter !== 'all') query = query.eq('status', filter);
         const { data } = await query;
         setInquiries(data || []);
@@ -46,140 +44,148 @@ export default function InquiriesAdmin() {
     };
 
     const counts = {
-        all: inquiries.length || 0,
-        new: inquiries.filter(i => i.status === 'new').length,
+        all:       inquiries.length,
+        new:       inquiries.filter(i => i.status === 'new').length,
         contacted: inquiries.filter(i => i.status === 'contacted').length,
-        booked: inquiries.filter(i => i.status === 'booked').length,
+        booked:    inquiries.filter(i => i.status === 'booked').length,
     };
 
     const displayed = filter === 'all' ? inquiries : inquiries.filter(i => i.status === filter);
 
-    const label = (key) => STATUS_CONFIG[key]?.label || key;
-    const color = (key) => STATUS_CONFIG[key]?.color || '#A3A3A3';
-
     return (
-        <div style={{ fontFamily: "'Montserrat', sans-serif" }}>
-            {/* Page Header */}
-            <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div>
-                    <p style={{ fontSize: 9, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#CEB175', marginBottom: 8, fontWeight: 300 }}>
-                        Admin · Phase 4
-                    </p>
-                    <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 300, color: '#FAFAFA', margin: 0 }}>
-                        Inquiry Submissions
-                    </h1>
-                    <p style={{ color: '#A3A3A3', fontSize: 13, marginTop: 8, fontWeight: 300 }}>
-                        Semua permintaan yang masuk melalui Smart Inquiry Form.
-                    </p>
+        <div>
+            {/* ── Page Header ── */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="mb-12"
+            >
+                <p className="text-[8px] uppercase tracking-[0.6em] text-[#CEB175]/60 mb-5">Manajemen</p>
+                <h1 className="font-serif font-light leading-[0.9] mb-8"
+                    style={{ fontSize: 'clamp(42px, 6vw, 80px)' }}>
+                    Inquiries
+                </h1>
+                <div className="flex items-center gap-6">
+                    <div className="h-px bg-gradient-to-r from-[#CEB175]/30 to-transparent w-16" />
+                    <button onClick={fetch}
+                        className="text-white/15 hover:text-white/40 transition-colors duration-300">
+                        <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
+                    </button>
                 </div>
-                <button onClick={fetch} className="flex items-center gap-2" style={{ color: '#CEB175', fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', background: 'none', border: 'none', cursor: 'pointer' }}>
-                    <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
-                    Refresh
-                </button>
-            </div>
+            </motion.div>
 
-            {/* Stats row */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+            {/* ── Filter / Stat Cards ── */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.04] mb-12">
                 {[
-                    { key: 'all', label: 'Total', count: counts.all, color: '#FAFAFA' },
-                    { key: 'new', label: 'Baru', count: counts.new, color: '#CEB175' },
-                    { key: 'contacted', label: 'Dihubungi', count: counts.contacted, color: '#6BA3BE' },
-                    { key: 'booked', label: 'Booked', count: counts.booked, color: '#7CAE7A' },
+                    { key: 'all',       label: 'Total',     count: counts.all,       gold: false },
+                    { key: 'new',       label: 'Baru',      count: counts.new,       gold: true  },
+                    { key: 'contacted', label: 'Dihubungi', count: counts.contacted, gold: false },
+                    { key: 'booked',    label: 'Booked',    count: counts.booked,    gold: false },
                 ].map(s => (
                     <button key={s.key} onClick={() => setFilter(s.key)}
-                        style={{
-                            background: filter === s.key ? 'rgba(206,177,117,0.07)' : 'rgba(255,255,255,0.02)',
-                            border: `1px solid ${filter === s.key ? 'rgba(206,177,117,0.3)' : 'rgba(255,255,255,0.06)'}`,
-                            borderRadius: 12, padding: '16px 20px', textAlign: 'left', cursor: 'pointer', transition: 'all 0.3s',
-                        }}>
-                        <p style={{ fontSize: 'clamp(22px, 3vw, 32px)', fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, color: s.color, margin: 0, lineHeight: 1 }}>
-                            {s.count}
+                        className={`group p-5 bg-[#040404] text-left transition-all duration-300 ${
+                            filter === s.key ? 'bg-[#CEB175]/5' : 'hover:bg-white/[0.02]'
+                        }`}>
+                        <p className={`font-serif font-light leading-none mb-2 ${
+                            s.gold ? 'text-[#CEB175]' : 'text-white/70'
+                        }`} style={{ fontSize: 'clamp(24px, 3vw, 36px)' }}>
+                            {loading ? <span className="inline-block w-10 h-7 bg-white/[0.04] animate-pulse" /> : s.count}
                         </p>
-                        <p style={{ fontSize: 9, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#525252', margin: '6px 0 0', fontWeight: 300 }}>
-                            {s.label}
-                        </p>
+                        <p className={`text-[8px] uppercase tracking-[0.4em] ${
+                            filter === s.key ? 'text-[#CEB175]/60' : 'text-white/20'
+                        }`}>{s.label}</p>
                     </button>
                 ))}
             </div>
 
-            {/* Table */}
+            {/* ── Inquiry List ── */}
             {loading ? (
-                <div style={{ textAlign: 'center', padding: '60px 0', color: '#525252', fontSize: 12 }}>Memuat...</div>
+                <div className="space-y-px">
+                    {[...Array(4)].map((_, i) => (
+                        <div key={i} className="h-20 bg-white/[0.02] animate-pulse" />
+                    ))}
+                </div>
             ) : displayed.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '60px 0', color: '#525252' }}>
-                    <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontStyle: 'italic', marginBottom: 8 }}>Belum ada inquiry masuk.</p>
-                    <p style={{ fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase' }}>Form inquiry tersedia di halaman utama</p>
+                <div className="text-center py-32 border border-dashed border-white/[0.05]">
+                    <p className="font-serif italic text-white/20 text-2xl mb-3">Belum ada inquiry masuk.</p>
+                    <p className="text-[8px] uppercase tracking-[0.5em] text-white/10">Form tersedia di halaman utama</p>
                 </div>
             ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    {/* Table Header */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 100px 140px 120px 160px', gap: 16, padding: '10px 16px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                        {['Pasangan', 'Tanggal', 'Estetika', 'Tamu', 'Status'].map(h => (
-                            <p key={h} style={{ fontSize: 8, letterSpacing: '0.5em', textTransform: 'uppercase', color: '#525252', margin: 0, fontWeight: 300 }}>{h}</p>
+                <div className="space-y-px">
+                    {/* Column headers — desktop only */}
+                    <div className="hidden md:grid md:grid-cols-[1fr_120px_160px_140px_auto] gap-4 px-5 pb-3 border-b border-white/[0.04]">
+                        {['Pasangan', 'Tgl Nikah', 'Estetika', 'Tamu', 'Status'].map(h => (
+                            <p key={h} className="text-[7px] uppercase tracking-[0.5em] text-white/20">{h}</p>
                         ))}
                     </div>
 
-                    {displayed.map((item) => (
-                        <div key={item.id}
-                            style={{
-                                display: 'grid', gridTemplateColumns: '1fr 100px 140px 120px 160px', gap: 16,
-                                padding: '16px', background: 'rgba(255,255,255,0.015)',
-                                border: '1px solid rgba(255,255,255,0.04)', borderRadius: 8,
-                                transition: 'background 0.3s', alignItems: 'center',
-                            }}
-                        >
-                            {/* Pasangan */}
-                            <div>
-                                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 18, color: '#FAFAFA', margin: 0, fontWeight: 300 }}>
-                                    {item.initials || '—'}
-                                </p>
-                                {item.message && (
-                                    <p style={{ fontSize: 11, color: '#525252', margin: '4px 0 0', lineHeight: 1.4, fontWeight: 300 }}>
-                                        {item.message.slice(0, 60)}{item.message.length > 60 ? '...' : ''}
+                    {displayed.map((item, i) => {
+                        const cfg = STATUS_CONFIG[item.status] || STATUS_CONFIG.new;
+                        return (
+                            <motion.div key={item.id}
+                                initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: i * 0.04, duration: 0.4, ease: [0.22,1,0.36,1] }}
+                                className="group flex flex-col md:grid md:grid-cols-[1fr_120px_160px_140px_auto] gap-3 md:gap-4 p-5 border border-white/[0.04] hover:border-[#CEB175]/10 transition-colors duration-400"
+                            >
+                                {/* Pasangan */}
+                                <div>
+                                    <p className="font-serif italic text-white/80 text-base font-light">
+                                        {item.initials || '—'}
                                     </p>
-                                )}
-                                <p style={{ fontSize: 9, color: '#333', margin: '6px 0 0', letterSpacing: '0.3em' }}>
-                                    {new Date(item.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                    {item.message && (
+                                        <p className="text-[10px] text-white/30 mt-1 font-light leading-relaxed line-clamp-2">
+                                            {item.message}
+                                        </p>
+                                    )}
+                                    <p className="text-[7px] uppercase tracking-[0.3em] text-white/15 mt-1.5">
+                                        {new Date(item.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                    </p>
+                                </div>
+
+                                {/* Tanggal nikah */}
+                                <p className="text-[10px] text-white/40 font-light self-start md:self-center">
+                                    {item.wedding_date
+                                        ? new Date(item.wedding_date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+                                        : '—'}
                                 </p>
-                            </div>
 
-                            {/* Tanggal nikah */}
-                            <p style={{ fontSize: 12, color: '#A3A3A3', margin: 0, fontWeight: 300 }}>
-                                {item.wedding_date ? new Date(item.wedding_date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : '—'}
-                            </p>
+                                {/* Estetika */}
+                                <p className="font-serif italic text-white/40 text-sm self-start md:self-center">
+                                    {item.aesthetic || '—'}
+                                </p>
 
-                            {/* Estetika */}
-                            <p style={{ fontSize: 11, color: '#A3A3A3', margin: 0, fontStyle: 'italic', fontFamily: "'Cormorant Garamond', serif" }}>
-                                {item.aesthetic || '—'}
-                            </p>
+                                {/* Tamu */}
+                                <p className="text-[10px] text-white/30 font-light self-start md:self-center">
+                                    {item.guest_range || '—'}
+                                </p>
 
-                            {/* Tamu */}
-                            <p style={{ fontSize: 11, color: '#A3A3A3', margin: 0, fontWeight: 300 }}>
-                                {item.guest_range || '—'}
-                            </p>
-
-                            {/* Status + actions */}
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                <select
-                                    value={item.status || 'new'}
-                                    onChange={e => updateStatus(item.id, e.target.value)}
-                                    disabled={updating === item.id}
-                                    style={{
-                                        background: STATUS_CONFIG[item.status]?.bg || 'rgba(206,177,117,0.12)',
-                                        border: `1px solid ${color(item.status)}33`,
-                                        color: color(item.status),
-                                        borderRadius: 20, padding: '4px 10px', fontSize: 9, letterSpacing: '0.3em',
-                                        textTransform: 'uppercase', cursor: 'pointer', fontFamily: "'Montserrat', sans-serif",
-                                        outline: 'none', appearance: 'none', fontWeight: 300,
-                                    }}
-                                >
-                                    {Object.entries(STATUS_CONFIG).map(([k, v]) => (
-                                        <option key={k} value={k}>{v.label}</option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-                    ))}
+                                {/* Status + WA */}
+                                <div className="flex items-center gap-3 self-start md:self-center">
+                                    <div className="flex items-center gap-2">
+                                        <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
+                                        <select
+                                            value={item.status || 'new'}
+                                            onChange={e => updateStatus(item.id, e.target.value)}
+                                            disabled={updating === item.id}
+                                            className={`bg-transparent border-b ${cfg.border} ${cfg.color} text-[8px] uppercase tracking-[0.3em] cursor-pointer outline-none font-light disabled:opacity-40 transition-all duration-300`}
+                                            style={{ fontFamily: "'Montserrat', sans-serif" }}
+                                        >
+                                            {Object.entries(STATUS_CONFIG).map(([k, v]) => (
+                                                <option key={k} value={k} style={{ background: '#0a0a0a', color: '#FAFAFA' }}>
+                                                    {v.label}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <button onClick={() => openWA(item)}
+                                        className="text-white/15 hover:text-[#CEB175] transition-colors duration-300"
+                                        title="Kirim pesan WA">
+                                        <MessageCircle className="w-3.5 h-3.5" />
+                                    </button>
+                                </div>
+                            </motion.div>
+                        );
+                    })}
                 </div>
             )}
         </div>

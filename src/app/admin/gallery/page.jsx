@@ -27,7 +27,7 @@ function UploadModal({ onClose, onSuccess }) {
     const [error,      setError]     = useState('');
     const [showCats,   setShowCats]  = useState(false);
 
-    const categories = ['Tawa Lepas', 'Hangat', 'Estetik'];
+    const categories = ['Romantic', 'Bold', 'Natural', 'Elegant', 'Garden'];
 
     const handleUpload = async (e) => {
         e.preventDefault();
@@ -186,7 +186,7 @@ function UploadModal({ onClose, onSuccess }) {
                                         </div>
                                     ) : (
                                         <div className="flex flex-col items-center gap-2">
-                                            <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-white/30">
+                                            <div className="w-10 h-10 bg-white/5 flex items-center justify-center text-white/30">
                                                 <Upload className="w-5 h-5" />
                                             </div>
                                             <p className="text-white/40 text-xs">Tarik gambar atau klik untuk memilih</p>
@@ -198,7 +198,7 @@ function UploadModal({ onClose, onSuccess }) {
                         </div>
 
                         {error && (
-                            <p className="text-red-400 text-[10px] text-center border border-red-500/15 rounded-xl py-2.5 px-4 bg-red-500/5">
+                            <p className="text-red-400 text-[10px] text-center border border-red-500/15 py-2.5 px-4 bg-red-500/5">
                                 {error}
                             </p>
                         )}
@@ -329,7 +329,7 @@ export default function GalleryAdmin() {
                 {loading ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                         {[...Array(8)].map((_, i) => (
-                            <div key={i} className="aspect-[4/5] bg-white/[0.03] rounded-2xl animate-pulse" />
+                            <div key={i} className="aspect-[4/5] bg-white/[0.03] animate-pulse" />
                         ))}
                     </div>
                 ) : photos.length === 0 ? (

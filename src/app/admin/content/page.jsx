@@ -133,7 +133,7 @@ export default function ContentManagement() {
 
             {loading ? (
                 <div className="animate-pulse space-y-4 luxury-section">
-                    {[...Array(6)].map((_, i) => <div key={i} className="h-12 bg-white/[0.03] rounded-xl" />)}
+                    {[...Array(6)].map((_, i) => <div key={i} className="h-12 bg-white/[0.03]" />)}
                 </div>
             ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] luxury-gap luxury-section">
@@ -341,7 +341,7 @@ export default function ContentManagement() {
                                         exit={{ opacity: 0, height: 0 }}
                                         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                                         className="overflow-hidden">
-                                        <div className="mt-10 border border-white/[0.06] rounded-2xl overflow-hidden">
+                                        <div className="mt-10 border border-white/[0.06] overflow-hidden">
                                             {/* Preview Header */}
                                             <div className="flex items-center gap-2 px-5 py-3 bg-white/[0.02] border-b border-white/[0.06]">
                                                 <div className="flex gap-1.5">
@@ -377,7 +377,7 @@ export default function ContentManagement() {
                                                     </span>
                                                 )}
                                                 {form.image_url && (
-                                                    <div className="mt-8 rounded-xl overflow-hidden border border-white/[0.05] max-w-md">
+                                                    <div className="mt-8 overflow-hidden border border-white/[0.05] max-w-md">
                                                         <img src={form.image_url} alt="Preview"
                                                             className="w-full h-48 object-cover"
                                                             onError={(e) => { e.target.style.display = 'none'; }} />

@@ -111,10 +111,10 @@ export default function TestimonialsAdmin() {
 
             {loading ? (
                 <div className="space-y-4 animate-pulse">
-                    {[...Array(3)].map((_, i) => <div key={i} className="h-40 bg-white/[0.02] rounded-xl" />)}
+                    {[...Array(3)].map((_, i) => <div key={i} className="h-40 bg-white/[0.02]" />)}
                 </div>
             ) : items.length === 0 ? (
-                <div className="text-center py-32 border border-dashed border-white/[0.05] rounded-2xl">
+                <div className="text-center py-32 border border-dashed border-white/[0.05]">
                     <Quote className="w-8 h-8 text-white/10 mx-auto mb-4" />
                     <p className="font-serif italic text-2xl text-white/30 mb-4">Belum ada testimonial.</p>
                     <p className="text-[9px] uppercase tracking-[0.5em] text-white/20">Klik &quot;Tambah&quot; untuk mulai</p>
@@ -130,7 +130,7 @@ export default function TestimonialsAdmin() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, x: -20 }}
                                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                                className="group border border-white/[0.05] hover:border-[#CEB175]/15 rounded-2xl p-6 md:p-8 transition-colors duration-500 bg-white/[0.01]"
+                                className="group border border-white/[0.05] hover:border-[#CEB175]/15 p-6 md:p-8 transition-colors duration-500 bg-white/[0.01]"
                             >
                                 <div className="grid grid-cols-1 md:grid-cols-[40px_1fr_auto] gap-6 items-start">
 

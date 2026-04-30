@@ -123,11 +123,11 @@ export default function VenuesAdmin() {
             {loading ? (
                 <div className="space-y-4 animate-pulse">
                     {[...Array(3)].map((_, i) => (
-                        <div key={i} className="h-48 bg-white/[0.02] rounded-xl" />
+                        <div key={i} className="h-48 bg-white/[0.02]" />
                     ))}
                 </div>
             ) : venues.length === 0 ? (
-                <div className="text-center py-32 border border-dashed border-white/[0.05] rounded-2xl">
+                <div className="text-center py-32 border border-dashed border-white/[0.05]">
                     <p className="font-serif italic text-2xl text-white/30 mb-4">Belum ada venue.</p>
                     <p className="text-[9px] uppercase tracking-[0.5em] text-white/20">
                         Klik "Tambah Venue" untuk memulai
@@ -144,11 +144,11 @@ export default function VenuesAdmin() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, x: -20 }}
                                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                                className="group border border-white/[0.05] hover:border-[#CEB175]/15 rounded-2xl p-6 md:p-8 transition-colors duration-500 bg-white/[0.01]"
+                                className="group border border-white/[0.05] hover:border-[#CEB175]/15 p-6 md:p-8 transition-colors duration-500 bg-white/[0.01]"
                             >
                                 <div className="grid grid-cols-1 md:grid-cols-[100px_1fr_auto] gap-6 items-start">
                                     {/* Thumb */}
-                                    <div className="relative w-24 h-24 md:w-24 md:h-32 overflow-hidden rounded-lg border border-white/[0.06] bg-[#0A0A0A]">
+                                    <div className="relative w-24 h-24 md:w-24 md:h-32 overflow-hidden border border-white/[0.06] bg-[#0A0A0A]">
                                         {v.image_url ? (
                                             // eslint-disable-next-line @next/next/no-img-element
                                             <img
