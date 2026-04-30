@@ -99,7 +99,7 @@ export default function InquiryForm({ isOpen, onClose }) {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.97 }}
                         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                        className="relative z-10 w-full max-w-xl bg-[#060606] border border-[#CEB175]/15 rounded-2xl overflow-hidden"
+                        className="relative z-10 w-full max-w-xl bg-[#060606] border border-[#CEB175]/15 overflow-hidden"
                         style={{ fontFamily: "'Montserrat', sans-serif" }}
                     >
                         {/* Gold top line */}
@@ -176,7 +176,7 @@ export default function InquiryForm({ isOpen, onClose }) {
                                             <div className="flex flex-wrap gap-2">
                                                 {GUEST_RANGES.map(g => (
                                                     <button key={g} onClick={() => setForm(p => ({ ...p, guests: g }))}
-                                                        className={`text-[8px] uppercase tracking-[0.3em] px-4 py-2 rounded-full border transition-all duration-400 ${
+                                                        className={`text-[8px] uppercase tracking-[0.3em] px-4 py-2 border transition-all duration-400 ${
                                                             form.guests === g
                                                                 ? 'bg-[#CEB175]/15 border-[#CEB175]/50 text-[#CEB175]'
                                                                 : 'border-white/10 text-white/30 hover:border-white/25 hover:text-white/50'
@@ -199,7 +199,7 @@ export default function InquiryForm({ isOpen, onClose }) {
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                             {AESTHETICS.map(a => (
                                                 <button key={a.name} onClick={() => setForm(p => ({ ...p, aesthetic: a.name }))}
-                                                    className={`text-left p-3.5 rounded-xl border transition-all duration-400 ${
+                                                    className={`text-left p-3.5 border transition-all duration-400 ${
                                                         form.aesthetic === a.name
                                                             ? 'border-[#CEB175]/50 bg-[#CEB175]/8'
                                                             : 'border-white/[0.06] hover:border-white/15'
@@ -208,7 +208,7 @@ export default function InquiryForm({ isOpen, onClose }) {
                                                     {a.colors.length > 0 && (
                                                         <div className="flex gap-1 mb-2">
                                                             {a.colors.map((c, ci) => (
-                                                                <div key={ci} className="w-4 h-4 rounded-full border border-white/10 flex-shrink-0" style={{ background: c }} />
+                                                                <div key={ci} className="w-4 h-4 border border-white/10 flex-shrink-0" style={{ background: c }} />
                                                             ))}
                                                         </div>
                                                     )}
@@ -251,7 +251,7 @@ export default function InquiryForm({ isOpen, onClose }) {
                                             />
                                         </div>
                                         {/* Summary */}
-                                        <div className="p-4 border border-white/[0.05] rounded-xl bg-white/[0.01]">
+                                        <div className="p-4 border border-white/[0.05] bg-white/[0.01]">
                                             <p className="text-[7px] uppercase tracking-[0.4em] text-white/20 mb-2">Ringkasan Inquiry</p>
                                             <div className="space-y-1">
                                                 {[['Tanggal', form.date || '—'], ['Tamu', form.guests || '—'], ['Estetika', form.aesthetic || '—']].map(([k, v]) => (
@@ -280,7 +280,7 @@ export default function InquiryForm({ isOpen, onClose }) {
                                 <button
                                     onClick={() => setStep(s => s + 1)}
                                     disabled={step === 1 ? !canNext1 : !canNext2}
-                                    className="group flex items-center gap-3 text-[9px] uppercase tracking-[0.5em] text-[#CEB175] border border-[#CEB175]/30 px-7 py-3 rounded-full hover:bg-[#CEB175] hover:text-black disabled:opacity-25 disabled:cursor-not-allowed transition-all duration-500"
+                                    className="group flex items-center gap-3 text-[9px] uppercase tracking-[0.5em] text-[#CEB175] border border-[#CEB175]/30 px-7 py-3 hover:bg-[#CEB175] hover:text-black disabled:opacity-25 disabled:cursor-not-allowed transition-all duration-500"
                                 >
                                     Lanjut
                                     <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-300" />
@@ -289,7 +289,7 @@ export default function InquiryForm({ isOpen, onClose }) {
                                 <button
                                     onClick={handleSubmit}
                                     disabled={!canSubmit || submitting}
-                                    className="group flex items-center gap-3 text-[9px] uppercase tracking-[0.5em] bg-[#CEB175] text-black px-8 py-3.5 rounded-full hover:bg-[#E8D399] disabled:opacity-25 disabled:cursor-not-allowed transition-all duration-500"
+                                    className="group flex items-center gap-3 text-[9px] uppercase tracking-[0.5em] bg-[#CEB175] text-black px-8 py-3.5 hover:bg-[#E8D399] disabled:opacity-25 disabled:cursor-not-allowed transition-all duration-500"
                                 >
                                     {submitting ? <Loader2 className="w-3 h-3 animate-spin" /> : null}
                                     {submitting ? 'Mengirim...' : 'Kirim ke WhatsApp'}

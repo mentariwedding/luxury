@@ -144,7 +144,7 @@ export default function Testimonial() {
                         <button
                             onClick={() => navigate(-1)}
                             aria-label="Previous"
-                            className="w-9 h-9 border border-[#CEB175]/20 rounded-full flex items-center justify-center text-[#CEB175]/50 hover:border-[#CEB175]/60 hover:text-[#CEB175] transition-all duration-500"
+                            className="w-9 h-9 border border-[#CEB175]/20 flex items-center justify-center text-[#CEB175]/50 hover:border-[#CEB175]/60 hover:text-[#CEB175] transition-all duration-500"
                         >
                             <span className="text-lg leading-none select-none">‹</span>
                         </button>
@@ -167,7 +167,7 @@ export default function Testimonial() {
                         <button
                             onClick={() => navigate(1)}
                             aria-label="Next"
-                            className="w-9 h-9 border border-[#CEB175]/20 rounded-full flex items-center justify-center text-[#CEB175]/50 hover:border-[#CEB175]/60 hover:text-[#CEB175] transition-all duration-500"
+                            className="w-9 h-9 border border-[#CEB175]/20 flex items-center justify-center text-[#CEB175]/50 hover:border-[#CEB175]/60 hover:text-[#CEB175] transition-all duration-500"
                         >
                             <span className="text-lg leading-none select-none">›</span>
                         </button>

@@ -204,7 +204,7 @@ export default function MoodBoardAdmin() {
                                                 {colors.slice(0, 4).map((c, ci) => (
                                                     <div
                                                         key={ci}
-                                                        className="w-4 h-4 rounded-full border border-white/10 flex-shrink-0"
+                                                        className="w-4 h-4 border border-white/10 flex-shrink-0"
                                                         style={{ background: c }}
                                                         title={c}
                                                     />

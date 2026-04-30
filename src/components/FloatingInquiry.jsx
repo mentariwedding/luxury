@@ -71,7 +71,7 @@ export default function FloatingInquiry() {
                                 animate={{ opacity: 1, x: 0, scale: 1 }}
                                 exit={{ opacity: 0, x: 20, scale: 0.95 }}
                                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                                className="hidden sm:block bg-[#050505] border border-[#CEB175]/30 backdrop-blur-xl rounded-2xl p-5 max-w-[260px] shadow-2xl shadow-black/60 mb-1"
+                                className="hidden sm:block bg-[#050505] border border-[#CEB175]/30 backdrop-blur-xl p-5 max-w-[260px] shadow-2xl shadow-black/60 mb-1"
                             >
                                 <p className="text-[8px] uppercase tracking-[0.5em] text-[#CEB175] mb-3 font-light">
                                     Sebuah Bisikan
@@ -98,7 +98,7 @@ export default function FloatingInquiry() {
                         <button
                             type="button"
                             onClick={() => setExpanded((p) => !p)}
-                            className="hidden sm:flex w-14 h-14 rounded-full border border-[#CEB175]/30 bg-[#050505]/90 backdrop-blur-xl items-center justify-center text-[#CEB175] hover:bg-[#CEB175] hover:text-black hover:border-[#CEB175] transition-all duration-500 shadow-2xl shadow-black/60 group"
+                            className="hidden sm:flex w-14 h-14 border border-[#CEB175]/30 bg-[#050505]/90 backdrop-blur-xl items-center justify-center text-[#CEB175] hover:bg-[#CEB175] hover:text-black hover:border-[#CEB175] transition-all duration-500 shadow-2xl shadow-black/60 group"
                             aria-label={expanded ? 'Tutup' : 'Buka pesan'}
                         >
                             {expanded ? (
@@ -108,7 +108,7 @@ export default function FloatingInquiry() {
                             )}
                             {/* Pulse */}
                             {!expanded && (
-                                <span className="absolute inset-0 rounded-full border border-[#CEB175]/40 animate-ping opacity-50" />
+                                <span className="absolute inset-0 border border-[#CEB175]/40 animate-ping opacity-50" />
                             )}
                         </button>
 
@@ -118,7 +118,7 @@ export default function FloatingInquiry() {
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={handleClick}
-                            className="sm:hidden flex items-center gap-2 px-5 py-3 rounded-full border border-[#CEB175]/40 bg-[#050505]/95 backdrop-blur-xl text-[#CEB175] hover:bg-[#CEB175] hover:text-black hover:border-[#CEB175] transition-all duration-500 shadow-2xl shadow-black/60"
+                            className="sm:hidden flex items-center gap-2 px-5 py-3 border border-[#CEB175]/40 bg-[#050505]/95 backdrop-blur-xl text-[#CEB175] hover:bg-[#CEB175] hover:text-black hover:border-[#CEB175] transition-all duration-500 shadow-2xl shadow-black/60"
                         >
                             <span className="text-[9px] uppercase tracking-[0.3em] font-light">Whisper</span>
                             <ArrowUpRight className="w-3.5 h-3.5" />

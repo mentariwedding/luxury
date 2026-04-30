@@ -49,7 +49,7 @@ export function MoodBoardSkeleton() {
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[...Array(3)].map((_, i) => (
-                <div key={i} className="flex flex-col gap-3 p-6 border border-white/[0.04] rounded-lg">
+                <div key={i} className="flex flex-col gap-3 p-6 border border-white/[0.04]">
                     <div className="flex gap-2">
                         {[...Array(4)].map((_, j) => (
                             <GoldSkeleton key={j} className="w-8 h-8" rounded="full" />

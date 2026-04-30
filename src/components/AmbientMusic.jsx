@@ -29,7 +29,7 @@ export default function AmbientMusic() {
             <button 
                 onClick={toggleMusic}
                 aria-label="Toggle Background Music"
-                className="w-12 h-12 md:w-12 md:h-12 rounded-full border-2 border-[#CEB175] bg-[#050505] shadow-[0_0_20px_rgba(206,177,117,0.3)] flex items-center justify-center group transition-all duration-500 active:scale-90"
+                className="w-12 h-12 md:w-12 md:h-12 border-2 border-[#CEB175] bg-[#050505] shadow-[0_0_20px_rgba(206,177,117,0.3)] flex items-center justify-center group transition-all duration-500 active:scale-90"
             >
                 {isPlaying ? (
                     <Volume2 className="w-6 h-6 text-[#CEB175] animate-pulse" />

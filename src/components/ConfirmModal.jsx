@@ -53,10 +53,10 @@ export function ConfirmProvider({ children }) {
                             animate={{ opacity: 1, scale: 1,    y: 0  }}
                             exit={{   opacity: 0, scale: 0.95, y: 10  }}
                             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                            className="relative z-10 bg-[#0a0a0a] border border-white/[0.08] rounded-2xl p-8 max-w-sm w-full"
+                            className="relative z-10 bg-[#0a0a0a] border border-white/[0.08] p-8 max-w-sm w-full"
                         >
                             {/* Icon */}
-                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-5 border ${
+                            <div className={`w-10 h-10 flex items-center justify-center mb-5 border ${
                                 isDanger 
                                     ? 'bg-red-500/10 border-red-500/15 text-red-400' 
                                     : 'bg-[#CEB175]/10 border-[#CEB175]/15 text-[#CEB175]'
@@ -75,11 +75,11 @@ export function ConfirmProvider({ children }) {
                             {/* Actions */}
                             <div className="flex items-center justify-end gap-3">
                                 <button onClick={() => handleClose(false)}
-                                    className="px-5 py-2.5 rounded-xl text-[9px] uppercase tracking-[0.35em] text-white/40 hover:text-white/70 transition-colors duration-300 border border-white/[0.06] hover:border-white/[0.12]">
+                                    className="px-5 py-2.5 text-[9px] uppercase tracking-[0.35em] text-white/40 hover:text-white/70 transition-colors duration-300 border border-white/[0.06] hover:border-white/[0.12]">
                                     {state.cancelText}
                                 </button>
                                 <button onClick={() => handleClose(true)}
-                                    className={`px-5 py-2.5 rounded-xl text-[9px] uppercase tracking-[0.35em] border transition-all duration-300 ${
+                                    className={`px-5 py-2.5 text-[9px] uppercase tracking-[0.35em] border transition-all duration-300 ${
                                         isDanger
                                             ? 'bg-red-500/15 text-red-400 border-red-500/20 hover:bg-red-500 hover:text-white'
                                             : 'bg-[#CEB175]/15 text-[#CEB175] border-[#CEB175]/20 hover:bg-[#CEB175] hover:text-black'

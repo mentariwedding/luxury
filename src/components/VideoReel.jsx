@@ -81,7 +81,7 @@ export default function VideoReel({ src = '/images/hero.mp4', poster = '/images/
                 <button
                     onClick={toggleMute}
                     aria-label={muted ? 'Aktifkan suara' : 'Bisukan'}
-                    className="group flex items-center gap-2.5 px-4 py-2 border border-[#CEB175]/20 bg-[#050505]/80 backdrop-blur-sm rounded-full hover:border-[#CEB175]/50 transition-all duration-500"
+                    className="group flex items-center gap-2.5 px-4 py-2 border border-[#CEB175]/20 bg-[#050505]/80 backdrop-blur-sm hover:border-[#CEB175]/50 transition-all duration-500"
                 >
                     {/* Wave icon */}
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className={`text-[#CEB175]/60 group-hover:text-[#CEB175] transition-colors duration-500`}>

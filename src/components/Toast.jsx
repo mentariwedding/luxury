@@ -50,7 +50,7 @@ export function ToastProvider({ children }) {
                                 animate={{ opacity: 1, y: 0,  scale: 1,    filter: 'blur(0px)' }}
                                 exit={{   opacity: 0, x: 60, filter: 'blur(4px)' }}
                                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                                className={`flex items-center gap-3 px-5 py-4 rounded-2xl border backdrop-blur-xl ${c.border} ${c.bg}`}
+                                className={`flex items-center gap-3 px-5 py-4 border backdrop-blur-xl ${c.border} ${c.bg}`}
                             >
                                 <span className={`shrink-0 ${c.icon}`}>{ICONS[toast.type]}</span>
                                 <p className={`text-[10px] uppercase tracking-[0.2em] flex-1 ${c.text}`}>

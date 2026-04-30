@@ -99,7 +99,7 @@ export default function PortfolioPage() {
                 {loading ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                         {[...Array(6)].map((_, i) => (
-                            <div key={i} className="aspect-[4/5] bg-white/[0.02] rounded-sm animate-pulse" />
+                            <div key={i} className="aspect-[4/5] bg-white/[0.02] animate-pulse" />
                         ))}
                     </div>
                 ) : (

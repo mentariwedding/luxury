@@ -55,7 +55,7 @@ export default function Signature() {
                 <div className="flex flex-col lg:flex-row gap-20 items-center">
                     <Reveal delay={200} className="w-full lg:w-1/2 order-2 lg:order-1">
                         <div className="relative max-w-md mx-auto lg:mx-0">
-                            <div className="aspect-[3/4] overflow-hidden border border-[#CEB175]/20 rounded-sm">
+                            <div className="aspect-[3/4] overflow-hidden border border-[#CEB175]/20">
                                 <motion.img
                                     style={{ y, scale: 1.2 }}
                                     src={content.image_url}

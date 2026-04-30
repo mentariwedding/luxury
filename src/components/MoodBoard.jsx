@@ -115,7 +115,7 @@ export default function MoodBoard() {
                                     {(p.colors || []).map((color, ci) => (
                                         <div
                                             key={ci}
-                                            className="w-5 h-5 rounded-full border border-white/10 flex-shrink-0"
+                                            className="w-5 h-5 border border-white/10 flex-shrink-0"
                                             style={{ background: color }}
                                         />
                                     ))}
@@ -154,7 +154,7 @@ export default function MoodBoard() {
                                     {(current?.keywords || []).map((kw, ki) => (
                                         <span
                                             key={ki}
-                                            className="text-[9px] uppercase tracking-[0.4em] border border-[#CEB175]/25 px-3 py-1.5 text-[#CEB175]/70 font-light rounded-full"
+                                            className="text-[9px] uppercase tracking-[0.4em] border border-[#CEB175]/25 px-3 py-1.5 text-[#CEB175]/70 font-light"
                                         >
                                             {kw}
                                         </span>
@@ -166,7 +166,7 @@ export default function MoodBoard() {
                                     {(current?.colors || []).map((color, ci) => (
                                         <div key={ci} className="flex flex-col items-center gap-2">
                                             <div
-                                                className="w-10 h-10 rounded-full border border-white/10 shadow-lg"
+                                                className="w-10 h-10 border border-white/10 shadow-lg"
                                                 style={{ background: color }}
                                             />
                                             <span className="text-[7px] uppercase tracking-wider text-white/30 font-mono">

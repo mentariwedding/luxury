@@ -182,7 +182,7 @@ export default function Manifesto() {
                     <Reveal delay={700}>
                         <button
                             onClick={() => setInquiryOpen(true)}
-                            className="inline-flex items-center gap-5 group border border-[#CEB175]/40 px-12 py-6 rounded-full hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700 relative overflow-hidden mb-6"
+                            className="inline-flex items-center gap-5 group border border-[#CEB175]/40 px-12 py-6 hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700 relative overflow-hidden mb-6"
                         >
                             <span className="text-[10px] uppercase tracking-[0.5em] text-white group-hover:text-black font-light transition-colors duration-700 relative z-10">
                                 {content.cta_text}

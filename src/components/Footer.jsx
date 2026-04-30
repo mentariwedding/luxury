@@ -126,19 +126,19 @@ export default function Footer() {
                         <p className="text-[10px] uppercase tracking-[0.4em] text-[#525252] mb-10">Koneksi Sosial</p>
                         <div className="flex flex-col gap-8">
                             <a href={settings.instagram_url} className="group flex items-center gap-4 text-sm font-light text-[#A3A3A3] hover:text-[#CEB175] transition-all duration-500">
-                                <div className="w-10 h-10 border border-[#CEB175]/10 flex items-center justify-center group-hover:border-[#CEB175]/40 rounded-full transition-colors">
+                                <div className="w-10 h-10 border border-[#CEB175]/10 flex items-center justify-center group-hover:border-[#CEB175]/40 transition-colors">
                                     <InstagramIcon className="w-4 h-4" />
                                 </div>
                                 <span className="tracking-[0.2em] uppercase text-[11px]">Instagram</span>
                             </a>
                             <a href={settings.pinterest_url} className="group flex items-center gap-4 text-sm font-light text-[#A3A3A3] hover:text-[#CEB175] transition-all duration-500">
-                                <div className="w-10 h-10 border border-[#CEB175]/10 flex items-center justify-center group-hover:border-[#CEB175]/40 rounded-full transition-colors">
+                                <div className="w-10 h-10 border border-[#CEB175]/10 flex items-center justify-center group-hover:border-[#CEB175]/40 transition-colors">
                                     <PinterestIcon className="w-4 h-4" />
                                 </div>
                                 <span className="tracking-[0.2em] uppercase text-[11px]">Pinterest</span>
                             </a>
                             <a href={`https://www.google.com/maps?q=${settings.map_coordinates}`} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-sm font-light text-[#A3A3A3] hover:text-[#CEB175] transition-all duration-500">
-                                <div className="w-10 h-10 border border-[#CEB175]/10 flex items-center justify-center group-hover:border-[#CEB175]/40 rounded-full transition-colors">
+                                <div className="w-10 h-10 border border-[#CEB175]/10 flex items-center justify-center group-hover:border-[#CEB175]/40 transition-colors">
                                     <MapPin className="w-4 h-4" />
                                 </div>
                                 <span className="tracking-[0.2em] uppercase text-[11px]">Lokasi</span>
