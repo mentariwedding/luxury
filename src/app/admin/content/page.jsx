@@ -173,9 +173,9 @@ export default function ContentManagement() {
                                 </div>
                                 <div className="flex items-center gap-4 flex-wrap">
                                     {/* Tabs */}
-                                    <div className="flex items-center gap-1 bg-white/[0.02] border border-white/[0.05] rounded-full p-1.5 backdrop-blur-sm">
+                                    <div className="flex items-center gap-1 bg-white/[0.02] border border-white/[0.05] p-1.5 backdrop-blur-sm">
                                         <button onClick={() => setTab('text')}
-                                            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-[8px] uppercase tracking-[0.35em] font-medium transition-all duration-500 ${
+                                            className={`flex items-center gap-2 px-5 py-2.5 text-[8px] uppercase tracking-[0.35em] font-medium transition-all duration-500 ${
                                                 tab === 'text' ? 'bg-[#CEB175] text-black shadow-lg shadow-[#CEB175]/10' : 'text-white/20 hover:text-white/50'
                                             }`}>
                                             <Type className="w-3 h-3" />Teks
@@ -183,7 +183,7 @@ export default function ContentManagement() {
                                         {hasItems && (
                                             <MinimalistTooltip text="Lihat Item Section">
                                                 <button onClick={() => setTab('items')}
-                                                    className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-[8px] uppercase tracking-[0.35em] font-medium transition-all duration-500 ${
+                                                    className={`flex items-center gap-2 px-5 py-2.5 text-[8px] uppercase tracking-[0.35em] font-medium transition-all duration-500 ${
                                                         tab === 'items' ? 'bg-[#CEB175] text-black shadow-lg shadow-[#CEB175]/10' : 'text-white/20 hover:text-white/50'
                                                     }`}>
                                                     <LayoutGrid className="w-3 h-3" />{items.length}
@@ -194,7 +194,7 @@ export default function ContentManagement() {
                                     {/* Preview Toggle */}
                                     <MinimalistTooltip text={preview ? "Tutup Pratinjau" : "Lihat Pratinjau"}>
                                         <button type="button" onClick={() => setPreview(p => !p)}
-                                            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-[8px] uppercase tracking-[0.35em] font-medium transition-all duration-500 border ${preview ? 'bg-[#CEB175]/10 text-[#CEB175] border-[#CEB175]/20' : 'text-white/20 border-white/[0.05] hover:text-white/50'}`}>
+                                            className={`flex items-center gap-2 px-5 py-2.5 text-[8px] uppercase tracking-[0.35em] font-medium transition-all duration-500 border ${preview ? 'bg-[#CEB175]/10 text-[#CEB175] border-[#CEB175]/20' : 'text-white/20 border-white/[0.05] hover:text-white/50'}`}>
                                             {preview ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
                                             Preview
                                         </button>
@@ -240,7 +240,7 @@ export default function ContentManagement() {
                                         <MinimalistTooltip text="Simpan ke Database">
                                             <button type="submit" disabled={saving}
                                                 className="group flex items-center gap-4 disabled:opacity-20 transition-all duration-500">
-                                                <div className="w-10 h-10 rounded-full border border-[#CEB175]/20 flex items-center justify-center group-hover:border-[#CEB175]/50 transition-all duration-500">
+                                                <div className="w-10 h-10 border border-[#CEB175]/20 flex items-center justify-center group-hover:border-[#CEB175]/50 transition-all duration-500">
                                                     {saving
                                                         ? <RefreshCw className="w-3.5 h-3.5 text-[#CEB175] animate-spin" />
                                                         : <Save className="w-3.5 h-3.5 text-[#CEB175] group-hover:scale-110 transition-transform duration-500" />

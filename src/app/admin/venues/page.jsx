@@ -112,7 +112,7 @@ export default function VenuesAdmin() {
                 <MinimalistTooltip text="Tambah venue baru">
                     <button
                         onClick={handleAdd}
-                        className="group flex items-center gap-3 text-[9px] uppercase tracking-[0.5em] text-[#CEB175] border border-[#CEB175]/30 px-6 py-3 rounded-full hover:bg-[#CEB175] hover:text-black transition-all duration-500"
+                        className="group flex items-center gap-3 text-[9px] uppercase tracking-[0.5em] text-[#CEB175] border border-[#CEB175]/30 px-6 py-3 hover:bg-[#CEB175] hover:text-black transition-all duration-500"
                     >
                         <Plus className="w-3 h-3 group-hover:rotate-90 transition-transform duration-300" />
                         Tambah Venue

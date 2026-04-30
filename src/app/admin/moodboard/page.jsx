@@ -149,7 +149,7 @@ export default function MoodBoardAdmin() {
                 <MinimalistTooltip text="Tambah palette baru">
                     <button
                         onClick={handleAdd}
-                        className="group flex items-center gap-3 text-[9px] uppercase tracking-[0.5em] text-[#CEB175] border border-[#CEB175]/30 px-6 py-3 rounded-full hover:bg-[#CEB175] hover:text-black transition-all duration-500"
+                        className="group flex items-center gap-3 text-[9px] uppercase tracking-[0.5em] text-[#CEB175] border border-[#CEB175]/30 px-6 py-3 hover:bg-[#CEB175] hover:text-black transition-all duration-500"
                     >
                         <Plus className="w-3 h-3 group-hover:rotate-90 transition-transform duration-300" />
                         Tambah
@@ -242,7 +242,7 @@ export default function MoodBoardAdmin() {
                                                 {/* Tags preview */}
                                                 <div className="flex flex-wrap gap-1.5 mt-2">
                                                     {keywords.map((kw, ki) => (
-                                                        <span key={ki} className="text-[7px] uppercase tracking-wider border border-[#CEB175]/20 px-2 py-0.5 text-[#CEB175]/50 rounded-full">
+                                                        <span key={ki} className="text-[7px] uppercase tracking-wider border border-[#CEB175]/20 px-2 py-0.5 text-[#CEB175]/50">
                                                             {kw}
                                                         </span>
                                                     ))}
