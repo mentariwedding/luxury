@@ -16,6 +16,7 @@ const NAV = [
     { label: 'Galeri',       href: '/admin/gallery'                      },
     { label: 'Venues',       href: '/admin/venues'                       },
     { label: 'Inquiries',    href: '/admin/inquiries'                    },
+    { label: 'Kisah',        href: '/admin/journal'                      },
     { label: 'Testimonial',  href: '/admin/testimonials'                 },
     { label: 'Mood Board',   href: '/admin/moodboard'                    },
     { label: 'Instagram',    href: '/admin/instagram'                    },

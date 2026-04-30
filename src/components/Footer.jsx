@@ -153,8 +153,8 @@ export default function Footer() {
                             {[
                                 { label: 'Whisper', num: '01', href: '#testimonial' },
                                 { label: 'Editorial', num: '02', href: '/portfolio' },
-                                { label: 'Atelier', num: '03', href: '#atelier' },
-                                { label: 'Venues', num: '04', href: '#venues' },
+                                { label: 'Kisah', num: '03', href: '/kisah' },
+                                { label: 'Atelier', num: '04', href: '#atelier' },
                                 { label: 'Tentang', num: '05', href: '/tentang' },
                                 { label: 'Inquiry', num: '06', href: '#manifesto' },
                             ].map((item) => (

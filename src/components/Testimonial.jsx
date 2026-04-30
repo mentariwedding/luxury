@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import Reveal from './Reveal';
+import { TestimonialSkeleton } from './GoldSkeleton';
 
 /**
  * "Whisper from Our Couples" — Testimonial carousel.
@@ -35,6 +36,7 @@ export default function Testimonial() {
     const [items, setItems] = useState(DEFAULTS);
     const [current, setCurrent] = useState(0);
     const [direction, setDirection] = useState(1);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         (async () => {
@@ -47,6 +49,8 @@ export default function Testimonial() {
                 if (data && data.length > 0) setItems(data);
             } catch (_) {
                 // fallback to defaults
+            } finally {
+                setLoading(false);
             }
         })();
     }, []);
@@ -80,6 +84,7 @@ export default function Testimonial() {
             <div className="absolute top-1/2 -left-40 -translate-y-1/2 w-[500px] h-[500px] bg-[#CEB175] rounded-full blur-[180px] opacity-[0.025] pointer-events-none" />
 
             <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
+                {loading && <TestimonialSkeleton />}
 
                 {/* Eyebrow label */}
                 <Reveal>

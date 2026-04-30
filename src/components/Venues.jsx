@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import Reveal from './Reveal';
 import GoldDivider from './GoldDivider';
+import { VenuesSkeleton } from './GoldSkeleton';
 
 /**
  * Curated Venues — Showcase venue tanpa nama spesifik.
@@ -23,6 +24,7 @@ export default function Venues() {
         { name: 'Balai Warisan', cryptic_caption: 'Dinding yang sudah menyaksikan banyak cerita.', location_hint: 'Sebuah kediaman megah.', image_url: '/images/heritage.jpg' },
         { name: 'Atrium Langit', cryptic_caption: 'Perayaan yang tertulis di langit kota.', location_hint: 'Di atas ketinggian kota.', image_url: '/images/rooftop.jpg' },
     ]);
+    const [venuesLoading, setVenuesLoading] = useState(true);
 
     useEffect(() => {
         (async () => {
@@ -45,6 +47,7 @@ export default function Venues() {
                 .eq('is_active', true)
                 .order('display_order', { ascending: true });
             if (v && v.length > 0) setVenues(v);
+            setVenuesLoading(false);
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -81,9 +84,12 @@ export default function Venues() {
 
                 {/* Venues Grid — Editorial alternating layout */}
                 <div className="space-y-32">
-                    {venues.map((v, i) => (
-                        <VenueCard key={v.id || i} venue={v} index={i} />
-                    ))}
+                    {venuesLoading
+                        ? <VenuesSkeleton />
+                        : venues.map((v, i) => (
+                            <VenueCard key={v.id || i} venue={v} index={i} />
+                        ))
+                    }
                 </div>
             </div>
         </section>

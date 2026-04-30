@@ -180,3 +180,26 @@ html, body {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
 }
+
+/* Gold Skeleton Shimmer — used by GoldSkeleton component */
+.gold-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,0.03);
+}
+
+.gold-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(206,177,117,0.06) 50%,
+    transparent 100%
+  );
+  animation: shimmer-slide 2.2s ease-in-out infinite;
+}
