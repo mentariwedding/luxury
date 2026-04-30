@@ -19,11 +19,11 @@ export default function InquiriesAdmin() {
 
     const fetch = useCallback(async () => {
         setLoading(true);
-        const query = supabase
+        let query = supabase
             .from('inquiry_submissions')
             .select('*')
             .order('created_at', { ascending: false });
-        if (filter !== 'all') query.eq('status', filter);
+        if (filter !== 'all') query = query.eq('status', filter);
         const { data } = await query;
         setInquiries(data || []);
         setLoading(false);

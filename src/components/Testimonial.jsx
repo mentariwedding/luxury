@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import Reveal from './Reveal';
-import { TestimonialSkeleton } from './GoldSkeleton';
 
 /**
  * "Whisper from Our Couples" — Testimonial carousel.
@@ -36,7 +35,6 @@ export default function Testimonial() {
     const [items, setItems] = useState(DEFAULTS);
     const [current, setCurrent] = useState(0);
     const [direction, setDirection] = useState(1);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         (async () => {
@@ -49,25 +47,30 @@ export default function Testimonial() {
                 if (data && data.length > 0) setItems(data);
             } catch (_) {
                 // fallback to defaults
-            } finally {
-                setLoading(false);
             }
         })();
     }, []);
 
-    // Auto-cycle
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setDirection(1);
-            setCurrent((c) => (c + 1) % items.length);
-        }, 6500);
-        return () => clearInterval(timer);
-    }, [items.length]);
-
-    const navigate = (dir) => {
+    const navigate = useCallback((dir) => {
         setDirection(dir);
         setCurrent((c) => (c + dir + items.length) % items.length);
-    };
+    }, [items.length]);
+
+    // Auto-cycle every 6.5s
+    useEffect(() => {
+        const timer = setInterval(() => navigate(1), 6500);
+        return () => clearInterval(timer);
+    }, [navigate]);
+
+    // Keyboard navigation — ← / →
+    useEffect(() => {
+        const onKey = (e) => {
+            if (e.key === 'ArrowLeft')  navigate(-1);
+            if (e.key === 'ArrowRight') navigate(1);
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [navigate]);
 
     const item = items[current];
 
@@ -84,7 +87,6 @@ export default function Testimonial() {
             <div className="absolute top-1/2 -left-40 -translate-y-1/2 w-[500px] h-[500px] bg-[#CEB175] rounded-full blur-[180px] opacity-[0.025] pointer-events-none" />
 
             <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
-                {loading && <TestimonialSkeleton />}
 
                 {/* Eyebrow label */}
                 <Reveal>
