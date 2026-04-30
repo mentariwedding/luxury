@@ -3,7 +3,7 @@ import SmoothScroll from '../components/SmoothScroll';
 import AmbientMusic from '../components/AmbientMusic';
 import FloatingGoldThread from '../components/FloatingGoldThread';
 import BackToTop from '../components/BackToTop';
-import ScrollProgressBar from '../components/ScrollProgressBar';
+import PageTransition from '../components/PageTransition';
 
 import './globals.css';
 
@@ -174,7 +174,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-screen relative grain-overlay">
         <Preloader />
         <SmoothScroll />
-        <ScrollProgressBar />
+        <PageTransition />
         <AmbientMusic />
         <FloatingGoldThread />
         <BackToTop />
