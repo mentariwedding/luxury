@@ -134,13 +134,23 @@ export default function Portfolio() {
                 <p className="text-[9px] uppercase tracking-[0.5em] text-white/25 font-light">
                     Fragmen pilihan — selengkapnya hanya melalui percakapan
                 </p>
-                <a
-                    href="#manifesto"
-                    className="text-[10px] uppercase tracking-[0.5em] text-[#CEB175] border-b border-[#CEB175]/30 pb-1 hover:text-white hover:border-white transition-all duration-500"
-                >
-                    Mulai Percakapan
-                </a>
+                <div className="flex items-center gap-6">
+                    <a
+                        href="/portfolio"
+                        className="text-[10px] uppercase tracking-[0.5em] text-white/30 border-b border-white/15 pb-1 hover:text-[#CEB175] hover:border-[#CEB175]/40 transition-all duration-500"
+                    >
+                        Lihat Semua Karya
+                    </a>
+                    <span className="text-white/10">·</span>
+                    <a
+                        href="#manifesto"
+                        className="text-[10px] uppercase tracking-[0.5em] text-[#CEB175] border-b border-[#CEB175]/30 pb-1 hover:text-white hover:border-white transition-all duration-500"
+                    >
+                        Mulai Percakapan
+                    </a>
+                </div>
             </div>
+
 
             <Lightbox
                 images={photos}

@@ -11,22 +11,28 @@ export default function sitemap() {
       priority: 1,
     },
     {
+      url: `${baseUrl}/portfolio`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/#signature`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/#approach`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/#philosophy`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/#atelier`,
@@ -35,10 +41,11 @@ export default function sitemap() {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/#contact`,
+      url: `${baseUrl}/#manifesto`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
     },
   ];
 }
+

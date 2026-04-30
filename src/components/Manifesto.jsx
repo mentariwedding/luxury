@@ -5,6 +5,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import Reveal from './Reveal';
+import InquiryForm from './InquiryForm';
 
 /* Inline count-up hook — no extra dependency */
 function useCountUp(target, duration = 2000, shouldStart = false) {
@@ -33,6 +34,7 @@ export default function Manifesto() {
     const c0 = useCountUp(60, 2000, statsInView);
     const c1 = useCountUp(5, 1500, statsInView);
     const c2 = useCountUp(100, 2200, statsInView);
+    const [inquiryOpen, setInquiryOpen] = useState(false);
 
     const [content, setContent] = useState({
         subtitle: 'Selectively Curated',
@@ -87,6 +89,7 @@ export default function Manifesto() {
     const waMessage = encodeURIComponent('Halo Mentari Wedding, saya tertarik untuk memulai percakapan tentang perayaan kami.');
 
     return (
+        <>
         <section
             id="manifesto"
             className="relative bg-[#0A0A0A] overflow-hidden border-y border-[#CEB175]/10"
@@ -177,11 +180,8 @@ export default function Manifesto() {
                     </Reveal>
 
                     <Reveal delay={700}>
-                        <a
-                            href={`https://wa.me/${whatsapp}?text=${waMessage}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={trackClick}
+                        <button
+                            onClick={() => setInquiryOpen(true)}
                             className="inline-flex items-center gap-5 group border border-[#CEB175]/40 px-12 py-6 rounded-full hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700 relative overflow-hidden mb-6"
                         >
                             <span className="text-[10px] uppercase tracking-[0.5em] text-white group-hover:text-black font-light transition-colors duration-700 relative z-10">
@@ -189,7 +189,7 @@ export default function Manifesto() {
                             </span>
                             <span className="w-8 h-px bg-[#CEB175] group-hover:bg-black transition-colors duration-700 relative z-10" />
                             <ArrowUpRight className="w-4 h-4 text-[#CEB175] group-hover:text-black group-hover:rotate-45 transition-all duration-700 relative z-10" />
-                        </a>
+                        </button>
                     </Reveal>
 
                     <Reveal delay={900}>
@@ -200,5 +200,7 @@ export default function Manifesto() {
                 </div>
             </div>
         </section>
+        <InquiryForm isOpen={inquiryOpen} onClose={() => setInquiryOpen(false)} />
+        </>
     );
 }
