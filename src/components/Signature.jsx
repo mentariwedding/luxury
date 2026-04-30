@@ -63,8 +63,8 @@ export default function Signature() {
                                 />
                             </div>
                             <div className="absolute -bottom-8 -right-8 bg-[#050505] p-8 border border-[#CEB175]/20 hidden md:block z-10 shadow-2xl">
-                                <p className="font-serif text-[#CEB175] text-xl mb-1 italic">Signature Style</p>
-                                <p className="text-white text-[10px] uppercase tracking-[0.4em] font-light">The Mentari Wedding Look</p>
+                                <p className="font-serif text-[#CEB175] text-xl mb-1 italic">Gaya Khas Kami</p>
+                                <p className="text-white text-[10px] uppercase tracking-[0.4em] font-light">Sentuhan Mentari Wedding</p>
                             </div>
                         </div>
                     </Reveal>

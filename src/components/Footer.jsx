@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { SunMedium, MapPin, Send } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import Reveal from './Reveal';
+import InstagramFeed from './InstagramFeed';
 
 const InstagramIcon = ({ className }) => (
     <svg
@@ -143,14 +144,13 @@ export default function Footer() {
                     </Reveal>
                 </div>
 
+                {/* Instagram Feed */}
+                <InstagramFeed />
+
                 {/* Minimalist Bottom */}
                 <Reveal delay={800}>
-                    <div className="mt-40 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-[#CEB175]/5 pt-12">
+                    <div className="mt-20 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-[#CEB175]/5 pt-12">
                         <p className="text-[9px] uppercase tracking-[0.5em] text-[#525252]">Mentari Wedding © 2026 — All Rights Reserved</p>
-                        <div className="flex gap-12">
-                            <a href="#" className="text-[9px] uppercase tracking-[0.5em] text-[#525252] hover:text-[#CEB175] transition-colors">Privacy</a>
-                            <a href="#" className="text-[9px] uppercase tracking-[0.5em] text-[#525252] hover:text-[#CEB175] transition-colors">Legal</a>
-                        </div>
                     </div>
                 </Reveal>
             </div>

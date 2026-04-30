@@ -16,6 +16,7 @@ const NAV = [
     { label: 'Whispers',   href: '/admin/whispers'              },
     { label: 'Galeri',     href: '/admin/gallery'               },
     { label: 'Venues',     href: '/admin/venues'                },
+    { label: 'Instagram',  href: '/admin/instagram'             },
     { label: 'Pengaturan', href: '/admin/settings'              },
 ];
 

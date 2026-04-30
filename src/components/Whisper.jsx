@@ -12,12 +12,12 @@ import { supabase } from '@/lib/supabase';
 export default function Whisper() {
     const containerRef = useRef(null);
     const [whispers, setWhispers] = useState([
-        { quote: 'Some moments are not planned. They are summoned.', accent_word: 'summoned' },
-        { quote: 'In the silence between vows, we craft the loudest memories.', accent_word: 'silence' },
-        { quote: 'We do not chase trends. We invite timelessness.', accent_word: 'timelessness' },
+        { quote: 'Ada momen yang tak bisa direncanakan. Ia datang sendiri.', accent_word: 'datang' },
+        { quote: 'Di antara keheningan janji, kami merangkai kenangan yang paling berkesan.', accent_word: 'keheningan' },
+        { quote: 'Kami tidak mengejar tren. Kami mengundang keabadian.', accent_word: 'keabadian' },
     ]);
     const [intro, setIntro] = useState({
-        subtitle: 'A Whisper',
+        subtitle: 'Sebuah Bisikan',
         description:
             'Bukan sekadar pesta. Bukan sekadar dekorasi. Ada keheningan di balik setiap kemewahan—dan di sanalah kami bekerja.',
     });

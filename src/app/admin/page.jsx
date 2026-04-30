@@ -270,10 +270,11 @@ export default function AdminDashboard() {
                     <div className="space-y-0">
                         {[
                             { num: '01', label: 'Edit Banner Hero',     href: '/admin/content'   },
-                            { num: '02', label: 'Tulis Whisper Baru',   href: '/admin/whispers'  },
-                            { num: '03', label: 'Tambah Foto Editorial',href: '/admin/gallery'   },
-                            { num: '04', label: 'Curate Venues',        href: '/admin/venues'    },
-                            { num: '05', label: 'Atur Info Kontak',     href: '/admin/settings'  },
+                            { num: '02', label: 'Tulis Whisper Baru',    href: '/admin/whispers'  },
+                            { num: '03', label: 'Tambah Foto Editorial', href: '/admin/gallery'   },
+                            { num: '04', label: 'Curate Venues',         href: '/admin/venues'    },
+                            { num: '05', label: 'Atur Info Kontak',      href: '/admin/settings'  },
+                            { num: '06', label: 'Kelola Feed Instagram', href: '/admin/instagram' },
                         ].map((l) => (
                             <Link key={l.num} href={l.href}
                                 className="group flex items-center justify-between py-4 border-b border-white/[0.04] hover:border-[#CEB175]/15 transition-colors duration-400">

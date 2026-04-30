@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Reveal from './Reveal';
 import SplitText from './SplitText';
+import Lightbox from './Lightbox';
 import { supabase } from '@/lib/supabase';
 
 /**
@@ -32,6 +33,15 @@ export default function Portfolio() {
 
         fetchPhotos();
     }, []);
+
+    // Lightbox state
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
+
+    const openLightbox = (index) => {
+        setLightboxIndex(index);
+        setLightboxOpen(true);
+    };
 
     return (
         <section id="portfolio" className="luxury-section px-6 md:px-12 max-w-[1500px] mx-auto">
@@ -69,27 +79,30 @@ export default function Portfolio() {
                     <EditorialCard
                         photo={photos[0]}
                         index={0}
-                        className="col-span-12 md:col-span-7 aspect-[4/5] md:aspect-[4/5]"
+                        className="col-span-12 md:col-span-7 h-[750px] md:h-[900px] lg:h-[1100px] w-full"
                         size="large"
+                        onClick={openLightbox}
                     />
                 )}
 
                 {/* Stack right */}
-                <div className="col-span-12 md:col-span-5 grid grid-cols-1 gap-4 md:gap-6">
+                <div className="col-span-12 md:col-span-5 flex flex-col gap-4 md:gap-6 h-[750px] md:h-[900px] lg:h-[1100px]">
                     {photos[1] && (
                         <EditorialCard
                             photo={photos[1]}
                             index={1}
-                            className="aspect-[4/3]"
+                            className="flex-[1.6] w-full"
                             size="medium"
+                            onClick={openLightbox}
                         />
                     )}
                     {photos[2] && (
                         <EditorialCard
                             photo={photos[2]}
                             index={2}
-                            className="aspect-[4/3]"
+                            className="flex-1 w-full"
                             size="medium"
+                            onClick={openLightbox}
                         />
                     )}
                 </div>
@@ -101,6 +114,7 @@ export default function Portfolio() {
                         index={3}
                         className="col-span-12 md:col-span-4 aspect-square md:aspect-[3/4]"
                         size="medium"
+                        onClick={openLightbox}
                     />
                 )}
                 {photos[4] && (
@@ -110,6 +124,7 @@ export default function Portfolio() {
                         className="col-span-12 md:col-span-4 aspect-square md:aspect-[3/4]"
                         size="medium"
                         offset
+                        onClick={openLightbox}
                     />
                 )}
                 {photos[5] && (
@@ -118,6 +133,7 @@ export default function Portfolio() {
                         index={5}
                         className="col-span-12 md:col-span-4 aspect-square md:aspect-[3/4]"
                         size="medium"
+                        onClick={openLightbox}
                     />
                 )}
             </div>
@@ -125,20 +141,29 @@ export default function Portfolio() {
             {/* Magazine footnote */}
             <div className="mt-20 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-[#CEB175]/10 pt-8">
                 <p className="text-[9px] uppercase tracking-[0.5em] text-white/25 font-light">
-                    Selected fragments — viewed in full by inquiry
+                    Fragmen pilihan — selengkapnya hanya melalui percakapan
                 </p>
                 <a
                     href="#manifesto"
                     className="text-[10px] uppercase tracking-[0.5em] text-[#CEB175] border-b border-[#CEB175]/30 pb-1 hover:text-white hover:border-white transition-all duration-500"
                 >
-                    Begin a Conversation
+                    Mulai Percakapan
                 </a>
             </div>
+
+            {/* Lightbox */}
+            <Lightbox
+                images={photos}
+                currentIndex={lightboxIndex}
+                isOpen={lightboxOpen}
+                onClose={() => setLightboxOpen(false)}
+                onNavigate={(i) => setLightboxIndex(i)}
+            />
         </section>
     );
 }
 
-function EditorialCard({ photo, index, className = '', size = 'medium', offset = false }) {
+function EditorialCard({ photo, index, className = '', size = 'medium', offset = false, onClick }) {
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -153,9 +178,9 @@ function EditorialCard({ photo, index, className = '', size = 'medium', offset =
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1], delay: index * 0.08 }}
-            className={`group relative overflow-hidden bg-[#0A0A0A] border border-[#CEB175]/10 ${className} ${
-                offset ? 'md:translate-y-12' : ''
-            }`}
+            className={`group relative overflow-hidden bg-[#0A0A0A] border border-[#CEB175]/10 cursor-pointer ${className} ${offset ? 'md:translate-y-12' : ''
+                }`}
+            onClick={() => onClick?.(index)}
         >
             <motion.img
                 style={{ y, scale: 1.12 }}
@@ -181,9 +206,8 @@ function EditorialCard({ photo, index, className = '', size = 'medium', offset =
                     </p>
                 </div>
                 <h3
-                    className={`font-serif text-white font-light leading-tight italic ${
-                        size === 'large' ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl'
-                    }`}
+                    className={`font-serif text-white font-light leading-tight italic ${size === 'large' ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl'
+                        }`}
                 >
                     {photo.title}
                 </h3>

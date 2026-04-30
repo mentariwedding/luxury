@@ -111,7 +111,7 @@ export default function Preloader() {
                                 transition={{ duration: 1.0, delay: 1.1 }}
                                 className="font-serif italic text-[10px] tracking-[0.4em] text-[#CEB175]/60 uppercase mt-6"
                             >
-                                woven in light
+                                dirajut dalam cahaya
                             </motion.p>
                         </div>
                     </motion.div>

@@ -51,7 +51,7 @@ export default function FloatingInquiry() {
     };
 
     const waMessage = encodeURIComponent(
-        'Halo Mentari Wedding, saya ingin berbisik tentang sebuah cerita yang ingin saya rangkai.',
+        'Halo Mentari Wedding, saya tertarik untuk memulai percakapan tentang perayaan kami.',
     );
 
     return (
@@ -74,10 +74,10 @@ export default function FloatingInquiry() {
                                 className="hidden sm:block bg-[#050505] border border-[#CEB175]/30 backdrop-blur-xl rounded-2xl p-5 max-w-[260px] shadow-2xl shadow-black/60 mb-1"
                             >
                                 <p className="text-[8px] uppercase tracking-[0.5em] text-[#CEB175] mb-3 font-light">
-                                    A Whisper
+                                    Sebuah Bisikan
                                 </p>
                                 <p className="font-serif italic text-sm text-white/80 leading-relaxed mb-4">
-                                    &ldquo;Bisikkan cerita Anda. Kami mendengarkan dengan penuh ketulusan.&rdquo;
+                                    &ldquo;Ceritakan rencana kalian. Kami mendengarkan dengan sepenuh hati.&rdquo;
                                 </p>
                                 <a
                                     href={`https://wa.me/${whatsapp}?text=${waMessage}`}
@@ -86,7 +86,7 @@ export default function FloatingInquiry() {
                                     onClick={handleClick}
                                     className="inline-flex items-center gap-2 text-[9px] uppercase tracking-[0.4em] text-[#CEB175] hover:text-white transition-colors duration-500 group"
                                 >
-                                    Begin
+                                    Mulai
                                     <ArrowUpRight className="w-3 h-3 group-hover:rotate-45 transition-transform duration-500" />
                                 </a>
                             </motion.div>
@@ -104,7 +104,7 @@ export default function FloatingInquiry() {
                             {expanded ? (
                                 <X className="w-4 h-4" />
                             ) : (
-                                <span className="text-[9px] uppercase tracking-[0.3em] font-light">Whisper</span>
+                                <span className="text-[9px] uppercase tracking-[0.3em] font-light">Bisikan</span>
                             )}
                             {/* Pulse */}
                             {!expanded && (

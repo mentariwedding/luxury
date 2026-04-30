@@ -11,16 +11,16 @@ import Reveal from './Reveal';
  */
 export default function Venues() {
     const [content, setContent] = useState({
-        subtitle: 'Selected Locations',
-        title: 'A Curated Atlas.',
+        subtitle: 'Lokasi Pilihan',
+        title: 'Tempat yang Bercerita.',
         description:
-            'Setiap pernikahan memiliki tempatnya sendiri—dan setiap tempat memiliki ceritanya. Berikut beberapa lokasi pilihan yang pernah kami rangkai.',
+            'Setiap pernikahan punya tempatnya sendiri—dan setiap tempat punya ceritanya. Berikut beberapa lokasi pilihan yang pernah kami rangkai.',
     });
     const [venues, setVenues] = useState([
-        { name: 'The Cliff Pavilion', cryptic_caption: 'Where the ocean answers your vows.', location_hint: 'A coastline in the south.', image_url: '/images/hero.JPG' },
-        { name: 'The Garden Estate', cryptic_caption: 'Beneath century-old trees, time pauses.', location_hint: 'A private estate.', image_url: '/images/hangat.JPG' },
-        { name: 'The Heritage Hall', cryptic_caption: 'Walls that have witnessed dynasties.', location_hint: 'A palatial residence.', image_url: '/images/estetik.JPG' },
-        { name: 'The Rooftop Atrium', cryptic_caption: 'A celebration written across the skyline.', location_hint: 'High above the city.', image_url: '/images/tawalepas.JPG' },
+        { name: 'Pavilion Tebing', cryptic_caption: 'Di mana laut menjadi saksi janji kalian.', location_hint: 'Pesisir di ujung selatan.', image_url: '/images/pavilion.JPG' },
+        { name: 'Taman Abadi', cryptic_caption: 'Di bawah pepohonan tua, waktu seolah berhenti.', location_hint: 'Sebuah taman pribadi.', image_url: '/images/garden.jpg' },
+        { name: 'Balai Warisan', cryptic_caption: 'Dinding yang sudah menyaksikan banyak cerita.', location_hint: 'Sebuah kediaman megah.', image_url: '/images/heritage.jpg' },
+        { name: 'Atrium Langit', cryptic_caption: 'Perayaan yang tertulis di langit kota.', location_hint: 'Di atas ketinggian kota.', image_url: '/images/rooftop.jpg' },
     ]);
 
     useEffect(() => {

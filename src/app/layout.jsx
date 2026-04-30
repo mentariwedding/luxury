@@ -2,7 +2,8 @@ import Preloader from '../components/Preloader';
 import SmoothScroll from '../components/SmoothScroll';
 import AmbientMusic from '../components/AmbientMusic';
 import FloatingGoldThread from '../components/FloatingGoldThread';
-import CustomCursor from '../components/CustomCursor';
+import BackToTop from '../components/BackToTop';
+
 import './globals.css';
 
 export const metadata = {
@@ -57,14 +58,78 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': ['LocalBusiness', 'WeddingPlanning'],
+        '@id': 'https://mentariwedding.id/#business',
+        name: 'Mentari Wedding',
+        alternateName: 'Mentari Wedding Organizer',
+        description: 'Wedding Organizer profesional di Sukabumi. Merangkai pernikahan impian dengan estetika timeless, dekorasi elegant, dan pelayanan penuh ketulusan.',
+        url: 'https://mentariwedding.id',
+        logo: 'https://mentariwedding.id/images/logo.jpg',
+        image: 'https://mentariwedding.id/images/hero.JPG',
+        telephone: '+628123456789',
+        priceRange: '$$$$',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Sukabumi',
+          addressRegion: 'Jawa Barat',
+          addressCountry: 'ID',
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: -6.9277,
+          longitude: 106.9300,
+        },
+        areaServed: [
+          { '@type': 'City', name: 'Sukabumi' },
+          { '@type': 'State', name: 'Jawa Barat' },
+        ],
+        serviceType: ['Wedding Organizer', 'Wedding Planner', 'Wedding Decoration', 'Event Organizer'],
+        slogan: 'Planned to Perfection',
+        knowsAbout: ['wedding planning', 'wedding decoration', 'event management', 'wedding photography coordination'],
+        sameAs: [
+          'https://instagram.com/mentariwedding',
+        ],
+      },
+      {
+        '@type': 'WebSite',
+        '@id': 'https://mentariwedding.id/#website',
+        url: 'https://mentariwedding.id',
+        name: 'Mentari Wedding',
+        description: 'Wedding Organizer Sukabumi - Planned to Perfection',
+        publisher: { '@id': 'https://mentariwedding.id/#business' },
+        inLanguage: 'id-ID',
+      },
+      {
+        '@type': 'WebPage',
+        '@id': 'https://mentariwedding.id/#webpage',
+        url: 'https://mentariwedding.id',
+        name: 'Mentari Wedding | Wedding Organizer Sukabumi',
+        isPartOf: { '@id': 'https://mentariwedding.id/#website' },
+        about: { '@id': 'https://mentariwedding.id/#business' },
+        description: 'Merangkai pernikahan impian dengan estetika timeless dan pelayanan penuh ketulusan.',
+        inLanguage: 'id-ID',
+      },
+    ],
+  };
+
   return (
     <html lang="id">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-screen relative grain-overlay">
         <Preloader />
         <SmoothScroll />
         <AmbientMusic />
         <FloatingGoldThread />
-        <CustomCursor />
+        <BackToTop />
         {children}
       </body>
     </html>

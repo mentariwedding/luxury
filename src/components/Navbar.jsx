@@ -55,7 +55,7 @@ export default function Navbar() {
 
                     <div className="hidden md:block">
                         <a href="#manifesto" className="relative inline-block px-8 py-3 group overflow-hidden border border-[#CEB175]/30 rounded-full transition-all duration-500 hover:border-[#CEB175]">
-                            <span className="relative z-10 text-[10px] uppercase tracking-[0.5em] font-light text-white group-hover:text-black transition-colors duration-500">Whisper</span>
+                            <span className="relative z-10 text-[10px] uppercase tracking-[0.5em] font-light text-white group-hover:text-black transition-colors duration-500">Mulai Cerita</span>
                             <div className="absolute inset-0 bg-[#CEB175] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
                         </a>
                     </div>
@@ -93,7 +93,7 @@ export default function Navbar() {
                         className={`mt-10 text-xs uppercase tracking-[0.4em] text-black bg-[#CEB175] px-12 py-5 rounded-full transition-all duration-700 transform ${mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
                         style={{ transitionDelay: `${navItems.length * 100}ms` }}
                     >
-                        Whisper to Us
+                        Mulai Cerita
                     </a>
                  </div>
             </div>

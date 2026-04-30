@@ -19,14 +19,12 @@ export default function AmbientMusic() {
     };
 
     return (
-        <div className="fixed bottom-12 right-6 md:bottom-10 md:right-10 z-[9999] flex items-center gap-3">
+        <div className="fixed bottom-28 right-6 md:bottom-28 md:right-10 z-[9999] flex items-center gap-3">
             <audio 
                 ref={audioRef}
                 src="/music/yiruma.mp3" 
                 loop
                 preload="auto"
-                onPlay={() => console.log("Music started playing")}
-                onError={(e) => console.error("Audio error:", e)}
             />
             <button 
                 onClick={toggleMusic}
@@ -40,7 +38,7 @@ export default function AmbientMusic() {
                 )}
             </button>
             <div className={`hidden md:block text-[10px] font-sans font-medium uppercase tracking-[0.3em] text-[#CEB175] transition-opacity duration-1000 ${isPlaying ? 'opacity-100' : 'opacity-0'}`}>
-                    Ambient Mood
+                    Suasana
                 </div>
         </div>
     );

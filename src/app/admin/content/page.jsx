@@ -8,7 +8,7 @@ import { useToast } from '@/components/Toast';
 import { useConfirm } from '@/components/ConfirmModal';
 import MinimalistTooltip from '@/components/MinimalistTooltip';
 
-const SECTIONS = ['hero', 'whisper', 'signature', 'approach', 'atelier', 'venues', 'philosophy', 'manifesto'];
+const SECTIONS = ['hero', 'whisper', 'signature', 'approach', 'atelier', 'venues', 'philosophy', 'manifesto', 'social_proof'];
 const LABELS   = {
     hero: 'Hero',
     whisper: 'Whisper',
@@ -18,8 +18,9 @@ const LABELS   = {
     venues: 'Venues',
     philosophy: 'Filosofi',
     manifesto: 'Manifesto',
+    social_proof: 'Social Proof',
 };
-const HAS_ITEMS = ['approach', 'philosophy', 'atelier'];
+const HAS_ITEMS = ['approach', 'philosophy', 'atelier', 'social_proof'];
 
 function UnderlineInput({ label, name, value, onChange, textarea = false, rows = 4, placeholder = '' }) {
     return (
