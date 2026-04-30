@@ -2,53 +2,77 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
-import { Plus, Edit2, Trash2, Eye, EyeOff, RefreshCw, X, Check } from 'lucide-react';
+import { Plus, Edit2, Trash2, Eye, EyeOff, RefreshCw, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useToast } from '@/components/Toast';
+import { useConfirm } from '@/components/ConfirmModal';
 
-const EMPTY = { title: '', slug: '', tagline: '', content: '', cover_image: '', aesthetic_tag: '', venue_hint: '', season: '', is_published: false, display_order: 0 };
+const EMPTY = {
+    title: '', slug: '', tagline: '', content: '',
+    cover_image: '', aesthetic_tag: '', venue_hint: '',
+    season: '', is_published: false, display_order: 0,
+};
 
-const slugify = (text) => text.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
+const slugify = (t) =>
+    t.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
+
+/* ── Underline Input ── */
+function Field({ label, children }) {
+    return (
+        <div className="border-b border-white/[0.08] focus-within:border-[#CEB175]/40 transition-colors duration-300 pb-2">
+            <label className="text-[7px] uppercase tracking-[0.5em] text-white/20 block mb-2">{label}</label>
+            {children}
+        </div>
+    );
+}
+const inputCls = "w-full bg-transparent text-white/80 text-[13px] font-light outline-none placeholder:text-white/10";
+const areaCls  = `${inputCls} resize-none leading-[1.8] min-h-[160px]`;
 
 export default function JournalAdmin() {
     const [entries, setEntries] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [editing, setEditing] = useState(null); // null | 'new' | entry object
-    const [form, setForm] = useState(EMPTY);
-    const [saving, setSaving] = useState(false);
-    const [deleting, setDeleting] = useState(null);
+    const [editing, setEditing] = useState(null);
+    const [form,    setForm]    = useState(EMPTY);
+    const [saving,  setSaving]  = useState(false);
+    const [deleting,setDeleting]= useState(null);
+    const toast   = useToast();
+    const confirm = useConfirm();
 
     const fetch = useCallback(async () => {
         setLoading(true);
-        const { data } = await supabase.from('journal_entries').select('*').order('display_order', { ascending: true });
+        const { data } = await supabase
+            .from('journal_entries').select('*')
+            .order('display_order', { ascending: true });
         setEntries(data || []);
         setLoading(false);
     }, []);
 
     useEffect(() => { fetch(); }, [fetch]);
 
-    const startNew = () => { setForm(EMPTY); setEditing('new'); };
+    const startNew  = () => { setForm(EMPTY); setEditing('new'); };
     const startEdit = (e) => { setForm({ ...e }); setEditing(e); };
-    const cancelEdit = () => { setEditing(null); setForm(EMPTY); };
+    const cancel    = () => { setEditing(null); setForm(EMPTY); };
 
-    const handleForm = (k, v) => {
-        setForm(prev => {
-            const next = { ...prev, [k]: v };
-            if (k === 'title' && (!prev.slug || prev.slug === slugify(prev.title))) {
-                next.slug = slugify(v);
-            }
-            return next;
-        });
-    };
+    const handleForm = (k, v) => setForm(prev => {
+        const next = { ...prev, [k]: v };
+        if (k === 'title' && (!prev.slug || prev.slug === slugify(prev.title)))
+            next.slug = slugify(v);
+        return next;
+    });
 
     const handleSave = async () => {
         if (!form.title || !form.slug) return;
         setSaving(true);
         if (editing === 'new') {
-            await supabase.from('journal_entries').insert([{ ...form }]);
+            const { error } = await supabase.from('journal_entries').insert([{ ...form }]);
+            if (error) { toast('Gagal menyimpan: ' + error.message, 'error'); setSaving(false); return; }
         } else {
-            await supabase.from('journal_entries').update({ ...form }).eq('id', editing.id);
+            const { error } = await supabase.from('journal_entries').update({ ...form }).eq('id', editing.id);
+            if (error) { toast('Gagal memperbarui: ' + error.message, 'error'); setSaving(false); return; }
         }
+        toast(editing === 'new' ? 'Cerita baru diterbitkan.' : 'Cerita diperbarui.', 'success');
         setSaving(false);
-        cancelEdit();
+        cancel();
         fetch();
     };
 
@@ -58,151 +82,229 @@ export default function JournalAdmin() {
     };
 
     const handleDelete = async (id) => {
+        const ok = await confirm('Hapus Cerita', 'Cerita ini akan dihapus permanen. Tindakan tidak bisa dibatalkan.');
+        if (!ok) return;
         setDeleting(id);
         await supabase.from('journal_entries').delete().eq('id', id);
         setEntries(prev => prev.filter(e => e.id !== id));
         setDeleting(null);
+        toast('Cerita dihapus.', 'success');
     };
 
-    const S = { fontFamily: "'Montserrat', sans-serif" };
-    const inp = { background: 'transparent', border: 'none', borderBottom: '1px solid rgba(255,255,255,0.08)', color: '#FAFAFA', outline: 'none', fontSize: 13, padding: '8px 0', width: '100%', fontFamily: "'Montserrat', sans-serif", fontWeight: 300 };
-    const label = { fontSize: 9, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#525252', marginBottom: 6, display: 'block', fontWeight: 300 };
-
     return (
-        <div style={S}>
-            {/* Header */}
-            <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div>
-                    <p style={{ fontSize: 9, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#CEB175', marginBottom: 8, fontWeight: 300 }}>Admin · Kisah</p>
-                    <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 300, color: '#FAFAFA', margin: 0 }}>Jurnal Editorial</h1>
-                    <p style={{ color: '#A3A3A3', fontSize: 13, marginTop: 8, fontWeight: 300 }}>Kelola cerita yang tampil di halaman /kisah.</p>
-                </div>
-                <div className="flex items-center gap-3">
-                    <button onClick={fetch} style={{ color: '#525252', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase' }}>
-                        <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
+        <div>
+            {/* ── Page Header ── */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="mb-16"
+            >
+                <p className="text-[8px] uppercase tracking-[0.6em] text-[#CEB175]/60 mb-5">Editor</p>
+                <h1 className="font-serif font-light leading-[0.9] mb-8"
+                    style={{ fontSize: 'clamp(42px, 6vw, 80px)' }}>
+                    Kisah
+                </h1>
+                <div className="flex items-center gap-6">
+                    <div className="h-px bg-gradient-to-r from-[#CEB175]/30 to-transparent w-16" />
+                    <button onClick={fetch} className="text-white/15 hover:text-white/40 transition-colors duration-300">
+                        <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
                     </button>
-                    <button onClick={startNew} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(206,177,117,0.1)', border: '1px solid rgba(206,177,117,0.3)', color: '#CEB175', borderRadius: 20, padding: '8px 16px', cursor: 'pointer', fontSize: 9, letterSpacing: '0.4em', textTransform: 'uppercase', fontWeight: 300 }}>
-                        <Plus size={14} /> Cerita Baru
+                    <button onClick={startNew}
+                        className="group flex items-center gap-3 text-[9px] uppercase tracking-[0.5em] text-[#CEB175] border border-[#CEB175]/25 px-5 py-2.5 hover:bg-[#CEB175]/5 transition-all duration-500">
+                        <Plus className="w-3 h-3 group-hover:rotate-90 transition-transform duration-300" />
+                        Cerita Baru
                     </button>
                 </div>
-            </div>
+            </motion.div>
 
-            {/* Editor Modal */}
-            {editing && (
-                <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(12px)', zIndex: 9999, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', overflowY: 'auto', padding: '40px 16px' }}>
-                    <div style={{ background: '#0A0A0A', border: '1px solid rgba(206,177,117,0.15)', borderRadius: 16, width: '100%', maxWidth: 680, padding: '40px', position: 'relative' }}>
-                        <button onClick={cancelEdit} style={{ position: 'absolute', top: 20, right: 20, background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer' }}>
-                            <X size={16} />
-                        </button>
-                        <p style={{ fontSize: 9, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#CEB175', marginBottom: 8 }}>{editing === 'new' ? 'Cerita Baru' : 'Edit Cerita'}</p>
-                        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontWeight: 300, color: '#FAFAFA', margin: '0 0 28px' }}>
-                            {editing === 'new' ? 'Tulis Cerita Baru' : 'Edit: ' + (form.title?.slice(0, 30) || '')}
-                        </h2>
-
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px 24px' }}>
-                            <div style={{ gridColumn: '1 / -1' }}>
-                                <label style={label}>Judul *</label>
-                                <input style={inp} value={form.title} onChange={e => handleForm('title', e.target.value)} placeholder="Sebuah Sabtu di Lereng Gunung" />
-                            </div>
-                            <div style={{ gridColumn: '1 / -1' }}>
-                                <label style={label}>Slug (URL) *</label>
-                                <input style={{ ...inp, color: '#CEB175', fontFamily: 'monospace', fontSize: 12 }} value={form.slug} onChange={e => handleForm('slug', e.target.value)} placeholder="sabtu-di-lereng-gunung" />
-                            </div>
-                            <div style={{ gridColumn: '1 / -1' }}>
-                                <label style={label}>Tagline (1-2 kalimat)</label>
-                                <input style={inp} value={form.tagline} onChange={e => handleForm('tagline', e.target.value)} placeholder="Ketika kabut turun tepat saat ijab kabul..." />
-                            </div>
-                            <div>
-                                <label style={label}>Estetika</label>
-                                <input style={inp} value={form.aesthetic_tag} onChange={e => handleForm('aesthetic_tag', e.target.value)} placeholder="Natural / Romantic / Elegant" />
-                            </div>
-                            <div>
-                                <label style={label}>Venue (cryptic)</label>
-                                <input style={inp} value={form.venue_hint} onChange={e => handleForm('venue_hint', e.target.value)} placeholder="Lereng Gunung, Sukabumi" />
-                            </div>
-                            <div>
-                                <label style={label}>Musim / Waktu</label>
-                                <input style={inp} value={form.season} onChange={e => handleForm('season', e.target.value)} placeholder="Musim Hujan 2024" />
-                            </div>
-                            <div>
-                                <label style={label}>Urutan Tampil</label>
-                                <input style={inp} type="number" value={form.display_order} onChange={e => handleForm('display_order', parseInt(e.target.value) || 0)} />
-                            </div>
-                            <div style={{ gridColumn: '1 / -1' }}>
-                                <label style={label}>URL Gambar Cover</label>
-                                <input style={inp} value={form.cover_image} onChange={e => handleForm('cover_image', e.target.value)} placeholder="https://... atau /images/foto.jpg" />
-                            </div>
-                            <div style={{ gridColumn: '1 / -1' }}>
-                                <label style={label}>Isi Cerita (paragraf dipisah dengan baris kosong)</label>
-                                <textarea style={{ ...inp, resize: 'vertical', minHeight: 200, paddingTop: 12, lineHeight: 1.8 }}
-                                    value={form.content} onChange={e => handleForm('content', e.target.value)}
-                                    placeholder="Ada pagi-pagi yang terasa berbeda...&#10;&#10;Paragraf kedua..." />
-                            </div>
-                            <div style={{ gridColumn: '1 / -1', display: 'flex', alignItems: 'center', gap: 10 }}>
-                                <button onClick={() => handleForm('is_published', !form.is_published)}
-                                    style={{ width: 40, height: 20, borderRadius: 10, background: form.is_published ? '#CEB175' : 'rgba(255,255,255,0.1)', border: 'none', cursor: 'pointer', transition: 'background 0.3s', position: 'relative' }}>
-                                    <span style={{ position: 'absolute', top: 2, left: form.is_published ? 22 : 2, width: 16, height: 16, borderRadius: '50%', background: form.is_published ? '#000' : '#555', transition: 'left 0.3s' }} />
-                                </button>
-                                <label style={{ ...label, margin: 0, color: form.is_published ? '#CEB175' : '#525252' }}>
-                                    {form.is_published ? 'Diterbitkan' : 'Draft'}
-                                </label>
-                            </div>
-                        </div>
-
-                        <div style={{ display: 'flex', gap: 12, marginTop: 28, justifyContent: 'flex-end' }}>
-                            <button onClick={cancelEdit} style={{ background: 'none', border: '1px solid rgba(255,255,255,0.08)', color: '#525252', borderRadius: 20, padding: '8px 20px', cursor: 'pointer', fontSize: 9, letterSpacing: '0.4em', textTransform: 'uppercase' }}>Batal</button>
-                            <button onClick={handleSave} disabled={saving || !form.title || !form.slug}
-                                style={{ background: '#CEB175', border: 'none', color: '#000', borderRadius: 20, padding: '8px 24px', cursor: 'pointer', fontSize: 9, letterSpacing: '0.4em', textTransform: 'uppercase', opacity: saving || !form.title ? 0.5 : 1 }}>
-                                {saving ? 'Menyimpan...' : '✓ Simpan'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* List */}
+            {/* ── Entry List ── */}
             {loading ? (
-                <div style={{ textAlign: 'center', padding: '60px 0', color: '#525252', fontSize: 12 }}>Memuat...</div>
+                <div className="space-y-2">
+                    {[...Array(3)].map((_, i) => (
+                        <div key={i} className="h-16 bg-white/[0.02] animate-pulse" />
+                    ))}
+                </div>
             ) : entries.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '60px 0' }}>
-                    <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontStyle: 'italic', color: '#525252' }}>Belum ada cerita.</p>
-                    <button onClick={startNew} style={{ marginTop: 16, background: 'none', border: '1px solid rgba(206,177,117,0.3)', color: '#CEB175', borderRadius: 20, padding: '8px 20px', cursor: 'pointer', fontSize: 9, letterSpacing: '0.4em', textTransform: 'uppercase' }}>+ Cerita Pertama</button>
+                <div className="text-center py-32 border border-dashed border-white/[0.05]">
+                    <p className="font-serif italic text-white/20 text-2xl mb-6">Belum ada cerita.</p>
+                    <button onClick={startNew}
+                        className="text-[8px] uppercase tracking-[0.5em] text-[#CEB175]/50 hover:text-[#CEB175] transition-colors duration-300">
+                        + Cerita Pertama
+                    </button>
                 </div>
             ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    {entries.map(entry => (
-                        <div key={entry.id} style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '16px', background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.04)', borderRadius: 8 }}>
+                <div className="space-y-px">
+                    {entries.map((entry, i) => (
+                        <motion.div key={entry.id}
+                            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.05, duration: 0.5, ease: [0.22,1,0.36,1] }}
+                            className="group flex items-center gap-4 p-4 sm:p-5 border border-white/[0.04] hover:border-[#CEB175]/15 transition-colors duration-500"
+                        >
                             {/* Cover thumb */}
-                            <div style={{ width: 60, height: 40, borderRadius: 4, background: '#111', overflow: 'hidden', flexShrink: 0 }}>
-                                {entry.cover_image && <img src={entry.cover_image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.7 }} />}
+                            <div className="w-14 h-10 bg-white/[0.03] border border-white/[0.05] overflow-hidden flex-shrink-0">
+                                {entry.cover_image && (
+                                    <img src={entry.cover_image} alt="" className="w-full h-full object-cover opacity-60" />
+                                )}
                             </div>
+
                             {/* Info */}
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: 18, color: '#FAFAFA', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: 300 }}>{entry.title}</p>
-                                <p style={{ fontSize: 9, color: '#525252', margin: '3px 0 0', letterSpacing: '0.3em', textTransform: 'uppercase' }}>/{entry.slug} · {entry.aesthetic_tag || '—'} · {entry.season || '—'}</p>
+                            <div className="flex-1 min-w-0">
+                                <p className="font-serif italic text-white/80 text-base font-light truncate">
+                                    {entry.title}
+                                </p>
+                                <p className="text-[8px] uppercase tracking-[0.3em] text-white/20 mt-1">
+                                    /{entry.slug} · {entry.aesthetic_tag || '—'} · {entry.season || '—'}
+                                </p>
                             </div>
-                            {/* Published badge */}
-                            <span style={{ fontSize: 8, letterSpacing: '0.4em', textTransform: 'uppercase', color: entry.is_published ? '#7CAE7A' : '#525252', flexShrink: 0 }}>
-                                {entry.is_published ? 'Published' : 'Draft'}
+
+                            {/* Status */}
+                            <span className={`text-[7px] uppercase tracking-[0.4em] flex-shrink-0 ${
+                                entry.is_published ? 'text-emerald-400/60' : 'text-white/15'
+                            }`}>
+                                {entry.is_published ? 'Live' : 'Draft'}
                             </span>
+
                             {/* Actions */}
-                            <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
+                            <div className="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <button onClick={() => togglePublish(entry)} title={entry.is_published ? 'Jadikan Draft' : 'Terbitkan'}
-                                    style={{ background: 'none', border: 'none', color: entry.is_published ? '#CEB175' : '#525252', cursor: 'pointer', padding: 6 }}>
-                                    {entry.is_published ? <Eye size={15} /> : <EyeOff size={15} />}
+                                    className={`p-1.5 transition-colors duration-300 ${entry.is_published ? 'text-[#CEB175]/60 hover:text-[#CEB175]' : 'text-white/15 hover:text-white/50'}`}>
+                                    {entry.is_published ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
                                 </button>
-                                <button onClick={() => startEdit(entry)} style={{ background: 'none', border: 'none', color: '#525252', cursor: 'pointer', padding: 6 }}>
-                                    <Edit2 size={15} />
+                                <button onClick={() => startEdit(entry)}
+                                    className="p-1.5 text-white/15 hover:text-white/50 transition-colors duration-300">
+                                    <Edit2 className="w-3.5 h-3.5" />
                                 </button>
                                 <button onClick={() => handleDelete(entry.id)} disabled={deleting === entry.id}
-                                    style={{ background: 'none', border: 'none', color: '#525252', cursor: 'pointer', padding: 6, opacity: deleting === entry.id ? 0.4 : 1 }}>
-                                    <Trash2 size={15} />
+                                    className="p-1.5 text-white/15 hover:text-red-400/60 disabled:opacity-20 disabled:cursor-not-allowed transition-colors duration-300">
+                                    <Trash2 className="w-3.5 h-3.5" />
                                 </button>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             )}
+
+            {/* ── Editor Modal ── */}
+            <AnimatePresence>
+                {editing && (
+                    <motion.div
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[9999] bg-black/85 backdrop-blur-md flex items-start justify-center overflow-y-auto p-4 sm:p-10"
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 24, scale: 0.98 }}
+                            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                            className="w-full max-w-2xl bg-[#0a0a0a] border border-[#CEB175]/15 p-8 sm:p-10 relative my-auto"
+                            style={{ fontFamily: "'Montserrat', sans-serif" }}
+                        >
+                            {/* Close */}
+                            <button onClick={cancel}
+                                className="absolute top-5 right-5 text-white/20 hover:text-white/60 transition-colors duration-300">
+                                <X className="w-4 h-4" />
+                            </button>
+
+                            {/* Modal Header */}
+                            <p className="text-[8px] uppercase tracking-[0.6em] text-[#CEB175]/60 mb-3">
+                                {editing === 'new' ? 'Cerita Baru' : 'Edit Cerita'}
+                            </p>
+                            <h2 className="font-serif font-light text-white/90 mb-8"
+                                style={{ fontSize: 'clamp(22px, 3vw, 32px)' }}>
+                                {editing === 'new' ? 'Tulis Cerita Baru' : (form.title?.slice(0, 40) || 'Edit')}
+                            </h2>
+
+                            {/* Form Fields */}
+                            <div className="space-y-6">
+                                <Field label="Judul *">
+                                    <input className={inputCls} value={form.title}
+                                        onChange={e => handleForm('title', e.target.value)}
+                                        placeholder="Sebuah Sabtu di Lereng Gunung" />
+                                </Field>
+
+                                <Field label="Slug (URL) *">
+                                    <input className={`${inputCls} text-[#CEB175]/70 font-mono text-xs`}
+                                        value={form.slug}
+                                        onChange={e => handleForm('slug', e.target.value)}
+                                        placeholder="sabtu-di-lereng-gunung" />
+                                </Field>
+
+                                <Field label="Tagline">
+                                    <input className={inputCls} value={form.tagline}
+                                        onChange={e => handleForm('tagline', e.target.value)}
+                                        placeholder="Ketika kabut turun tepat saat ijab kabul..." />
+                                </Field>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                                    <Field label="Estetika">
+                                        <input className={inputCls} value={form.aesthetic_tag}
+                                            onChange={e => handleForm('aesthetic_tag', e.target.value)}
+                                            placeholder="Natural / Romantic" />
+                                    </Field>
+                                    <Field label="Venue (cryptic)">
+                                        <input className={inputCls} value={form.venue_hint}
+                                            onChange={e => handleForm('venue_hint', e.target.value)}
+                                            placeholder="Lereng Gunung, Sukabumi" />
+                                    </Field>
+                                    <Field label="Musim / Waktu">
+                                        <input className={inputCls} value={form.season}
+                                            onChange={e => handleForm('season', e.target.value)}
+                                            placeholder="Musim Hujan 2024" />
+                                    </Field>
+                                </div>
+
+                                <Field label="URL Gambar Cover">
+                                    <input className={inputCls} value={form.cover_image}
+                                        onChange={e => handleForm('cover_image', e.target.value)}
+                                        placeholder="https://... atau /images/foto.jpg" />
+                                </Field>
+
+                                <Field label="Urutan Tampil">
+                                    <input className={inputCls} type="number" value={form.display_order}
+                                        onChange={e => handleForm('display_order', parseInt(e.target.value) || 0)} />
+                                </Field>
+
+                                <Field label="Isi Cerita (paragraf dipisah baris kosong)">
+                                    <textarea className={areaCls} value={form.content}
+                                        onChange={e => handleForm('content', e.target.value)}
+                                        placeholder={'Ada pagi-pagi yang terasa berbeda...\n\nParagraf kedua...'} />
+                                </Field>
+
+                                {/* Publish toggle */}
+                                <div className="flex items-center gap-4 pt-2">
+                                    <button type="button" onClick={() => handleForm('is_published', !form.is_published)}
+                                        className={`relative w-9 h-5 border transition-all duration-400 ${
+                                            form.is_published ? 'bg-[#CEB175]/20 border-[#CEB175]/40' : 'bg-white/[0.03] border-white/[0.08]'
+                                        }`}>
+                                        <span className={`absolute top-[3px] w-3 h-3 transition-all duration-300 ${
+                                            form.is_published ? 'left-[18px] bg-[#CEB175]' : 'left-[3px] bg-white/20'
+                                        }`} />
+                                    </button>
+                                    <span className={`text-[8px] uppercase tracking-[0.4em] ${
+                                        form.is_published ? 'text-[#CEB175]' : 'text-white/20'
+                                    }`}>
+                                        {form.is_published ? 'Diterbitkan' : 'Draft'}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Actions */}
+                            <div className="flex items-center justify-end gap-4 mt-10 pt-6 border-t border-white/[0.06]">
+                                <button onClick={cancel}
+                                    className="text-[8px] uppercase tracking-[0.5em] text-white/20 hover:text-white/50 transition-colors duration-300">
+                                    Batal
+                                </button>
+                                <button onClick={handleSave}
+                                    disabled={saving || !form.title || !form.slug}
+                                    className="flex items-center gap-2 px-6 py-2.5 bg-[#CEB175] text-black text-[8px] uppercase tracking-[0.4em] font-medium disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#D4C090] transition-all duration-400">
+                                    {saving ? <RefreshCw className="w-3 h-3 animate-spin" /> : null}
+                                    {saving ? 'Menyimpan...' : 'Simpan Cerita'}
+                                </button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
