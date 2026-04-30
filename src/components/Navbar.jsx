@@ -16,10 +16,10 @@ export default function Navbar() {
     }, []);
 
     const navItems = [
-        { label: 'Whisper', href: '#testimonial' },
-        { label: 'Editorial', href: '#portfolio' },
+        { label: 'Editorial', href: '/portfolio' },
+        { label: 'Kisah', href: '/kisah' },
         { label: 'Atelier', href: '#atelier' },
-        { label: 'Venues', href: '#venues' },
+        { label: 'Tentang', href: '/tentang' },
         { label: 'Inquiry', href: '#manifesto' },
     ];
 

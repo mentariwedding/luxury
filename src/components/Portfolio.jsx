@@ -7,6 +7,7 @@ import SplitText from './SplitText';
 import Lightbox from './Lightbox';
 import GoldDivider from './GoldDivider';
 import { supabase } from '@/lib/supabase';
+import { PortfolioSkeleton } from './GoldSkeleton';
 
 /**
  * Editorial Mood Gallery — Magazine-style layout.
@@ -19,6 +20,7 @@ export default function Portfolio() {
         { title: 'Detail Penuh Makna', category: 'Hangat', image_url: '/images/hangat.JPG' },
         { title: 'Momen Tak Terlupakan', category: 'Estetik', image_url: '/images/estetik.JPG' },
     ]);
+    const [photosLoading, setPhotosLoading] = useState(true);
 
     useEffect(() => {
         const fetchPhotos = async () => {
@@ -31,6 +33,7 @@ export default function Portfolio() {
             if (data && data.length > 0 && !error) {
                 setPhotos(data);
             }
+            setPhotosLoading(false);
         };
         fetchPhotos();
     }, []);
@@ -74,59 +77,65 @@ export default function Portfolio() {
                 </Reveal>
             </div>
 
-            {/* ── Row 1: Hero Spread ── */}
-            <div className="grid grid-cols-12 gap-2 md:gap-3 mb-2 md:mb-3">
+            {photosLoading ? (
+                <PortfolioSkeleton />
+            ) : (
+                <>
+                {/* ── Row 1: Hero Spread ── */}
+                <div className="grid grid-cols-12 gap-2 md:gap-3 mb-2 md:mb-3">
 
-                {/* Large feature — left */}
-                {photos[0] && (
-                    <EditorialCard
-                        photo={photos[0]}
-                        index={0}
-                        className="col-span-12 lg:col-span-7 h-[420px] sm:h-[500px] md:h-[560px] lg:h-[760px]"
-                        size="large"
-                        onClick={openLightbox}
-                    />
-                )}
-
-                {/* Two stacked — right (3fr top, 2fr bottom) */}
-                <div className="col-span-12 lg:col-span-5 grid lg:grid-rows-[3fr_2fr] gap-2 md:gap-3 lg:h-[760px]">
-                    {photos[1] && (
+                    {/* Large feature — left */}
+                    {photos[0] && (
                         <EditorialCard
-                            photo={photos[1]}
-                            index={1}
-                            className="h-[280px] sm:h-[320px] md:h-[360px] lg:h-full"
-                            size="medium"
+                            photo={photos[0]}
+                            index={0}
+                            className="col-span-12 lg:col-span-7 h-[420px] sm:h-[500px] md:h-[560px] lg:h-[760px]"
+                            size="large"
                             onClick={openLightbox}
                         />
                     )}
-                    {photos[2] && (
-                        <EditorialCard
-                            photo={photos[2]}
-                            index={2}
-                            className="h-[200px] sm:h-[240px] md:h-[270px] lg:h-full"
-                            size="medium"
-                            onClick={openLightbox}
-                        />
-                    )}
-                </div>
-            </div>
 
-            {/* ── Row 2: Three equal columns ── */}
-            {(photos[3] || photos[4] || photos[5]) && (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3">
-                    {[3, 4, 5].map((i) =>
-                        photos[i] ? (
+                    {/* Two stacked — right (3fr top, 2fr bottom) */}
+                    <div className="col-span-12 lg:col-span-5 grid lg:grid-rows-[3fr_2fr] gap-2 md:gap-3 lg:h-[760px]">
+                        {photos[1] && (
                             <EditorialCard
-                                key={i}
-                                photo={photos[i]}
-                                index={i}
-                                className="aspect-[4/3] w-full"
-                                size="small"
+                                photo={photos[1]}
+                                index={1}
+                                className="h-[280px] sm:h-[320px] md:h-[360px] lg:h-full"
+                                size="medium"
                                 onClick={openLightbox}
                             />
-                        ) : null
-                    )}
+                        )}
+                        {photos[2] && (
+                            <EditorialCard
+                                photo={photos[2]}
+                                index={2}
+                                className="h-[200px] sm:h-[240px] md:h-[270px] lg:h-full"
+                                size="medium"
+                                onClick={openLightbox}
+                            />
+                        )}
+                    </div>
                 </div>
+
+                {/* ── Row 2: Three equal columns ── */}
+                {(photos[3] || photos[4] || photos[5]) && (
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3">
+                        {[3, 4, 5].map((i) =>
+                            photos[i] ? (
+                                <EditorialCard
+                                    key={i}
+                                    photo={photos[i]}
+                                    index={i}
+                                    className="aspect-[4/3] w-full"
+                                    size="small"
+                                    onClick={openLightbox}
+                                />
+                            ) : null
+                        )}
+                    </div>
+                )}
+                </>
             )}
 
             {/* Magazine footnote */}
