@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import GoldSkeleton from '@/components/GoldSkeleton';
 import Reveal from '@/components/Reveal';
