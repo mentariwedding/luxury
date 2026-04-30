@@ -5,11 +5,13 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Reveal from './Reveal';
 import SplitText from './SplitText';
 import Lightbox from './Lightbox';
+import GoldDivider from './GoldDivider';
 import { supabase } from '@/lib/supabase';
 
 /**
- * Editorial Mood Gallery — Magazine-style asymmetric layout.
- * Tidak menampilkan harga atau detail. Hanya atmosfer.
+ * Editorial Mood Gallery — Magazine-style layout.
+ * Row 1: Large feature (7 cols) + two stacked right (5 cols, 3fr/2fr split).
+ * Row 2: Three equal-proportion photos.
  */
 export default function Portfolio() {
     const [photos, setPhotos] = useState([
@@ -30,11 +32,9 @@ export default function Portfolio() {
                 setPhotos(data);
             }
         };
-
         fetchPhotos();
     }, []);
 
-    // Lightbox state
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState(0);
 
@@ -45,8 +45,9 @@ export default function Portfolio() {
 
     return (
         <section id="portfolio" className="luxury-section px-6 md:px-12 max-w-[1500px] mx-auto">
+
             {/* Magazine masthead */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 md:mb-28 gap-8 border-b border-[#CEB175]/10 pb-8">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8 border-b border-[#CEB175]/10 pb-10">
                 <div className="max-w-2xl relative">
                     <div className="absolute -left-12 -top-8 text-[10vw] font-serif italic text-white/[0.025] select-none pointer-events-none hidden lg:block leading-none">
                         Editorial
@@ -59,10 +60,11 @@ export default function Portfolio() {
                         </span>
                     </h2>
                     <Reveal delay={800}>
-                        <p className="text-[#A3A3A3] font-light tracking-wide leading-relaxed max-w-lg italic">
+                        <p className="text-[#A3A3A3] font-light tracking-wide leading-relaxed max-w-lg italic font-serif">
                             Tidak ada dua perayaan yang sama. Berikut, beberapa fragmen yang kami pilih untuk dibagikan.
                         </p>
                     </Reveal>
+                    <GoldDivider delay={0.4} width="w-20" />
                 </div>
                 <Reveal delay={400}>
                     <div className="flex flex-col items-end gap-2">
@@ -72,26 +74,27 @@ export default function Portfolio() {
                 </Reveal>
             </div>
 
-            {/* Magazine asymmetric grid */}
-            <div className="grid grid-cols-12 gap-4 md:gap-6">
-                {/* Feature 1 - Large left */}
+            {/* ── Row 1: Hero Spread ── */}
+            <div className="grid grid-cols-12 gap-2 md:gap-3 mb-2 md:mb-3">
+
+                {/* Large feature — left */}
                 {photos[0] && (
                     <EditorialCard
                         photo={photos[0]}
                         index={0}
-                        className="col-span-12 md:col-span-7 h-[750px] md:h-[900px] lg:h-[1100px] w-full"
+                        className="col-span-12 lg:col-span-7 h-[420px] sm:h-[500px] md:h-[560px] lg:h-[760px]"
                         size="large"
                         onClick={openLightbox}
                     />
                 )}
 
-                {/* Stack right */}
-                <div className="col-span-12 md:col-span-5 flex flex-col gap-4 md:gap-6 h-[750px] md:h-[900px] lg:h-[1100px]">
+                {/* Two stacked — right (3fr top, 2fr bottom) */}
+                <div className="col-span-12 lg:col-span-5 grid lg:grid-rows-[3fr_2fr] gap-2 md:gap-3 lg:h-[760px]">
                     {photos[1] && (
                         <EditorialCard
                             photo={photos[1]}
                             index={1}
-                            className="flex-[1.6] w-full"
+                            className="h-[280px] sm:h-[320px] md:h-[360px] lg:h-full"
                             size="medium"
                             onClick={openLightbox}
                         />
@@ -100,46 +103,34 @@ export default function Portfolio() {
                         <EditorialCard
                             photo={photos[2]}
                             index={2}
-                            className="flex-1 w-full"
+                            className="h-[200px] sm:h-[240px] md:h-[270px] lg:h-full"
                             size="medium"
                             onClick={openLightbox}
                         />
                     )}
                 </div>
-
-                {/* Optional row 2 — extra photos if available */}
-                {photos[3] && (
-                    <EditorialCard
-                        photo={photos[3]}
-                        index={3}
-                        className="col-span-12 md:col-span-4 aspect-square md:aspect-[3/4]"
-                        size="medium"
-                        onClick={openLightbox}
-                    />
-                )}
-                {photos[4] && (
-                    <EditorialCard
-                        photo={photos[4]}
-                        index={4}
-                        className="col-span-12 md:col-span-4 aspect-square md:aspect-[3/4]"
-                        size="medium"
-                        offset
-                        onClick={openLightbox}
-                    />
-                )}
-                {photos[5] && (
-                    <EditorialCard
-                        photo={photos[5]}
-                        index={5}
-                        className="col-span-12 md:col-span-4 aspect-square md:aspect-[3/4]"
-                        size="medium"
-                        onClick={openLightbox}
-                    />
-                )}
             </div>
 
+            {/* ── Row 2: Three equal columns ── */}
+            {(photos[3] || photos[4] || photos[5]) && (
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3">
+                    {[3, 4, 5].map((i) =>
+                        photos[i] ? (
+                            <EditorialCard
+                                key={i}
+                                photo={photos[i]}
+                                index={i}
+                                className="aspect-[4/3] w-full"
+                                size="small"
+                                onClick={openLightbox}
+                            />
+                        ) : null
+                    )}
+                </div>
+            )}
+
             {/* Magazine footnote */}
-            <div className="mt-20 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-[#CEB175]/10 pt-8">
+            <div className="mt-16 md:mt-20 flex flex-col md:flex-row justify-between items-center gap-6 border-t border-[#CEB175]/10 pt-8">
                 <p className="text-[9px] uppercase tracking-[0.5em] text-white/25 font-light">
                     Fragmen pilihan — selengkapnya hanya melalui percakapan
                 </p>
@@ -151,7 +142,6 @@ export default function Portfolio() {
                 </a>
             </div>
 
-            {/* Lightbox */}
             <Lightbox
                 images={photos}
                 currentIndex={lightboxIndex}
@@ -163,52 +153,71 @@ export default function Portfolio() {
     );
 }
 
-function EditorialCard({ photo, index, className = '', size = 'medium', offset = false, onClick }) {
+/* ─────────────────────────────────────────────────── */
+/*  Editorial Card                                      */
+/* ─────────────────────────────────────────────────── */
+function EditorialCard({ photo, index, className = '', size = 'medium', onClick }) {
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ['start end', 'end start'],
     });
-    const y = useTransform(scrollYProgress, [0, 1], ['-6%', '6%']);
+    // Subtle parallax — less aggressive than before for cleaner feel
+    const y = useTransform(scrollYProgress, [0, 1], ['-4%', '4%']);
 
     return (
         <motion.div
             ref={ref}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1], delay: index * 0.08 }}
-            className={`group relative overflow-hidden bg-[#0A0A0A] border border-[#CEB175]/10 cursor-pointer ${className} ${offset ? 'md:translate-y-12' : ''
-                }`}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: index * 0.07 }}
+            className={`group relative overflow-hidden bg-[#0A0A0A] border border-[#CEB175]/8 cursor-pointer ${className}`}
+            style={{ borderColor: 'rgba(206,177,117,0.08)' }}
             onClick={() => onClick?.(index)}
         >
+            {/* Parallax image */}
             <motion.img
-                style={{ y, scale: 1.12 }}
+                style={{ y, scale: 1.1 }}
                 src={photo.image_url}
                 alt={photo.title}
-                className="w-full h-full object-cover opacity-65 group-hover:opacity-100 transition-opacity duration-1000"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-[1200ms]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 opacity-100 group-hover:opacity-90 transition-opacity duration-700 pointer-events-none" />
 
-            {/* Magazine number */}
-            <div className="absolute top-5 left-5 z-20">
-                <span className="text-[9px] uppercase tracking-[0.5em] text-white/70 font-light font-serif italic">
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/10 z-10 pointer-events-none" />
+
+            {/* Hover vignette — luxury cinematic edge */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none"
+                style={{ boxShadow: 'inset 0 0 80px rgba(0,0,0,0.4)' }} />
+
+            {/* Plate number — top left */}
+            <div className="absolute top-4 left-4 z-20">
+                <span className="text-[9px] uppercase tracking-[0.5em] text-white/50 font-light font-serif italic">
                     Pl. {String(index + 1).padStart(2, '0')}
                 </span>
             </div>
 
-            {/* Caption */}
-            <div className="absolute bottom-0 left-0 w-full p-5 md:p-8 z-20">
-                <div className="flex items-center gap-3 mb-3">
-                    <span className="w-8 h-px bg-[#CEB175]" />
-                    <p className="text-[9px] uppercase tracking-[0.4em] text-[#CEB175] font-medium">
+            {/* Gold corner accent — top right, appears on hover */}
+            <div className="absolute top-0 right-0 w-8 h-8 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                <div className="absolute top-0 right-0 w-full h-px bg-[#CEB175]/60" />
+                <div className="absolute top-0 right-0 w-px h-full bg-[#CEB175]/60" />
+            </div>
+
+            {/* Caption — bottom */}
+            <div className="absolute bottom-0 left-0 w-full z-20 p-4 md:p-6">
+                <div className="flex items-center gap-2 mb-2">
+                    <span className="w-6 h-px bg-[#CEB175]" />
+                    <p className="text-[8px] uppercase tracking-[0.4em] text-[#CEB175] font-medium">
                         {photo.category || 'Gallery'}
                     </p>
                 </div>
-                <h3
-                    className={`font-serif text-white font-light leading-tight italic ${size === 'large' ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl'
-                        }`}
-                >
+                <h3 className={`font-serif text-white font-light leading-tight italic ${
+                    size === 'large' ? 'text-xl md:text-3xl' :
+                    size === 'medium' ? 'text-lg md:text-xl' :
+                    'text-base md:text-lg'
+                }`}>
                     {photo.title}
                 </h3>
             </div>

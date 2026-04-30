@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Reveal from './Reveal';
 import SplitText from './SplitText';
+import GoldDivider from './GoldDivider';
 import { supabase } from '@/lib/supabase';
 
 export default function Atelier() {
@@ -66,7 +67,7 @@ export default function Atelier() {
     }, []);
 
     return (
-        <section id="atelier" className="luxury-section bg-[#050505]">
+        <section id="atelier" className="luxury-section bg-[#050505] section-ambient">
             <div className="container mx-auto px-6 md:px-12">
                 <div className="max-w-3xl mb-24">
                     <Reveal>
@@ -93,19 +94,21 @@ export default function Atelier() {
                     </h2>
                     <Reveal delay={1000}>
                         <p className="text-[#A3A3A3] font-light leading-relaxed max-w-xl italic">
-                            "{content.description}"
+                            &ldquo;{content.description}&rdquo;
                         </p>
                     </Reveal>
+                    <GoldDivider delay={0.5} width="w-16" />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-20">
                     {pillars.map((pillar, index) => (
                         <Reveal key={index} delay={200 + (index * 200)}>
                             <div className="flex flex-col group cursor-pointer">
                                 <div className="aspect-[3/4] overflow-hidden mb-8 bg-[#111]">
-                                    <img 
-                                        src={pillar.image_url} 
-                                        alt={pillar.title} 
+                                    <img
+                                        src={pillar.image_url}
+                                        alt={pillar.title}
+                                        loading="lazy"
                                         className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-[1500ms] ease-out"
                                     />
                                 </div>
@@ -121,6 +124,32 @@ export default function Atelier() {
                         </Reveal>
                     ))}
                 </div>
+
+
+                {/* Lookbook CTA */}
+                <Reveal delay={800}>
+                    <div className="mt-20 md:mt-28 flex flex-col md:flex-row items-center justify-between gap-8 border-t border-[#CEB175]/10 pt-10">
+                        <div>
+                            <p className="text-[9px] uppercase tracking-[0.5em] text-white/25 font-light mb-2">Koleksi Visual</p>
+                            <p className="font-serif italic text-[#A3A3A3] text-lg font-light">
+                                Lihat dunia estetika kami yang lebih dalam.
+                            </p>
+                        </div>
+                        <a
+                            href={`https://wa.me/628123456789?text=${encodeURIComponent('Halo Mentari Wedding, saya ingin melihat Lookbook Anda.')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-4 flex-shrink-0"
+                        >
+                            <span className="text-[10px] uppercase tracking-[0.5em] text-[#CEB175] border-b border-[#CEB175]/30 pb-1 group-hover:text-white group-hover:border-white transition-all duration-500">
+                                Request Our Lookbook
+                            </span>
+                            <div className="w-8 h-8 border border-[#CEB175]/30 rounded-full flex items-center justify-center group-hover:bg-[#CEB175] group-hover:border-[#CEB175] transition-all duration-500">
+                                <span className="text-[#CEB175] group-hover:text-black text-xs transition-colors duration-500">↗</span>
+                            </div>
+                        </a>
+                    </div>
+                </Reveal>
             </div>
         </section>
     );

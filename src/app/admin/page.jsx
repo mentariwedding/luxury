@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { ArrowUpRight, ExternalLink, Clock, ImageIcon, FileText, Activity, MessageCircle, Quote, MapPin } from 'lucide-react';
+import { ArrowUpRight, ExternalLink, Clock, ImageIcon, FileText, Activity, MessageCircle, Quote, MapPin, Palette } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function AdminDashboard() {
-    const [stats,    setStats]    = useState({ photos: 0, sections: 0, whispers: 0, venues: 0, clicksToday: 0, clicksWeek: 0, clicksTotal: 0 });
+    const [stats,    setStats]    = useState({ photos: 0, sections: 0, testimonials: 0, venues: 0, clicksToday: 0, clicksWeek: 0, clicksTotal: 0 });
     const [recent,   setRecent]   = useState([]);
     const [updated,  setUpdated]  = useState([]);
     const [recentClicks, setRecentClicks] = useState([]);
@@ -18,10 +18,10 @@ export default function AdminDashboard() {
             const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
             const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
-            const [p, s, w, v, ct, cw, cTotal, recentPhotos, recentSections, recentClicksData] = await Promise.all([
+            const [p, s, t, v, ct, cw, cTotal, recentPhotos, recentSections, recentClicksData] = await Promise.all([
                 supabase.from('portfolio_gallery').select('*', { count: 'exact', head: true }),
                 supabase.from('section_content').select('*',  { count: 'exact', head: true }),
-                supabase.from('whispers').select('*', { count: 'exact', head: true }),
+                supabase.from('testimonials').select('*', { count: 'exact', head: true }),
                 supabase.from('venues').select('*', { count: 'exact', head: true }),
                 supabase.from('inquiry_clicks').select('*', { count: 'exact', head: true }).gte('created_at', dayAgo),
                 supabase.from('inquiry_clicks').select('*', { count: 'exact', head: true }).gte('created_at', weekAgo),
@@ -34,7 +34,7 @@ export default function AdminDashboard() {
             setStats({
                 photos: p.count || 0,
                 sections: s.count || 0,
-                whispers: w.count || 0,
+                testimonials: t.count || 0,
                 venues: v.count || 0,
                 clicksToday: ct.count || 0,
                 clicksWeek: cw.count || 0,
@@ -61,14 +61,14 @@ export default function AdminDashboard() {
 
     const SECTION_LABELS = {
         hero: 'Hero',
-        whisper: 'Whisper',
         signature: 'Signature',
         approach: 'Pendekatan',
         philosophy: 'Filosofi',
         atelier: 'Atelier',
         venues: 'Venues',
         manifesto: 'Manifesto',
-        partners: 'Partners',
+        moodboard: 'Mood Board',
+        testimonial: 'Testimonial',
     };
 
     const SOURCE_LABELS = {
@@ -146,10 +146,10 @@ export default function AdminDashboard() {
             {/* ── Stats Row ── */}
             <div className="border-t border-white/[0.06]">
                 {[
-                    { label: 'Foto Editorial',  value: stats.photos,   href: '/admin/gallery',   desc: 'Arsip visual pernikahan',  icon: ImageIcon },
-                    { label: 'Section Aktif',   value: stats.sections, href: '/admin/content',   desc: 'Konten yang dikelola',     icon: FileText },
-                    { label: 'Whispers',        value: stats.whispers, href: '/admin/whispers',  desc: 'Kalimat puitis aktif',     icon: Quote },
-                    { label: 'Venues',          value: stats.venues,   href: '/admin/venues',    desc: 'Curated locations',        icon: MapPin },
+                    { label: 'Foto Editorial',    value: stats.photos,       href: '/admin/gallery',       desc: 'Arsip visual pernikahan',    icon: ImageIcon },
+                    { label: 'Section Aktif',      value: stats.sections,     href: '/admin/content',       desc: 'Konten yang dikelola',       icon: FileText },
+                    { label: 'Testimonial',        value: stats.testimonials, href: '/admin/testimonials',  desc: 'Kutipan pasangan eksklusif', icon: Quote },
+                    { label: 'Venues',             value: stats.venues,       href: '/admin/venues',        desc: 'Curated locations',          icon: MapPin },
                 ].map((stat, i) => (
                     <motion.div key={i}
                         initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
@@ -269,12 +269,12 @@ export default function AdminDashboard() {
                     <p className="text-[8px] uppercase tracking-[0.5em] text-white/35 mb-8">Akses Cepat</p>
                     <div className="space-y-0">
                         {[
-                            { num: '01', label: 'Edit Banner Hero',     href: '/admin/content'   },
-                            { num: '02', label: 'Tulis Whisper Baru',    href: '/admin/whispers'  },
-                            { num: '03', label: 'Tambah Foto Editorial', href: '/admin/gallery'   },
-                            { num: '04', label: 'Curate Venues',         href: '/admin/venues'    },
-                            { num: '05', label: 'Atur Info Kontak',      href: '/admin/settings'  },
-                            { num: '06', label: 'Kelola Feed Instagram', href: '/admin/instagram' },
+                            { num: '01', label: 'Edit Banner Hero',       href: '/admin/content'       },
+                            { num: '02', label: 'Tambah Foto Editorial',  href: '/admin/gallery'       },
+                            { num: '03', label: 'Curate Venues',          href: '/admin/venues'        },
+                            { num: '04', label: 'Kelola Testimonial',     href: '/admin/testimonials'  },
+                            { num: '05', label: 'Kelola Mood Board',      href: '/admin/moodboard'     },
+                            { num: '06', label: 'Kelola Feed Instagram',  href: '/admin/instagram'     },
                         ].map((l) => (
                             <Link key={l.num} href={l.href}
                                 className="group flex items-center justify-between py-4 border-b border-white/[0.04] hover:border-[#CEB175]/15 transition-colors duration-400">

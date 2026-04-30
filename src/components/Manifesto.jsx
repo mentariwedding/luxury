@@ -1,16 +1,39 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import Reveal from './Reveal';
+
+/* Inline count-up hook — no extra dependency */
+function useCountUp(target, duration = 2000, shouldStart = false) {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        if (!shouldStart) return;
+        const startTime = performance.now();
+        const animate = (now) => {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.floor(eased * target));
+            if (progress < 1) requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+    }, [target, duration, shouldStart]);
+    return count;
+}
 
 /**
  * "By Inquiry Only" — Manifesto eksklusivitas brand.
  * Tidak ada harga, tidak ada paket. Hanya ajakan untuk memulai percakapan.
  */
 export default function Manifesto() {
+    const statsRef = useRef(null);
+    const statsInView = useInView(statsRef, { once: true, margin: '-80px' });
+    const c0 = useCountUp(60, 2000, statsInView);
+    const c1 = useCountUp(5, 1500, statsInView);
+    const c2 = useCountUp(100, 2200, statsInView);
+
     const [content, setContent] = useState({
         subtitle: 'Selectively Curated',
         title: 'By Inquiry Only.',
@@ -110,13 +133,56 @@ export default function Manifesto() {
                         </p>
                     </Reveal>
 
+                    {/* Stats strip — merged from SocialProof */}
+                    <Reveal delay={550}>
+                        <div
+                            ref={statsRef}
+                            className="flex justify-center gap-12 md:gap-20 mb-14 border-y border-[#CEB175]/8 py-8"
+                        >
+                            {[
+                                { count: c0, suffix: '+', label: 'Cerita Dirangkai' },
+                                { count: c1, suffix: '+', label: 'Tahun Pengalaman' },
+                                { count: c2, suffix: '%', label: 'Dedikasi Penuh Hati' },
+                            ].map((s, i) => (
+                                <div key={i} className="text-center">
+                                    <p className="font-serif font-light text-white/90 leading-none mb-1.5" style={{ fontSize: 'clamp(28px, 5vw, 52px)' }}>
+                                        <span className="tabular-nums">{s.count}</span>
+                                        <span className="text-[#CEB175] italic" style={{ fontSize: '0.6em' }}>{s.suffix}</span>
+                                    </p>
+                                    <p className="text-[8px] uppercase tracking-[0.4em] text-white/30 font-light">{s.label}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </Reveal>
+
+                    <Reveal delay={600}>
+                        {/* Scarcity indicator — slot dots */}
+                        <div className="flex flex-col items-center gap-4 mb-12">
+                            <div className="flex items-center gap-1.5">
+                                {[...Array(12)].map((_, i) => (
+                                    <div
+                                        key={i}
+                                        className={`rounded-full transition-all duration-300 ${
+                                            i < 9
+                                                ? 'w-2 h-2 bg-[#CEB175]/15'
+                                                : 'w-2.5 h-2.5 bg-[#CEB175]'
+                                        }`}
+                                    />
+                                ))}
+                            </div>
+                            <span className="text-[9px] uppercase tracking-[0.5em] text-[#CEB175]/50 font-light">
+                                3 Celebrations Remaining · 2025
+                            </span>
+                        </div>
+                    </Reveal>
+
                     <Reveal delay={700}>
                         <a
                             href={`https://wa.me/${whatsapp}?text=${waMessage}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={trackClick}
-                            className="inline-flex items-center gap-5 group border border-[#CEB175]/40 px-12 py-6 rounded-full hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700 relative overflow-hidden"
+                            className="inline-flex items-center gap-5 group border border-[#CEB175]/40 px-12 py-6 rounded-full hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700 relative overflow-hidden mb-6"
                         >
                             <span className="text-[10px] uppercase tracking-[0.5em] text-white group-hover:text-black font-light transition-colors duration-700 relative z-10">
                                 {content.cta_text}

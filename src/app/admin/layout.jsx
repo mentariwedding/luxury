@@ -11,13 +11,14 @@ import { ConfirmProvider } from '@/components/ConfirmModal';
 import MinimalistTooltip from '@/components/MinimalistTooltip';
 
 const NAV = [
-    { label: 'Dashboard',  href: '/admin',          exact: true },
-    { label: 'Konten',     href: '/admin/content'               },
-    { label: 'Whispers',   href: '/admin/whispers'              },
-    { label: 'Galeri',     href: '/admin/gallery'               },
-    { label: 'Venues',     href: '/admin/venues'                },
-    { label: 'Instagram',  href: '/admin/instagram'             },
-    { label: 'Pengaturan', href: '/admin/settings'              },
+    { label: 'Dashboard',    href: '/admin',                exact: true },
+    { label: 'Konten',       href: '/admin/content'                      },
+    { label: 'Galeri',       href: '/admin/gallery'                      },
+    { label: 'Venues',       href: '/admin/venues'                       },
+    { label: 'Testimonial',  href: '/admin/testimonials'                 },
+    { label: 'Mood Board',   href: '/admin/moodboard'                    },
+    { label: 'Instagram',    href: '/admin/instagram'                    },
+    { label: 'Pengaturan',   href: '/admin/settings'                     },
 ];
 
 export default function AdminLayout({ children }) {

@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import Reveal from './Reveal';
+import GoldDivider from './GoldDivider';
 
 /**
  * Curated Venues — Showcase venue tanpa nama spesifik.
@@ -51,7 +52,7 @@ export default function Venues() {
     const titleParts = (content.title || '').split('.');
 
     return (
-        <section id="venues" className="luxury-section bg-[#050505] relative overflow-hidden">
+        <section id="venues" className="luxury-section bg-[#050505] relative overflow-hidden section-ambient">
             <div className="container mx-auto px-6 md:px-12 max-w-[1500px]">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-8">
@@ -69,6 +70,7 @@ export default function Venues() {
                                 )}
                             </h2>
                         </Reveal>
+                        <GoldDivider delay={0.3} width="w-16" />
                     </div>
                     <Reveal delay={400}>
                         <p className="text-[#A3A3A3] font-light text-sm leading-relaxed max-w-md italic border-l border-[#CEB175]/20 pl-6">
@@ -114,6 +116,7 @@ function VenueCard({ venue, index }) {
                         style={{ y, scale: 1.15 }}
                         src={venue.image_url}
                         alt={venue.name}
+                        loading="lazy"
                         className="w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-opacity duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />

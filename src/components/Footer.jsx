@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { SunMedium, MapPin, Send } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import Reveal from './Reveal';
 import InstagramFeed from './InstagramFeed';
@@ -22,6 +22,23 @@ const InstagramIcon = ({ className }) => (
         <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
         <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+);
+
+const PinterestIcon = ({ className }) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={className}
+    >
+        <path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.428 1.808-2.428.852 0 1.265.64 1.265 1.408 0 .858-.546 2.141-.828 3.329-.236.994.499 1.806 1.476 1.806 1.772 0 3.135-1.868 3.135-4.561 0-2.386-1.716-4.054-4.163-4.054-2.838 0-4.503 2.128-4.503 4.328 0 .857.33 1.776.742 2.278a.3.3 0 0 1 .069.286c-.076.314-.244.994-.277 1.134-.044.183-.146.222-.337.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.966-.527-2.292-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z" />
     </svg>
 );
 
@@ -60,7 +77,25 @@ export default function Footer() {
                     <div className="flex flex-col items-center text-center">
                         <Reveal>
                             <div className="flex items-center gap-4 mb-10 opacity-40">
-                                <SunMedium className="w-5 h-5 text-[#CEB175]" />
+                                <svg
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="text-[#CEB175] flex-shrink-0"
+                                    aria-hidden="true"
+                                >
+                                    <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1" />
+                                    <line x1="12" y1="2" x2="12" y2="5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="2" y1="12" x2="5" y2="12" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="19" y1="12" x2="22" y2="12" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="4.93" y1="4.93" x2="7.05" y2="7.05" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="16.95" y1="16.95" x2="19.07" y2="19.07" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="19.07" y1="4.93" x2="16.95" y2="7.05" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="7.05" y1="16.95" x2="4.93" y2="19.07" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                </svg>
                                 <span className="text-[10px] uppercase tracking-[0.8em] text-[#CEB175]">Planned to Perfection</span>
                             </div>
                         </Reveal>
@@ -98,7 +133,7 @@ export default function Footer() {
                             </a>
                             <a href={settings.pinterest_url} className="group flex items-center gap-4 text-sm font-light text-[#A3A3A3] hover:text-[#CEB175] transition-all duration-500">
                                 <div className="w-10 h-10 border border-[#CEB175]/10 flex items-center justify-center group-hover:border-[#CEB175]/40 rounded-full transition-colors">
-                                    <Send className="w-4 h-4" />
+                                    <PinterestIcon className="w-4 h-4" />
                                 </div>
                                 <span className="tracking-[0.2em] uppercase text-[11px]">Pinterest</span>
                             </a>

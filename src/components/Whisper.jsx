@@ -53,7 +53,7 @@ export default function Whisper() {
         <section
             ref={containerRef}
             id="whisper"
-            className="relative bg-[#050505] overflow-hidden"
+            className="relative bg-[#050505] overflow-hidden section-ambient"
             style={{ paddingTop: 'clamp(80px, 14vh, 180px)', paddingBottom: 'clamp(80px, 14vh, 180px)' }}
         >
             {/* Subtle radial glow */}

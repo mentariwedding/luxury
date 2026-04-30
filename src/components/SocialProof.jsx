@@ -67,7 +67,7 @@ export default function SocialProof() {
     const counts = [count0, count1, count2];
 
     return (
-        <section ref={ref} className="relative bg-[#0A0A0A] overflow-hidden border-y border-[#CEB175]/10">
+        <section ref={ref} className="relative bg-[#080808] overflow-hidden border-y border-[#CEB175]/5">
             {/* Subtle background glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#CEB175] rounded-full blur-[200px] opacity-[0.02] pointer-events-none" />
 

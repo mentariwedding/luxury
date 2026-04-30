@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Reveal from './Reveal';
 import SplitText from './SplitText';
 import { supabase } from '@/lib/supabase';
@@ -39,8 +40,17 @@ export default function Hero() {
     // Split title for effect if it contains comma
     const titleParts = content.title.split(',');
 
+    // Scroll parallax setup
+    const sectionRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ['start start', 'end start'],
+    });
+    const textY = useTransform(scrollYProgress, [0, 1], ['0%', '28%']);
+    const textOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+
     return (
-        <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden bg-black">
+        <section ref={sectionRef} className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden bg-black">
             {/* Floating Decorative Elements */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
                 <div className="absolute top-[20%] left-[10%] w-32 h-32 border border-[#CEB175]/10 rounded-full animate-float-slow"></div>
@@ -71,6 +81,7 @@ export default function Hero() {
                     <img
                         src={content.image_url}
                         alt="Background"
+                        fetchPriority="high"
                         className="w-full h-full object-cover opacity-60 scale-110 animate-[subtle-zoom_20s_infinite_alternate]"
                     />
                 )}
@@ -86,7 +97,10 @@ export default function Hero() {
                 <span className="w-px h-12 bg-[#CEB175]/30"></span>
             </div>
 
-            <div className="relative z-10 text-center px-4 max-w-5xl mx-auto mt-24 flex flex-col items-center">
+            <motion.div
+                style={{ y: textY, opacity: textOpacity }}
+                className="relative z-10 text-center px-4 max-w-5xl mx-auto mt-24 flex flex-col items-center"
+            >
                 <Reveal>
                     <SplitText
                         text={content.subtitle}
@@ -106,14 +120,14 @@ export default function Hero() {
                 </h1>
 
                 <Reveal delay={1200}>
-                    <p className="text-sm md:text-base text-[#A3A3A3] font-light max-w-2xl mx-auto mb-12 tracking-[0.1em] leading-relaxed uppercase opacity-80">
+                    <p className="text-sm md:text-base text-[#A3A3A3] font-light max-w-2xl mx-auto mb-12 tracking-[0.05em] leading-loose opacity-80 font-serif italic">
                         {content.description}
                     </p>
                 </Reveal>
                 <Reveal delay={1400}>
                     <div className="w-px h-12 bg-[#CEB175]/30 mx-auto mb-8"></div>
                 </Reveal>
-            </div>
+            </motion.div>
 
             {/* Scroll Indicator - More Elegant & Minimalist */}
             <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">

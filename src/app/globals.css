@@ -21,7 +21,7 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Grain Overlay Texture - Very Subtle for Luxury Feel */
+/* Grain Overlay Texture - Cinematic analog film depth */
 .grain-overlay::before {
   content: "";
   position: fixed;
@@ -31,7 +31,7 @@ html, body {
   height: 100%;
   pointer-events: none;
   z-index: 50;
-  opacity: 0.02;
+  opacity: 0.04;
   background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
 }
 
@@ -135,5 +135,48 @@ html, body {
   .luxury-gap {
     gap: clamp(32px, 5vw, 64px);
   }
+
+  /* Gold shimmer — divider line yang 'hidup' */
+  .gold-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .gold-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(206, 177, 117, 0.5), transparent);
+    animation: shimmer-slide 4s ease-in-out infinite;
+  }
+
+  /* Ambient section connector — gradient blob antar section */
+  .section-ambient {
+    position: relative;
+  }
+  .section-ambient::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(206, 177, 117, 0.12), transparent);
+    pointer-events: none;
+    z-index: 1;
+  }
 }
 
+@keyframes shimmer-slide {
+  0% { left: -100%; }
+  50% { left: 150%; }
+  100% { left: 150%; }
+}
+
+@keyframes draw-line {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}

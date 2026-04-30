@@ -104,7 +104,7 @@ export default function FloatingInquiry() {
                             {expanded ? (
                                 <X className="w-4 h-4" />
                             ) : (
-                                <span className="text-[9px] uppercase tracking-[0.3em] font-light">Bisikan</span>
+                                <span className="text-[9px] uppercase tracking-[0.3em] font-light">Whisper</span>
                             )}
                             {/* Pulse */}
                             {!expanded && (

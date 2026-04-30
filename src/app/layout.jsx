@@ -113,6 +113,52 @@ export default function RootLayout({ children }) {
         description: 'Merangkai pernikahan impian dengan estetika timeless dan pelayanan penuh ketulusan.',
         inLanguage: 'id-ID',
       },
+      {
+        '@type': 'FAQPage',
+        '@id': 'https://mentariwedding.id/#faq',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'Berapa biaya wedding organizer Mentari Wedding?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Mentari Wedding beroperasi dengan sistem By Inquiry Only. Kami tidak memiliki paket harga standar — setiap perayaan dirancang khusus sesuai visi dan kebutuhan unik pasangan. Hubungi kami melalui WhatsApp untuk konsultasi awal yang sepenuhnya gratis.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Apakah Mentari Wedding melayani area luar Sukabumi?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Ya, Mentari Wedding melayani seluruh area Jawa Barat dan sekitarnya, termasuk Bogor, Bandung, dan Cianjur. Untuk venue di luar Jawa Barat, silakan hubungi kami untuk diskusi lebih lanjut.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Berapa bulan sebelumnya saya harus menghubungi Mentari Wedding?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Kami menyarankan untuk menghubungi kami minimal 6 bulan sebelum hari pernikahan. Karena Mentari Wedding hanya melayani klien terpilih setiap tahunnya, slot kami terbatas dan sering kali penuh jauh hari sebelumnya.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Apa yang membedakan Mentari Wedding dari wedding organizer lainnya di Sukabumi?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Mentari Wedding mengutamakan pendekatan personal dan eksklusif. Kami membatasi jumlah klien per tahun untuk memastikan setiap pasangan mendapatkan perhatian penuh. Setiap detail — dari konsep dekorasi hingga alur acara — dirancang khusus, bukan dari template.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Apakah Mentari Wedding menyediakan dekorasi pernikahan?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Ya, Mentari Wedding menyediakan layanan dekorasi pernikahan sebagai bagian dari paket wedding organizer kami. Kami bekerja dengan vendor dekorasi terpilih untuk menghadirkan estetika yang selaras dengan visi Anda.',
+            },
+          },
+        ],
+      },
     ],
   };
 

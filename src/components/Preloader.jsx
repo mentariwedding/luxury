@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SunMedium } from 'lucide-react';
 
 export default function Preloader() {
     // null = belum diputuskan; true = tampilkan; false = jangan
@@ -78,23 +77,49 @@ export default function Preloader() {
                                 }}
                                 className="mb-8"
                             >
-                                <SunMedium
-                                    className="w-10 h-10 text-[#CEB175]"
-                                    strokeWidth={1}
-                                />
+                                <svg
+                                    width="40"
+                                    height="40"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="text-[#CEB175]"
+                                    aria-hidden="true"
+                                >
+                                    <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1" />
+                                    <line x1="12" y1="2" x2="12" y2="5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="2" y1="12" x2="5" y2="12" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="19" y1="12" x2="22" y2="12" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="4.93" y1="4.93" x2="7.05" y2="7.05" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="16.95" y1="16.95" x2="19.07" y2="19.07" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="19.07" y1="4.93" x2="16.95" y2="7.05" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="7.05" y1="16.95" x2="4.93" y2="19.07" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                                    <line x1="12" y1="6.5" x2="12" y2="7.5" stroke="currentColor" strokeWidth="0.5" strokeLinecap="round" opacity="0.5" />
+                                    <line x1="12" y1="16.5" x2="12" y2="17.5" stroke="currentColor" strokeWidth="0.5" strokeLinecap="round" opacity="0.5" />
+                                    <line x1="6.5" y1="12" x2="7.5" y2="12" stroke="currentColor" strokeWidth="0.5" strokeLinecap="round" opacity="0.5" />
+                                    <line x1="16.5" y1="12" x2="17.5" y2="12" stroke="currentColor" strokeWidth="0.5" strokeLinecap="round" opacity="0.5" />
+                                </svg>
                             </motion.div>
 
-                            {/* Brand name — letter reveal */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 8 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                                className="overflow-hidden"
-                            >
-                                <span className="font-serif text-xl md:text-2xl tracking-[0.5em] text-white/90 uppercase font-light">
-                                    Mentari
-                                </span>
-                            </motion.div>
+                            {/* Brand name — per-letter stagger reveal */}
+                            <div className="overflow-hidden flex items-center gap-0">
+                                {'MENTARI'.split('').map((letter, i) => (
+                                    <motion.span
+                                        key={i}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{
+                                            duration: 0.6,
+                                            delay: 0.3 + i * 0.07,
+                                            ease: [0.22, 1, 0.36, 1],
+                                        }}
+                                        className="font-serif text-xl md:text-2xl tracking-[0.5em] text-white/90 uppercase font-light inline-block"
+                                    >
+                                        {letter}
+                                    </motion.span>
+                                ))}
+                            </div>
 
                             {/* Gold line — draws from center outward */}
                             <motion.div

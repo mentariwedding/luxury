@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import Reveal from './Reveal';
+import GoldDivider from './GoldDivider';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 
@@ -55,16 +56,17 @@ export default function Signature() {
                     <Reveal delay={200} className="w-full lg:w-1/2 order-2 lg:order-1">
                         <div className="relative max-w-md mx-auto lg:mx-0">
                             <div className="aspect-[3/4] overflow-hidden border border-[#CEB175]/20 rounded-sm">
-                                <motion.img 
+                                <motion.img
                                     style={{ y, scale: 1.2 }}
-                                    src={content.image_url} 
-                                    alt="Mentari Signature Style" 
+                                    src={content.image_url}
+                                    alt="Mentari Signature Style"
+                                    loading="lazy"
                                     className="w-full h-full object-cover opacity-80"
                                 />
                             </div>
-                            <div className="absolute -bottom-8 -right-8 bg-[#050505] p-8 border border-[#CEB175]/20 hidden md:block z-10 shadow-2xl">
-                                <p className="font-serif text-[#CEB175] text-xl mb-1 italic">Gaya Khas Kami</p>
-                                <p className="text-white text-[10px] uppercase tracking-[0.4em] font-light">Sentuhan Mentari Wedding</p>
+                            <div className="absolute -bottom-8 -right-8 bg-[#050505] px-6 py-5 border border-[#CEB175]/20 hidden md:block z-10 shadow-2xl">
+                                <p className="font-serif text-[#CEB175] text-xs italic mb-1 tracking-[0.2em]">Est. 2019</p>
+                                <p className="text-white text-[9px] uppercase tracking-[0.45em] font-light">Sukabumi, Jawa Barat</p>
                             </div>
                         </div>
                     </Reveal>
@@ -74,11 +76,12 @@ export default function Signature() {
                             <p className="gold-gradient-text text-[10px] uppercase tracking-[0.4em] mb-6 font-medium">{content.subtitle}</p>
                         </Reveal>
                         <Reveal delay={200}>
-                            <h2 className="font-serif text-4xl md:text-6xl font-light text-white mb-8 leading-tight">
+                            <h2 className="font-serif text-4xl md:text-6xl font-light text-white mb-4 leading-tight">
                                 {titleParts[0]} <br />
                                 {titleParts[1] && <span className="italic gold-gradient-text">& {titleParts[1]}</span>}
                             </h2>
                         </Reveal>
+                        <GoldDivider delay={0.3} width="w-14" />
                         <Reveal delay={400} className="space-y-6 text-[#A3A3A3] font-light leading-relaxed max-w-lg text-sm md:text-base">
                             {paragraphs.map((p, i) => (
                                 <p key={i}>{p}</p>
