@@ -4,6 +4,7 @@ import AmbientMusic from '../components/AmbientMusic';
 import FloatingGoldThread from '../components/FloatingGoldThread';
 import BackToTop from '../components/BackToTop';
 import PageTransition from '../components/PageTransition';
+import Navbar from '../components/Navbar';
 
 import './globals.css';
 
@@ -178,6 +179,7 @@ export default function RootLayout({ children }) {
         <AmbientMusic />
         <FloatingGoldThread />
         <BackToTop />
+        <Navbar />
         {children}
       </body>
     </html>

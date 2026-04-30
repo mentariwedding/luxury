@@ -2,18 +2,22 @@
 
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
-    const [isScrolled, setIsScrolled] = useState(false);
+    const pathname = usePathname();
+    const isHomepage = pathname === '/';
+    const [scrolled, setScrolled] = useState(!isHomepage); // subpages: always dark
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
+        if (!isHomepage) return; // skip scroll listener on subpages
+        const handleScroll = () => setScrolled(window.scrollY > 50);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [isHomepage]);
+
+    const isScrolled = scrolled;
 
     const navItems = [
         { label: 'Editorial', href: '/portfolio' },

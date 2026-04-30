@@ -32,20 +32,8 @@ export default function KisahDetailPage() {
         <div className="min-h-screen bg-[#050505]" style={{ fontFamily: "'Montserrat', sans-serif" }}>
             <div className="grain-overlay" />
 
-            {/* Header */}
-            <header className="sticky top-0 z-50 bg-[#050505]/90 backdrop-blur-xl border-b border-white/[0.04]">
-                <div className="container mx-auto px-6 md:px-12 h-[60px] flex items-center justify-between">
-                    <Link href="/" className="font-serif text-lg tracking-wider text-white hover:text-[#CEB175] transition-colors duration-500">
-                        Mentari Wedding
-                    </Link>
-                    <Link href="/kisah" className="text-[9px] uppercase tracking-[0.5em] text-white/30 hover:text-[#CEB175] transition-colors duration-500">
-                        ← Semua Kisah
-                    </Link>
-                </div>
-            </header>
-
             <main className="max-w-[900px] mx-auto px-6 md:px-12"
-                style={{ paddingTop: 'clamp(60px, 10vh, 100px)', paddingBottom: 'clamp(80px, 12vh, 140px)' }}>
+                style={{ paddingTop: 'clamp(100px, 14vh, 140px)', paddingBottom: 'clamp(80px, 12vh, 140px)' }}>
 
                 {/* Loading */}
                 {loading && (

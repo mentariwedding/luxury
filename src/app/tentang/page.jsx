@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import Reveal from '@/components/Reveal';
 import GoldDivider from '@/components/GoldDivider';
 
@@ -37,32 +36,9 @@ export default function TentangPage() {
         <div className="min-h-screen bg-[#050505]" style={{ fontFamily: "'Montserrat', sans-serif" }}>
             <div className="grain-overlay" />
 
-            {/* ── Header ── */}
-            <header className="sticky top-0 z-50 bg-[#050505]/90 backdrop-blur-xl border-b border-white/[0.04]">
-                <div className="container mx-auto px-6 md:px-12 h-[60px] flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-[#CEB175]">
-                            <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1"/>
-                            <line x1="12" y1="2" x2="12" y2="5" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-                            <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-                            <line x1="2" y1="12" x2="5" y2="12" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-                            <line x1="19" y1="12" x2="22" y2="12" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-                            <line x1="4.93" y1="4.93" x2="7.05" y2="7.05" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-                            <line x1="16.95" y1="16.95" x2="19.07" y2="19.07" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-                            <line x1="19.07" y1="4.93" x2="16.95" y2="7.05" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-                            <line x1="7.05" y1="16.95" x2="4.93" y2="19.07" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
-                        </svg>
-                        <span className="font-serif text-lg tracking-wider text-white group-hover:text-[#CEB175] transition-colors duration-500">Mentari Wedding</span>
-                    </Link>
-                    <Link href="/" className="text-[9px] uppercase tracking-[0.5em] text-white/30 hover:text-[#CEB175] transition-colors duration-500">
-                        ← Kembali
-                    </Link>
-                </div>
-            </header>
-
             <main>
                 {/* ── Hero ── */}
-                <section className="relative overflow-hidden" style={{ paddingTop: 'clamp(80px, 14vh, 160px)', paddingBottom: 'clamp(60px, 10vh, 120px)' }}>
+                <section className="relative overflow-hidden" style={{ paddingTop: 'clamp(100px, 16vh, 180px)', paddingBottom: 'clamp(60px, 10vh, 120px)' }}>
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#CEB175] rounded-full blur-[250px] opacity-[0.025] pointer-events-none" />
                     <div className="container mx-auto px-6 md:px-12 max-w-[1200px] relative z-10">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-end">
