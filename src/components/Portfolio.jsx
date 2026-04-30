@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import Reveal from './Reveal';
 import SplitText from './SplitText';
 import Lightbox from './Lightbox';
@@ -172,8 +172,30 @@ function EditorialCard({ photo, index, className = '', size = 'medium', onClick 
         target: ref,
         offset: ['start end', 'end start'],
     });
-    // Subtle parallax — less aggressive than before for cleaner feel
     const y = useTransform(scrollYProgress, [0, 1], ['-4%', '4%']);
+
+    // 3D Tilt — mouse tracking (desktop only)
+    const rotateX = useMotionValue(0);
+    const rotateY = useMotionValue(0);
+    const springX = useSpring(rotateX, { stiffness: 150, damping: 20 });
+    const springY = useSpring(rotateY, { stiffness: 150, damping: 20 });
+
+    const handleMouseMove = (e) => {
+        const card = ref.current;
+        if (!card) return;
+        const rect = card.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / (rect.width / 2);  // -1 to 1
+        const dy = (e.clientY - cy) / (rect.height / 2); // -1 to 1
+        rotateY.set(dx * 5);   // max 5 degrees
+        rotateX.set(-dy * 4);  // max 4 degrees
+    };
+
+    const handleMouseLeave = () => {
+        rotateX.set(0);
+        rotateY.set(0);
+    };
 
     return (
         <motion.div
@@ -183,7 +205,9 @@ function EditorialCard({ photo, index, className = '', size = 'medium', onClick 
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: index * 0.07 }}
             className={`group relative overflow-hidden bg-[#0A0A0A] border border-[#CEB175]/8 cursor-pointer ${className}`}
-            style={{ borderColor: 'rgba(206,177,117,0.08)' }}
+            style={{ borderColor: 'rgba(206,177,117,0.08)', rotateX: springX, rotateY: springY, transformPerspective: 800 }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
             onClick={() => onClick?.(index)}
         >
             {/* Parallax image */}

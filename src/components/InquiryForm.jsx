@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowRight, Check } from 'lucide-react';
+import { X, ArrowRight, Check, Loader2 } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 const WA_NUMBER = '628123456789';
 
@@ -42,12 +43,27 @@ export default function InquiryForm({ isOpen, onClose }) {
     const canNext1 = form.date && form.guests;
     const canNext2 = form.aesthetic;
     const canSubmit = form.initials.trim().length >= 2;
+    const [submitting, setSubmitting] = useState(false);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        setSubmitting(true);
+        // Save to Supabase (silent fail — never block WA redirect)
+        try {
+            await supabase.from('inquiry_submissions').insert([{
+                initials: form.initials,
+                wedding_date: form.date || null,
+                guest_range: form.guests,
+                aesthetic: form.aesthetic,
+                message: form.message,
+                status: 'new',
+                source: 'inquiry_form',
+            }]);
+        } catch (_) { /* silent */ }
+
         const msg = [
             `Halo Mentari Wedding 🌸`,
             ``,
-            `Saya ${form.initials || '(nama belum diisi)'} ingin berdiskusi tentang pernikahan kami.`,
+            `Saya ${form.initials} ingin berdiskusi tentang pernikahan kami.`,
             ``,
             `📅 Tanggal: ${form.date || '—'}`,
             `👥 Tamu: ${form.guests || '—'}`,
@@ -55,9 +71,10 @@ export default function InquiryForm({ isOpen, onClose }) {
             form.message ? `💬 Pesan: ${form.message}` : '',
             ``,
             `Terima kasih, kami menantikan cerita lebih lanjut bersama Anda.`,
-        ].filter(l => l !== undefined).join('\n');
+        ].filter(Boolean).join('\n');
 
         window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+        setSubmitting(false);
         onClose?.();
     };
 
@@ -271,11 +288,12 @@ export default function InquiryForm({ isOpen, onClose }) {
                             ) : (
                                 <button
                                     onClick={handleSubmit}
-                                    disabled={!canSubmit}
+                                    disabled={!canSubmit || submitting}
                                     className="group flex items-center gap-3 text-[9px] uppercase tracking-[0.5em] bg-[#CEB175] text-black px-8 py-3.5 rounded-full hover:bg-[#E8D399] disabled:opacity-25 disabled:cursor-not-allowed transition-all duration-500"
                                 >
-                                    Kirim ke WhatsApp
-                                    <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-300" />
+                                    {submitting ? <Loader2 className="w-3 h-3 animate-spin" /> : null}
+                                    {submitting ? 'Mengirim...' : 'Kirim ke WhatsApp'}
+                                    {!submitting && <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-300" />}
                                 </button>
                             )}
                         </div>
