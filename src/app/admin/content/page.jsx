@@ -8,7 +8,7 @@ import { useToast } from '@/components/Toast';
 import { useConfirm } from '@/components/ConfirmModal';
 import MinimalistTooltip from '@/components/MinimalistTooltip';
 
-const SECTIONS = ['hero', 'signature', 'approach', 'atelier', 'venues', 'philosophy', 'manifesto', 'moodboard', 'testimonial'];
+const SECTIONS = ['hero', 'signature', 'approach', 'atelier', 'venues', 'philosophy', 'manifesto', 'moodboard', 'testimonial', 'partners'];
 const LABELS   = {
     hero: 'Hero',
     signature: 'Signature',
@@ -19,8 +19,9 @@ const LABELS   = {
     manifesto: 'Manifesto',
     moodboard: 'Mood Board',
     testimonial: 'Testimonial',
+    partners: 'Vendor & Mitra',
 };
-const HAS_ITEMS = ['approach', 'philosophy', 'atelier'];
+const HAS_ITEMS = ['approach', 'philosophy', 'atelier', 'partners'];
 
 function UnderlineInput({ label, name, value, onChange, textarea = false, rows = 4, placeholder = '' }) {
     return (
@@ -69,7 +70,8 @@ export default function ContentManagement() {
     useEffect(() => { fetchSections(); }, []);
     useEffect(() => { if (active) fetchItems(active.section_name); }, [active, fetchItems]);
 
-    const handleSelect = (s) => { setActive(s); setForm(s); setTab('text'); };
+    // Partners hanya punya Items (daftar vendor), langsung masuk tab items
+    const handleSelect = (s) => { setActive(s); setForm(s); setTab(s.section_name === 'partners' ? 'items' : 'text'); };
     const handleInput  = (e) => { const { name, value } = e.target; setForm(p => ({ ...p, [name]: value })); };
 
     const handleSaveMain = async (e) => {
@@ -173,13 +175,16 @@ export default function ContentManagement() {
                                 </div>
                                 <div className="flex items-center gap-4 flex-wrap">
                                     {/* Tabs */}
+                                    {/* Tabs — sembunyikan tab Teks untuk section partners */}
                                     <div className="flex items-center gap-1 bg-white/[0.02] border border-white/[0.05] p-1.5 backdrop-blur-sm">
-                                        <button onClick={() => setTab('text')}
-                                            className={`flex items-center gap-2 px-5 py-2.5 text-[8px] uppercase tracking-[0.35em] font-medium transition-all duration-500 ${
-                                                tab === 'text' ? 'bg-[#CEB175] text-black shadow-lg shadow-[#CEB175]/10' : 'text-white/20 hover:text-white/50'
-                                            }`}>
-                                            <Type className="w-3 h-3" />Teks
-                                        </button>
+                                        {active.section_name !== 'partners' && (
+                                            <button onClick={() => setTab('text')}
+                                                className={`flex items-center gap-2 px-5 py-2.5 text-[8px] uppercase tracking-[0.35em] font-medium transition-all duration-500 ${
+                                                    tab === 'text' ? 'bg-[#CEB175] text-black shadow-lg shadow-[#CEB175]/10' : 'text-white/20 hover:text-white/50'
+                                                }`}>
+                                                <Type className="w-3 h-3" />Teks
+                                            </button>
+                                        )}
                                         {hasItems && (
                                             <MinimalistTooltip text="Lihat Item Section">
                                                 <button onClick={() => setTab('items')}

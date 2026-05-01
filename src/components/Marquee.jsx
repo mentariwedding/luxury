@@ -1,21 +1,38 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
+
+const FALLBACK_ITEMS = [
+    'Planned to Perfection',
+    'By Inquiry Only',
+    'Woven in Light',
+    'Mentari Wedding',
+];
 
 /**
- * Luxury Marquee Divider — teks berjalan horizontal ala fashion house.
- * Dipakai sebagai pemisah antar section untuk menambah brand identity.
+ * Luxury Marquee Divider — menampilkan nama vendor/partner dari database.
+ * Fallback ke tagline brand jika data partners belum tersedia.
  */
 export default function Marquee() {
-    const items = [
-        'Planned to Perfection',
-        'By Inquiry Only',
-        'Woven in Light',
-        'Mentari Wedding',
-    ];
+    const [items, setItems] = useState(FALLBACK_ITEMS);
+
+    useEffect(() => {
+        (async () => {
+            const { data } = await supabase
+                .from('section_items')
+                .select('title')
+                .eq('section_name', 'partners')
+                .eq('is_active', true)
+                .order('display_order', { ascending: true });
+            if (data && data.length > 0) {
+                setItems(data.map(d => d.title));
+            }
+        })();
+    }, []);
 
     const separator = (
-        <span className="mx-6 md:mx-10 text-[#CEB175]/40 font-serif text-lg select-none">✦</span>
+        <span className="mx-12 md:mx-20 text-[#CEB175]/40 font-serif text-lg select-none">✦</span>
     );
 
     const content = items.map((item, i) => (
@@ -40,3 +57,4 @@ export default function Marquee() {
         </div>
     );
 }
+

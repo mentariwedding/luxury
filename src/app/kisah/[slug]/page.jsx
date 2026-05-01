@@ -60,8 +60,8 @@ export default function KisahDetailPage() {
 
                 {/* Content */}
                 {entry && !loading && (
-                    <motion.article initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}>
+                    <motion.article initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.9, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}>
 
                         {/* Meta */}
                         <div className="flex flex-wrap items-center gap-4 mb-10">

@@ -37,8 +37,8 @@ export default function KisahPage() {
                 style={{ paddingTop: 'clamp(100px, 14vh, 140px)', paddingBottom: 'clamp(80px, 12vh, 140px)' }}>
 
                 {/* Page Header */}
-                <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }} className="mb-16 md:mb-24">
+                <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1.0, delay: 0.5, ease: [0.22, 1, 0.36, 1] }} className="mb-16 md:mb-24">
                     <p className="text-[10px] uppercase tracking-[0.6em] text-[#CEB175] mb-6 font-light">— Kisah —</p>
                     <h1 className="font-serif font-light text-white leading-[1.05] mb-6" style={{ fontSize: 'clamp(40px, 7vw, 96px)' }}>
                         Setiap Perayaan,{' '}
@@ -69,7 +69,7 @@ export default function KisahPage() {
                 ) : (
                     <div className="space-y-20 md:space-y-32">
                         {entries.map((entry, i) => (
-                            <Reveal key={entry.id || i} delay={i * 80}>
+                            <Reveal key={entry.id || i} delay={i * 120}>
                                 <Link href={`/kisah/${entry.slug}`} className="group block">
                                     <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center ${i % 2 === 1 ? 'md:[direction:rtl]' : ''}`}>
                                         {/* Cover image */}
