@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import Lightbox from '@/components/Lightbox';
 
-const CATEGORIES = ['Semua', 'Romantic', 'Bold', 'Natural', 'Elegant', 'Garden'];
+const DEFAULT_CATEGORIES = ['Romantic', 'Bold', 'Natural', 'Elegant', 'Garden'];
 
 const DEFAULTS = [
     { id: 1, title: 'Pesta Penuh Tawa', category: 'Romantic', image_url: '/images/tawalepas.JPG' },
@@ -35,6 +35,11 @@ export default function PortfolioPage() {
         })();
     }, []);
 
+    // Derive categories dari data foto — otomatis update saat admin tambah kategori baru
+    const categories = ['Semua', ...Array.from(new Set(
+        photos.map(p => p.category).filter(Boolean)
+    ))];
+
     const filtered = activeFilter === 'Semua'
         ? photos
         : photos.filter(p => p.category === activeFilter);
@@ -52,9 +57,9 @@ export default function PortfolioPage() {
 
                 {/* ── Page Header ── */}
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 1.0, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     className="mb-16 md:mb-24"
                 >
                     <p className="text-[10px] uppercase tracking-[0.6em] text-[#CEB175] mb-6 font-light">
@@ -74,10 +79,10 @@ export default function PortfolioPage() {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.3 }}
+                    transition={{ duration: 0.8, delay: 0.6 }}
                     className="flex flex-wrap gap-2 mb-12 md:mb-16"
                 >
-                    {CATEGORIES.map((cat) => (
+                    {categories.map((cat) => (
                         <button
                             key={cat}
                             onClick={() => setActiveFilter(cat)}

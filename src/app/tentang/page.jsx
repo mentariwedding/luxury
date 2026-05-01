@@ -45,14 +45,14 @@ export default function TentangPage() {
                             <div>
                                 <motion.p
                                     initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                                    transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
                                     className="text-[10px] uppercase tracking-[0.6em] text-[#CEB175] mb-6 font-light"
                                 >
                                     — Tentang Kami —
                                 </motion.p>
                                 <motion.h1
-                                    initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                                    initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 1.0, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
                                     className="font-serif font-light text-white leading-[1.05] mb-8"
                                     style={{ fontSize: 'clamp(40px, 7vw, 88px)' }}
                                 >
@@ -63,7 +63,7 @@ export default function TentangPage() {
                                 <GoldDivider delay={0.4} width="w-20" />
                                 <motion.p
                                     initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                                    transition={{ duration: 1, delay: 0.6 }}
+                                    transition={{ duration: 1, delay: 0.8 }}
                                     className="font-serif italic text-[#A3A3A3] leading-relaxed text-base md:text-lg max-w-lg"
                                 >
                                     Mentari Wedding adalah studio pernikahan eksklusif di Sukabumi — didirikan atas keyakinan bahwa setiap pernikahan berhak atas perhatian yang utuh, bukan sekadar eksekusi daftar tugas.
@@ -73,7 +73,7 @@ export default function TentangPage() {
                             {/* Stats — right */}
                             <motion.div
                                 initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 1.0, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                                transition={{ duration: 1.0, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
                                 className="grid grid-cols-3 gap-px border border-[#CEB175]/10"
                             >
                                 {[

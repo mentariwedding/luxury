@@ -136,6 +136,7 @@ export default function AdminDashboard() {
         hero: 'Hero', signature: 'Signature', approach: 'Pendekatan',
         philosophy: 'Filosofi', atelier: 'Atelier', venues: 'Venues',
         manifesto: 'Manifesto', moodboard: 'Mood Board', testimonial: 'Testimonial',
+        partners: 'Vendor & Mitra',
     };
 
     return (
