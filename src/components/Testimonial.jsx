@@ -155,7 +155,7 @@ export default function Testimonial() {
                                     key={i}
                                     onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); }}
                                     aria-label={`Go to testimonial ${i + 1}`}
-                                    className={`rounded-full transition-all duration-500 ${
+                                    className={`transition-all duration-500 ${
                                         i === current
                                             ? 'w-6 h-[3px] bg-[#CEB175]'
                                             : 'w-[6px] h-[6px] bg-[#CEB175]/20 hover:bg-[#CEB175]/40'

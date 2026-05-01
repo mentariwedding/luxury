@@ -61,7 +61,7 @@ function StatCard({ label, value, desc, href, icon: Icon, loading, delay, gold }
                 <p className={`font-serif font-light leading-none mb-2 ${gold ? 'text-[#CEB175]' : 'text-white/80'}`}
                    style={{ fontSize: 'clamp(28px, 3.5vw, 44px)' }}>
                     {loading
-                        ? <span className="inline-block w-16 h-8 bg-white/[0.04] rounded animate-pulse align-bottom" />
+                        ? <span className="inline-block w-16 h-8 bg-white/[0.04] animate-pulse align-bottom" />
                         : value}
                 </p>
                 <p className="text-[9px] uppercase tracking-[0.4em] text-white/40 mb-1">{label}</p>

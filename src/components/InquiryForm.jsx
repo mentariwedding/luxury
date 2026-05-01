@@ -128,7 +128,7 @@ export default function InquiryForm({ isOpen, onClose }) {
                                 {stepLabels.map((label, i) => (
                                     <React.Fragment key={i}>
                                         <div className="flex items-center gap-2">
-                                            <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-all duration-500 ${
+                                            <div className={`w-5 h-5 flex items-center justify-center transition-all duration-500 ${
                                                 step > i + 1 ? 'bg-[#CEB175]' :
                                                 step === i + 1 ? 'border border-[#CEB175] bg-transparent' :
                                                 'border border-white/15 bg-transparent'

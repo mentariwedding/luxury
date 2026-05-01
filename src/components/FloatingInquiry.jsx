@@ -108,7 +108,11 @@ export default function FloatingInquiry() {
                             )}
                             {/* Pulse */}
                             {!expanded && (
-                                <span className="absolute inset-0 border border-[#CEB175]/40 animate-ping opacity-50" />
+                                <motion.span
+                                    animate={{ opacity: [0.3, 0, 0.3], scale: [1, 1.4, 1] }}
+                                    transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+                                    className="absolute inset-0 border border-[#CEB175]/30"
+                                />
                             )}
                         </button>
 

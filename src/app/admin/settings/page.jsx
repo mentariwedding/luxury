@@ -123,8 +123,8 @@ export default function SettingsPage() {
                 <div className="space-y-0 border-t border-white/[0.06] luxury-section">
                     {[...Array(5)].map((_, i) => (
                         <div key={i} className="grid grid-cols-[1fr_2fr] gap-12 py-9 border-b border-white/[0.05]">
-                            <div className="h-3 w-32 bg-white/[0.05] rounded animate-pulse" />
-                            <div className="h-5 w-full bg-white/[0.05] rounded animate-pulse" />
+                            <div className="h-3 w-32 bg-white/[0.05] animate-pulse" />
+                            <div className="h-5 w-full bg-white/[0.05] animate-pulse" />
                         </div>
                     ))}
                 </div>

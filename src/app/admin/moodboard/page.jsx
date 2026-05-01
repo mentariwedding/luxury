@@ -195,7 +195,7 @@ export default function MoodBoardAdmin() {
                                                     className="w-full h-full object-cover opacity-70"
                                                     onError={e => { e.target.style.display = 'none'; }}
                                                 />
-                                                <div className="absolute top-1 left-1 text-[8px] text-[#CEB175]/80 bg-black/60 px-1.5 py-0.5 rounded font-mono">
+                                                <div className="absolute top-1 left-1 text-[8px] text-[#CEB175]/80 bg-black/60 px-1.5 py-0.5 font-mono">
                                                     {String(idx + 1).padStart(2, '0')}
                                                 </div>
                                             </div>

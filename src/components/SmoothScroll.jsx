@@ -34,7 +34,7 @@ export default function SmoothScroll() {
             cancelAnimationFrame(rafId);
             lenis.destroy();
         };
-    }, []);
+    }, [isAdmin]);
 
     return null;
 }

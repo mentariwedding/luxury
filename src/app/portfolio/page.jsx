@@ -81,7 +81,7 @@ export default function PortfolioPage() {
                         <button
                             key={cat}
                             onClick={() => setActiveFilter(cat)}
-                            className={`text-[9px] uppercase tracking-[0.4em] px-5 py-2.5 rounded-full border transition-all duration-500 font-light ${
+                            className={`text-[9px] uppercase tracking-[0.4em] px-5 py-2.5 border transition-all duration-500 font-light ${
                                 activeFilter === cat
                                     ? 'bg-[#CEB175] border-[#CEB175] text-black'
                                     : 'border-white/10 text-white/40 hover:border-[#CEB175]/40 hover:text-white/70'
@@ -187,7 +187,7 @@ export default function PortfolioPage() {
                     </p>
                     <a
                         href="/#manifesto"
-                        className="group inline-flex items-center gap-5 border border-[#CEB175]/40 px-12 py-5 rounded-full hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700"
+                        className="group inline-flex items-center gap-5 border border-[#CEB175]/40 px-12 py-5 hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700"
                     >
                         <span className="text-[10px] uppercase tracking-[0.5em] text-white group-hover:text-black font-light transition-colors duration-700">
                             Mulai Cerita

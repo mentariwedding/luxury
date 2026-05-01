@@ -106,7 +106,7 @@ export default function MoodBoard() {
                                     {active === i && (
                                         <motion.div
                                             layoutId="active-indicator"
-                                            className="w-1.5 h-1.5 rounded-full bg-[#CEB175]"
+                                            className="w-1.5 h-1.5 bg-[#CEB175]"
                                         />
                                     )}
                                 </div>

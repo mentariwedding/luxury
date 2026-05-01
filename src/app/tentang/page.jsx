@@ -125,7 +125,7 @@ export default function TentangPage() {
                                 <Reveal key={i} delay={i * 100}>
                                     <div className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-4 md:gap-12 items-start">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-2 h-2 rounded-full bg-[#CEB175] flex-shrink-0 hidden md:block" />
+                                            <div className="w-2 h-2 rotate-45 bg-[#CEB175] flex-shrink-0 hidden md:block" />
                                             <span className="font-serif italic text-[#CEB175] text-lg md:text-xl">{m.year}</span>
                                         </div>
                                         <div>
@@ -174,7 +174,7 @@ export default function TentangPage() {
                         <Reveal delay={200}>
                             <a
                                 href="/#manifesto"
-                                className="group inline-flex items-center gap-5 border border-[#CEB175]/40 px-12 py-5 rounded-full hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700"
+                                className="group inline-flex items-center gap-5 border border-[#CEB175]/40 px-12 py-5 hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700"
                             >
                                 <span className="text-[10px] uppercase tracking-[0.5em] text-white group-hover:text-black font-light transition-colors duration-700">
                                     Mulai Cerita

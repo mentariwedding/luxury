@@ -36,7 +36,7 @@ export default function PageTransition() {
                     initial={{ scaleY: 0, transformOrigin: 'top' }}
                     animate={{ scaleY: 1, transformOrigin: 'top' }}
                     exit={{ scaleY: 0, transformOrigin: 'bottom' }}
-                    transition={{ duration: 0.45, ease: [0.76, 0, 0.24, 1] }}
+                    transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
                     className="fixed inset-0 z-[9990] bg-[#050505] pointer-events-none"
                 >
                     {/* Gold center mark during transition */}

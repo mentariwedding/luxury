@@ -75,21 +75,19 @@ export default function NotFound() {
                 >
                     <Link
                         href="/"
-                        className="group inline-flex items-center gap-4 border border-[#CEB175]/40 px-10 py-4 rounded-full hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700"
+                        className="group inline-flex items-center gap-4 border border-[#CEB175]/40 px-10 py-4 hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700"
                     >
                         <span className="text-[10px] uppercase tracking-[0.5em] text-white group-hover:text-black font-light transition-colors duration-700">
                             Kembali ke Beranda
                         </span>
                     </Link>
 
-                    <a
-                        href="https://wa.me/628123456789"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <Link
+                        href="/#manifesto"
                         className="text-[10px] uppercase tracking-[0.5em] text-[#CEB175]/60 hover:text-[#CEB175] transition-colors duration-500 font-light pb-0.5 border-b border-[#CEB175]/20 hover:border-[#CEB175]/50"
                     >
                         Hubungi Kami
-                    </a>
+                    </Link>
                 </motion.div>
 
                 {/* Brand footer */}

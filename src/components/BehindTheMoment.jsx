@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { supabase } from '@/lib/supabase';
 import Reveal from './Reveal';
 
 /**
@@ -19,7 +18,7 @@ const DEFAULTS = [
 ];
 
 export default function BehindTheMoment() {
-    const [items, setItems] = useState(DEFAULTS);
+    const items = DEFAULTS;
     const containerRef = useRef(null);
 
     const { scrollYProgress } = useScroll({
@@ -29,18 +28,7 @@ export default function BehindTheMoment() {
     // Gentle horizontal drift on scroll for cinematic feel
     const x = useTransform(scrollYProgress, [0, 1], ['2%', '-2%']);
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const { data } = await supabase
-                    .from('behind_the_moment')
-                    .select('*')
-                    .eq('is_active', true)
-                    .order('display_order', { ascending: true });
-                if (data && data.length > 0) setItems(data);
-            } catch (_) {}
-        })();
-    }, []);
+    // Uses default data — behind_the_moment DB table optional
 
     return (
         <section

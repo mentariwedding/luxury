@@ -165,7 +165,7 @@ export default function Manifesto() {
                                 {[...Array(12)].map((_, i) => (
                                     <div
                                         key={i}
-                                        className={`rounded-full transition-all duration-300 ${
+                                        className={`transition-all duration-300 ${
                                             i < 9
                                                 ? 'w-2 h-2 bg-[#CEB175]/15'
                                                 : 'w-2.5 h-2.5 bg-[#CEB175]'

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import Reveal from './Reveal';
 import SplitText from './SplitText';
 import { supabase } from '@/lib/supabase';
 
@@ -51,12 +50,10 @@ export default function Hero() {
 
     return (
         <section ref={sectionRef} className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden bg-black">
-            {/* Floating Decorative Elements */}
+            {/* Floating Decorative Elements — very subtle, GPU-friendly */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-[20%] left-[10%] w-32 h-32 border border-[#CEB175]/10 rounded-full animate-float-slow"></div>
-                <div className="absolute bottom-[20%] right-[15%] w-48 h-48 border border-[#CEB175]/5 rounded-full animate-float-slower"></div>
-                <div className="absolute top-[40%] right-[10%] w-2 h-2 bg-[#CEB175]/20 rounded-full animate-pulse"></div>
-                <div className="absolute bottom-[30%] left-[20%] w-1 h-1 bg-[#CEB175]/40 rounded-full animate-ping"></div>
+                <div className="absolute top-[20%] left-[10%] w-32 h-32 border border-[#CEB175]/8 rotate-45 animate-float-slow" />
+                <div className="absolute bottom-[20%] right-[15%] w-48 h-48 border border-[#CEB175]/4 rotate-45 animate-float-slower" />
             </div>
 
             {/* Background: Video if available, fallback to image */}
@@ -101,13 +98,11 @@ export default function Hero() {
                 style={{ y: textY, opacity: textOpacity }}
                 className="relative z-10 text-center px-4 max-w-5xl mx-auto mt-24 flex flex-col items-center"
             >
-                <Reveal>
-                    <SplitText
-                        text={content.subtitle}
-                        className="text-[10px] md:text-xs font-light tracking-[0.5em] text-[#CEB175] uppercase mb-8 opacity-80"
-                        stagger={0.05}
-                    />
-                </Reveal>
+                <SplitText
+                    text={content.subtitle}
+                    className="text-[10px] md:text-xs font-light tracking-[0.5em] text-[#CEB175] uppercase mb-8 opacity-80"
+                    stagger={0.05}
+                />
 
                 <h1 className="font-serif text-4xl sm:text-5xl md:text-8xl lg:text-9xl font-light leading-[1.1] text-white mb-10 drop-shadow-2xl">
                     {titleParts[0] && <><SplitText text={titleParts[0] + (titleParts[1] ? ',' : '')} delay={300} /> <br /></>}
@@ -119,14 +114,23 @@ export default function Hero() {
                     )}
                 </h1>
 
-                <Reveal delay={1200}>
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 1.2 }}
+                >
                     <p className="text-sm md:text-base text-[#A3A3A3] font-light max-w-2xl mx-auto mb-12 tracking-[0.05em] leading-loose opacity-80 font-serif italic">
                         {content.description}
                     </p>
-                </Reveal>
-                <Reveal delay={1400}>
-                    <div className="w-px h-12 bg-[#CEB175]/30 mx-auto mb-8"></div>
-                </Reveal>
+                </motion.div>
+                <motion.div
+                    initial={{ opacity: 0, scaleY: 0 }}
+                    animate={{ opacity: 1, scaleY: 1 }}
+                    transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 1.4 }}
+                    style={{ originY: 0 }}
+                >
+                    <div className="w-px h-12 bg-[#CEB175]/30 mx-auto mb-8" />
+                </motion.div>
             </motion.div>
 
             {/* Scroll Indicator - More Elegant & Minimalist */}

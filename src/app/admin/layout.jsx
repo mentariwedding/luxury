@@ -7,7 +7,7 @@ import Link from 'next/link';
 import {
     LayoutDashboard, FileText, Image, MapPin, BookOpen,
     MessageCircle, Star, Palette, Globe, Settings,
-    LogOut, X, Menu, SunMedium,
+    LogOut, X, Menu, SunMedium, Quote,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ToastProvider } from '@/components/Toast';
@@ -22,10 +22,11 @@ const NAV_GROUPS = [
     {
         label: 'Konten',
         items: [
-            { label: 'Konten',  href: '/admin/content',      icon: FileText      },
-            { label: 'Galeri',  href: '/admin/gallery',      icon: Image         },
-            { label: 'Venues',  href: '/admin/venues',       icon: MapPin        },
-            { label: 'Kisah',   href: '/admin/journal',      icon: BookOpen      },
+            { label: 'Konten',    href: '/admin/content',      icon: FileText      },
+            { label: 'Galeri',    href: '/admin/gallery',      icon: Image         },
+            { label: 'Venues',    href: '/admin/venues',       icon: MapPin        },
+            { label: 'Kisah',     href: '/admin/journal',      icon: BookOpen      },
+            { label: 'Whispers',  href: '/admin/whispers',     icon: Quote         },
         ],
     },
     {
@@ -52,15 +53,15 @@ function NavItem({ item, active, onClick }) {
     const Icon = item.icon;
     return (
         <Link href={item.href} onClick={onClick}
-            className={`group flex items-center gap-3 px-4 py-2.5 rounded-sm relative transition-all duration-300 ${
+            className={`group flex items-center gap-3 px-4 py-2.5 relative transition-all duration-300 ${
                 active
                     ? 'text-[#CEB175] bg-[#CEB175]/5'
-                    : 'text-white/30 hover:text-white/70 hover:bg-white/[0.02]'
+                    : 'text-white/55 hover:text-white/90 hover:bg-white/[0.03]'
             }`}
         >
             {/* Active left bar */}
-            <span className={`absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-4 bg-[#CEB175] rounded-full transition-all duration-300 ${
-                active ? 'opacity-100' : 'opacity-0 group-hover:opacity-30'
+            <span className={`absolute left-0 top-1/2 -translate-y-1/2 w-[2px] h-4 bg-[#CEB175] transition-all duration-300 ${
+                active ? 'opacity-100' : 'opacity-0 group-hover:opacity-40'
             }`} />
             <Icon className="w-[14px] h-[14px] flex-shrink-0" strokeWidth={1.5} />
             <span className="text-[10px] uppercase tracking-[0.4em] font-light">{item.label}</span>
@@ -130,7 +131,7 @@ export default function AdminLayout({ children }) {
                     {NAV_GROUPS.map((group, gi) => (
                         <div key={gi}>
                             {group.label && (
-                                <p className="text-[7px] uppercase tracking-[0.5em] text-white/15 px-4 mb-2 font-light">
+                                <p className="text-[7px] uppercase tracking-[0.5em] text-white/35 px-4 mb-2 font-light">
                                     {group.label}
                                 </p>
                             )}
@@ -144,19 +145,16 @@ export default function AdminLayout({ children }) {
                 </nav>
 
                 {/* Footer */}
-                <div className="border-t border-white/[0.04] p-4 space-y-3">
+                <div className="border-t border-white/[0.06] p-4 space-y-1">
                     <Link href="/" target="_blank"
-                        className="flex items-center gap-2 text-[8px] uppercase tracking-[0.4em] text-white/15 hover:text-[#CEB175]/50 transition-colors duration-300 px-2">
+                        className="flex items-center gap-2 text-[8px] uppercase tracking-[0.4em] text-white/45 hover:text-[#CEB175] transition-colors duration-300 px-2 py-2">
                         ↗ Lihat Website
                     </Link>
                     <button onClick={signOut}
-                        className="w-full flex items-center gap-2 px-2 py-1.5 text-[8px] uppercase tracking-[0.4em] text-white/15 hover:text-red-400/60 transition-colors duration-300">
+                        className="w-full flex items-center gap-2 px-2 py-2 text-[8px] uppercase tracking-[0.4em] text-white/45 hover:text-red-400 transition-colors duration-300">
                         <LogOut className="w-3 h-3" />
                         Keluar
                     </button>
-                    <p className="text-[6px] uppercase tracking-[0.4em] text-white/8 px-2 font-serif italic">
-                        Planned to Perfection
-                    </p>
                 </div>
             </aside>
 
@@ -217,7 +215,7 @@ export default function AdminLayout({ children }) {
                                     transition={{ delay: gi * 0.08, duration: 0.5, ease: [0.22,1,0.36,1] }}
                                 >
                                     {group.label && (
-                                        <p className="text-[7px] uppercase tracking-[0.5em] text-white/15 mb-4 font-light">
+                                        <p className="text-[7px] uppercase tracking-[0.5em] text-white/35 mb-4 font-light">
                                             — {group.label} —
                                         </p>
                                     )}
@@ -231,7 +229,7 @@ export default function AdminLayout({ children }) {
                                                     className={`flex flex-col gap-2 p-4 border transition-all duration-300 ${
                                                         active
                                                             ? 'border-[#CEB175]/30 bg-[#CEB175]/5 text-[#CEB175]'
-                                                            : 'border-white/[0.06] text-white/30 hover:border-white/20 hover:text-white/60'
+                                                            : 'border-white/[0.08] text-white/55 hover:border-white/25 hover:text-white/85'
                                                     }`}
                                                 >
                                                     <Icon className="w-4 h-4" strokeWidth={1.5} />
@@ -247,13 +245,13 @@ export default function AdminLayout({ children }) {
                         </div>
 
                         {/* Mobile Footer */}
-                        <div className="border-t border-white/[0.04] px-6 py-5 flex items-center justify-between">
+                        <div className="border-t border-white/[0.06] px-6 py-5 flex items-center justify-between">
                             <Link href="/" target="_blank"
-                                className="text-[8px] uppercase tracking-[0.4em] text-white/15 hover:text-white/40 transition-colors">
+                                className="text-[8px] uppercase tracking-[0.4em] text-white/45 hover:text-[#CEB175] transition-colors">
                                 ↗ Website
                             </Link>
                             <button onClick={signOut}
-                                className="flex items-center gap-2 text-[8px] uppercase tracking-[0.4em] text-white/20 hover:text-red-400/60 transition-colors">
+                                className="flex items-center gap-2 text-[8px] uppercase tracking-[0.4em] text-white/45 hover:text-red-400 transition-colors">
                                 <LogOut className="w-3 h-3" />
                                 Keluar
                             </button>

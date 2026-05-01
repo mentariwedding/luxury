@@ -132,7 +132,7 @@ export default function KisahPage() {
                     transition={{ duration: 0.8 }} className="mt-24 text-center border-t border-[#CEB175]/10 pt-16">
                     <p className="text-[9px] uppercase tracking-[0.6em] text-white/15 mb-8">Setiap cerita dimulai dari percakapan</p>
                     <a href="/#manifesto"
-                        className="group inline-flex items-center gap-5 border border-[#CEB175]/40 px-12 py-5 rounded-full hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700">
+                        className="group inline-flex items-center gap-5 border border-[#CEB175]/40 px-12 py-5 hover:bg-[#CEB175] hover:border-[#CEB175] transition-all duration-700">
                         <span className="text-[10px] uppercase tracking-[0.5em] text-white group-hover:text-black font-light transition-colors duration-700">Mulai Cerita</span>
                         <span className="w-6 h-px bg-[#CEB175] group-hover:bg-black transition-colors duration-700" />
                     </a>

@@ -151,12 +151,13 @@ export default function Footer() {
                         <p className="text-[10px] uppercase tracking-[0.4em] text-[#525252] mb-10">Eksplorasi</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
                             {[
-                                { label: 'Whisper', num: '01', href: '#testimonial' },
+                                { label: 'Whisper', num: '01', href: '#manifesto' },
                                 { label: 'Editorial', num: '02', href: '/portfolio' },
                                 { label: 'Kisah', num: '03', href: '/kisah' },
                                 { label: 'Atelier', num: '04', href: '#atelier' },
-                                { label: 'Tentang', num: '05', href: '/tentang' },
-                                { label: 'Inquiry', num: '06', href: '#manifesto' },
+                                { label: 'Venues', num: '05', href: '#venues' },
+                                { label: 'Tentang', num: '06', href: '/tentang' },
+                                { label: 'Inquiry', num: '07', href: '#manifesto' },
                             ].map((item) => (
                                 <a key={item.label} href={item.href} className="group flex items-end gap-3 w-fit">
                                     <span className="text-3xl font-serif font-light text-[#A3A3A3] group-hover:text-white transition-all duration-500 group-hover:translate-x-2">{item.label}</span>

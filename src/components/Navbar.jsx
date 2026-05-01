@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
@@ -46,8 +47,8 @@ export default function Navbar() {
                     }`}
             >
                 <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
-                    {/* Logo & Tagline */}
-                    <div className="flex flex-col">
+                    {/* Logo & Tagline — click to home */}
+                    <Link href="/" aria-label="Kembali ke halaman utama" className="flex flex-col group">
                         <div className="flex items-center gap-2 md:gap-3">
                             {/* Artisanal sun mark — bespoke, not a dashboard icon */}
                             <svg
@@ -56,7 +57,7 @@ export default function Navbar() {
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="text-[#CEB175] flex-shrink-0"
+                                className="text-[#CEB175] flex-shrink-0 group-hover:rotate-45 transition-transform duration-700"
                                 aria-hidden="true"
                             >
                                 <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1" />
@@ -74,10 +75,13 @@ export default function Navbar() {
                                 <line x1="6.5" y1="12" x2="7.5" y2="12" stroke="currentColor" strokeWidth="0.5" strokeLinecap="round" opacity="0.5" />
                                 <line x1="16.5" y1="12" x2="17.5" y2="12" stroke="currentColor" strokeWidth="0.5" strokeLinecap="round" opacity="0.5" />
                             </svg>
-                            <span className="font-serif text-2xl md:text-3xl font-medium tracking-wider text-white leading-none">Mentari Wedding</span>
+                            <span className="font-serif text-2xl md:text-3xl font-medium tracking-wider text-white leading-none relative">
+                                Mentari Wedding
+                                <span className="absolute bottom-0 left-0 w-full h-[0.5px] bg-[#CEB175]/50 scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+                            </span>
                         </div>
-                        <span className="text-[6px] md:text-[7px] uppercase tracking-[0.4em] md:tracking-[0.5em] text-[#CEB175] mt-1.5 ml-7 md:ml-[2.25rem]">Planned to Perfection</span>
-                    </div>
+                        <span className="text-[6px] md:text-[7px] uppercase tracking-[0.4em] md:tracking-[0.5em] text-[#CEB175] mt-1.5 ml-7 md:ml-[2.25rem] group-hover:text-[#CEB175]/80 transition-colors duration-500">Planned to Perfection</span>
+                    </Link>
 
                     {/* Desktop Links */}
                     <div className="hidden md:flex items-center space-x-10 text-[11px] uppercase tracking-[0.4em] font-light text-[#A3A3A3]">
@@ -111,8 +115,8 @@ export default function Navbar() {
             <div className={`fixed inset-0 bg-[#050505] z-40 transition-all duration-700 ease-in-out flex flex-col items-center justify-center ${mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
                  {/* Decorative background for mobile menu */}
                  <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
-                     <div className="absolute top-1/4 left-1/4 w-64 h-64 border border-[#CEB175]/20 rounded-full animate-float-slow"></div>
-                     <div className="absolute bottom-1/4 right-1/4 w-96 h-96 border border-[#CEB175]/10 rounded-full animate-float-slower"></div>
+                     <div className="absolute top-1/4 left-1/4 w-64 h-64 border border-[#CEB175]/20 rotate-45 animate-float-slow"></div>
+                     <div className="absolute bottom-1/4 right-1/4 w-96 h-96 border border-[#CEB175]/10 rotate-45 animate-float-slower"></div>
                  </div>
 
                  <div className="relative z-10 flex flex-col items-center gap-10 font-serif text-4xl text-white text-center">

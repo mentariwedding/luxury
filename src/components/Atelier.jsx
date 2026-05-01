@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Reveal from './Reveal';
 import SplitText from './SplitText';
 import GoldDivider from './GoldDivider';
+import InquiryForm from './InquiryForm';
 import { supabase } from '@/lib/supabase';
 
 export default function Atelier() {
@@ -12,6 +13,7 @@ export default function Atelier() {
         title: "Estetika Kami.",
         description: "Keindahan sejati lahir dari detail yang sederhana namun bermakna."
     });
+    const [inquiryOpen, setInquiryOpen] = useState(false);
 
     const [pillars, setPillars] = useState([
         {
@@ -67,6 +69,7 @@ export default function Atelier() {
     }, []);
 
     return (
+        <>
         <section id="atelier" className="luxury-section bg-[#050505] section-ambient">
             <div className="container mx-auto px-6 md:px-12">
                 <div className="max-w-3xl mb-24">
@@ -135,22 +138,22 @@ export default function Atelier() {
                                 Lihat dunia estetika kami yang lebih dalam.
                             </p>
                         </div>
-                        <a
-                            href={`https://wa.me/628123456789?text=${encodeURIComponent('Halo Mentari Wedding, saya ingin melihat Lookbook Anda.')}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <button
+                            onClick={() => setInquiryOpen(true)}
                             className="group flex items-center gap-4 flex-shrink-0"
                         >
                             <span className="text-[10px] uppercase tracking-[0.5em] text-[#CEB175] border-b border-[#CEB175]/30 pb-1 group-hover:text-white group-hover:border-white transition-all duration-500">
                                 Request Our Lookbook
                             </span>
-                            <div className="w-8 h-8 border border-[#CEB175]/30 rounded-full flex items-center justify-center group-hover:bg-[#CEB175] group-hover:border-[#CEB175] transition-all duration-500">
+                            <div className="w-8 h-8 border border-[#CEB175]/30 flex items-center justify-center group-hover:bg-[#CEB175] group-hover:border-[#CEB175] transition-all duration-500">
                                 <span className="text-[#CEB175] group-hover:text-black text-xs transition-colors duration-500">↗</span>
                             </div>
-                        </a>
+                        </button>
                     </div>
                 </Reveal>
             </div>
         </section>
+        <InquiryForm isOpen={inquiryOpen} onClose={() => setInquiryOpen(false)} />
+        </>
     );
 }

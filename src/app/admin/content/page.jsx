@@ -152,7 +152,7 @@ export default function ContentManagement() {
                                         isAct ? 'text-[#CEB175] pl-2' : 'text-white/20 hover:text-white/50'
                                     }`}>
                                     <span className="text-[10px] uppercase tracking-[0.4em] font-light">{LABELS[name]}</span>
-                                    {isAct && <motion.div layoutId="activeInd" className="w-1 h-1 rounded-full bg-[#CEB175]" />}
+                                    {isAct && <motion.div layoutId="activeInd" className="w-1 h-1 bg-[#CEB175]" />}
                                 </button>
                             );
                         })}
