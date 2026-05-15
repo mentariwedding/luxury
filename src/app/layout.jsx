@@ -12,17 +12,20 @@ import SectionCounter from "../components/SectionCounter";
 import "./globals.css";
 
 export const metadata = {
-  metadataBase: new URL("https://mentariwedding.id"),
+  metadataBase: new URL("https://mentariwedding.biz.id"),
   title: "Mentari Wedding | Wedding Organizer Sukabumi - Planned to Perfection",
   description:
     "Mentari Wedding - Wedding Organizer profesional di Sukabumi. Merangkai pernikahan impian dengan estetika timeless, dekorasi elegant, dan pelayanan penuh ketulusan. Konsultasi gratis via WhatsApp.",
   keywords: [
     "wedding organizer",
     "wedding organizer sukabumi",
+    "wedding organizer cibadak",
+    "jasa wedding cibadak",
     "pernikahan sukabumi",
-    "dekorasi pernikahan",
+    "dekorasi pernikahan cibadak",
     "wedding sukabumi",
     "WO sukabumi",
+    "WO cibadak",
     "wedding planner",
     "mentari wedding",
   ],
@@ -31,7 +34,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "id_ID",
-    url: "https://mentariwedding.id",
+    url: "https://mentariwedding.biz.id",
     siteName: "Mentari Wedding",
     title:
       "Mentari Wedding | Wedding Organizer Sukabumi - Planned to Perfection",
@@ -70,9 +73,9 @@ export const metadata = {
       "max-snippet": -1,
     },
   },
-  // verification: {
-  //   google: 'isi-kode-dari-google-search-console',
-  // },
+  verification: {
+    google: 'toD2_lSjU_P9YBmwx90sG8x2xfaMe3qzgLBOIcp60sA',
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -81,19 +84,19 @@ export default function RootLayout({ children }) {
     "@graph": [
       {
         "@type": ["LocalBusiness", "WeddingPlanning"],
-        "@id": "https://mentariwedding.id/#business",
+        "@id": "https://mentariwedding.biz.id/#business",
         name: "Mentari Wedding",
         alternateName: "Mentari Wedding Organizer",
         description:
           "Wedding Organizer profesional di Sukabumi. Merangkai pernikahan impian dengan estetika timeless, dekorasi elegant, dan pelayanan penuh ketulusan.",
-        url: "https://mentariwedding.id",
-        logo: "https://mentariwedding.id/images/logo.jpg",
-        image: "https://mentariwedding.id/images/hero.JPG",
+        url: "https://mentariwedding.biz.id",
+        logo: "https://mentariwedding.biz.id/images/logo.jpg",
+        image: "https://mentariwedding.biz.id/images/hero.JPG",
         telephone: "+628123456789",
         priceRange: "$$$$",
         address: {
           "@type": "PostalAddress",
-          addressLocality: "Sukabumi",
+          addressLocality: "Cibadak, Sukabumi",
           addressRegion: "Jawa Barat",
           addressCountry: "ID",
         },
@@ -103,6 +106,7 @@ export default function RootLayout({ children }) {
           longitude: 106.93,
         },
         areaServed: [
+          { "@type": "City", name: "Cibadak" },
           { "@type": "City", name: "Sukabumi" },
           { "@type": "State", name: "Jawa Barat" },
         ],
@@ -123,27 +127,27 @@ export default function RootLayout({ children }) {
       },
       {
         "@type": "WebSite",
-        "@id": "https://mentariwedding.id/#website",
-        url: "https://mentariwedding.id",
+        "@id": "https://mentariwedding.biz.id/#website",
+        url: "https://mentariwedding.biz.id",
         name: "Mentari Wedding",
         description: "Wedding Organizer Sukabumi - Planned to Perfection",
-        publisher: { "@id": "https://mentariwedding.id/#business" },
+        publisher: { "@id": "https://mentariwedding.biz.id/#business" },
         inLanguage: "id-ID",
       },
       {
         "@type": "WebPage",
-        "@id": "https://mentariwedding.id/#webpage",
-        url: "https://mentariwedding.id",
+        "@id": "https://mentariwedding.biz.id/#webpage",
+        url: "https://mentariwedding.biz.id",
         name: "Mentari Wedding | Wedding Organizer Sukabumi",
-        isPartOf: { "@id": "https://mentariwedding.id/#website" },
-        about: { "@id": "https://mentariwedding.id/#business" },
+        isPartOf: { "@id": "https://mentariwedding.biz.id/#website" },
+        about: { "@id": "https://mentariwedding.biz.id/#business" },
         description:
           "Merangkai pernikahan impian dengan estetika timeless dan pelayanan penuh ketulusan.",
         inLanguage: "id-ID",
       },
       {
         "@type": "FAQPage",
-        "@id": "https://mentariwedding.id/#faq",
+        "@id": "https://mentariwedding.biz.id/#faq",
         mainEntity: [
           {
             "@type": "Question",

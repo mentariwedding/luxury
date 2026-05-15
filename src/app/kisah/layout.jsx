@@ -4,11 +4,11 @@ export const metadata = {
     openGraph: {
         title: 'Kisah | Mentari Wedding',
         description: 'Cerita pernikahan yang dipercayakan kepada Mentari Wedding — tanpa nama, tanpa ekspos, hanya momen yang paling bermakna.',
-        url: 'https://mentariwedding.id/kisah',
+        url: 'https://mentariwedding.biz.id/kisah',
         images: [{ url: '/images/tawalepas.JPG', width: 1200, height: 630, alt: 'Kisah Pernikahan Mentari Wedding' }],
     },
     alternates: {
-        canonical: 'https://mentariwedding.id/kisah',
+        canonical: 'https://mentariwedding.biz.id/kisah',
     },
 };
 

@@ -9,6 +9,6 @@ export default function robots() {
         disallow: ['/admin', '/api/', '/_next/'],
       },
     ],
-    sitemap: 'https://mentariwedding.id/sitemap.xml',
+    sitemap: 'https://mentariwedding.biz.id/sitemap.xml',
   };
 }

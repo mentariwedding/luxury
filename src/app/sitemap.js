@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap() {
-  const baseUrl = 'https://mentariwedding.id';
+  const baseUrl = 'https://mentariwedding.biz.id';
 
   return [
     {

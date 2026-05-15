@@ -4,11 +4,11 @@ export const metadata = {
     openGraph: {
         title: 'Tentang Kami | Mentari Wedding',
         description: 'Filosofi, perjalanan, dan nilai-nilai yang membentuk Mentari Wedding — studio pernikahan eksklusif Sukabumi.',
-        url: 'https://mentariwedding.id/tentang',
+        url: 'https://mentariwedding.biz.id/tentang',
         images: [{ url: '/images/signature.JPG', width: 1200, height: 630, alt: 'Tentang Mentari Wedding' }],
     },
     alternates: {
-        canonical: 'https://mentariwedding.id/tentang',
+        canonical: 'https://mentariwedding.biz.id/tentang',
     },
 };
 
