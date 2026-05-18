@@ -43,6 +43,23 @@ const PinterestIcon = ({ className }) => (
   </svg>
 );
 
+const BridestoryIcon = ({ className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z" />
+  </svg>
+);
+
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [subState, setSubState] = useState("idle"); // 'idle' | 'loading' | 'success' | 'error'
@@ -69,8 +86,9 @@ export default function Footer() {
 
   const [settings, setSettings] = useState({
     whatsapp_number: "628123456789",
-    instagram_url: "#",
-    pinterest_url: "#",
+    instagram_url: "https://www.instagram.com/mentari_wo/",
+    pinterest_url: "https://id.pinterest.com/mentariweddingorganizer/",
+    bridestory_url: "https://www.bridestory.com/id/preview/mentari-wedding",
     map_coordinates: "-6.887298081773353, 106.77632655353484",
     office_address: "Jl. Kebon Pala 2 Cibadak, Sukabumi, Jawa Barat, 43351.",
   });
@@ -245,6 +263,19 @@ export default function Footer() {
                 </div>
                 <span className="tracking-[0.2em] uppercase text-[11px]">
                   Pinterest
+                </span>
+              </a>
+              <a
+                href={settings.bridestory_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 text-sm font-light text-[#A3A3A3] hover:text-[#CEB175] transition-all duration-500"
+              >
+                <div className="w-10 h-10 border border-[#CEB175]/10 flex items-center justify-center group-hover:border-[#CEB175]/40 transition-colors">
+                  <BridestoryIcon className="w-4 h-4" />
+                </div>
+                <span className="tracking-[0.2em] uppercase text-[11px]">
+                  Bridestory
                 </span>
               </a>
               <a

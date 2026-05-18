@@ -21,13 +21,20 @@ export const metadata = {
     "wedding organizer sukabumi",
     "wedding organizer cibadak",
     "jasa wedding cibadak",
+    "jasa wedding sukabumi",
     "pernikahan sukabumi",
     "dekorasi pernikahan cibadak",
+    "dekorasi pernikahan sukabumi",
     "wedding sukabumi",
     "WO sukabumi",
     "WO cibadak",
-    "wedding planner",
+    "wedding planner sukabumi",
+    "wedding planner cibadak",
+    "paket pernikahan sukabumi",
+    "paket wedding cibadak",
+    "vendor pernikahan sukabumi",
     "mentari wedding",
+    "mentari wedding sukabumi",
   ],
   authors: [{ name: "Mentari Wedding" }],
   creator: "Mentari Wedding",
@@ -76,6 +83,12 @@ export const metadata = {
   verification: {
     google: 'toD2_lSjU_P9YBmwx90sG8x2xfaMe3qzgLBOIcp60sA',
   },
+  alternates: {
+    canonical: 'https://mentariwedding.biz.id',
+  },
+  other: {
+    'p:domain_verify': '24b9400c3b47d394c27246e249a9bf15',
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -93,7 +106,11 @@ export default function RootLayout({ children }) {
         logo: "https://mentariwedding.biz.id/images/logo.jpg",
         image: "https://mentariwedding.biz.id/images/hero.JPG",
         telephone: "+628123456789",
-        priceRange: "$$$$",
+        priceRange: "$$",
+        currenciesAccepted: "IDR",
+        paymentAccepted: "Cash, Bank Transfer",
+        openingHours: "Mo-Su 08:00-21:00",
+        hasMap: "https://www.google.com/maps?q=-6.887298081773353,106.77632655353484",
         address: {
           "@type": "PostalAddress",
           addressLocality: "Cibadak, Sukabumi",
@@ -108,7 +125,10 @@ export default function RootLayout({ children }) {
         areaServed: [
           { "@type": "City", name: "Cibadak" },
           { "@type": "City", name: "Sukabumi" },
-          { "@type": "State", name: "Jawa Barat" },
+          { "@type": "City", name: "Cianjur" },
+          { "@type": "City", name: "Bogor" },
+          { "@type": "City", name: "Bandung" },
+          { "@type": "AdministrativeArea", name: "Jawa Barat" },
         ],
         serviceType: [
           "Wedding Organizer",
@@ -123,7 +143,13 @@ export default function RootLayout({ children }) {
           "event management",
           "wedding photography coordination",
         ],
-        sameAs: ["https://instagram.com/mentariwedding"],
+        sameAs: [
+          "https://www.instagram.com/mentari_wo/",
+          "https://id.pinterest.com/mentariweddingorganizer/",
+          "https://www.bridestory.com/id/preview/mentari-wedding",
+          "https://www.facebook.com/mentari.weddingorganizer",
+          "https://www.tiktok.com/@mentari.wo",
+        ],
       },
       {
         "@type": "WebSite",
